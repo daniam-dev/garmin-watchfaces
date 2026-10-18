@@ -1,0 +1,31 @@
+﻿{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-18T15:27:38.4287420+02:00",
+  "title": "Design System: Modular One",
+  "extensions": {
+    "colorMeta": {
+      "steps": {"role": "primary", "displayName": "Cian de pasos y lluvia"},
+      "body": {"role": "secondary", "displayName": "Coral de Body Battery"},
+      "text": {"role": "neutral", "displayName": "Marfil de hora y cifras"}
+    },
+    "nativeGeometry": {
+      "device": "fr170", "canvas": [390, 390], "units": "px",
+      "timeCenter": [195, 201],
+      "topCircles": [{"name": "fecha", "center": [113, 106], "radius": 36}, {"name": "tiempo", "center": [195, 92], "radius": 39}, {"name": "lluvia", "center": [277, 106], "radius": 36}],
+      "sideArcs": {"center": [195, 195], "radius": 180, "width": 12, "sweepDegrees": 168, "stepsStartDegrees": 96, "stepsClockwise": false, "bodyStartDegrees": 84, "bodyClockwise": true, "markerRadii": [9, 7, 5]},
+      "battery": {"center": [195, 311], "outlineRadius": 44, "arcRadius": 39, "arcWidth": 6, "marker": false}
+    },
+    "sources": ["PRODUCT.md", "source/Theme.mc", "source/FaceRenderer.mc", "source/Components.mc"],
+    "verification": "Extracción estática. Comparación visual pendiente: interfaz nativa del simulador no disponible."
+  },
+  "components": [
+    {"name": "Círculo de datos", "kind": "custom", "description": "Componente Monkey C con contorno de 2 píxeles sobre negro; sin implementación HTML/CSS."},
+    {"name": "Arco lateral", "kind": "custom", "description": "Pista oscura, progreso y marcador concéntrico según el dato real."},
+    {"name": "Batería física", "kind": "custom", "description": "Contorno exterior, anillo gris, icono relleno y porcentaje; sin marcador."}
+  ],
+  "narrative": {
+    "overview": "Esfera nativa Monkey C para fr170, circular de 390 × 390. Hora marfil dominante sobre negro y datos secundarios alrededor, según la referencia del usuario.",
+    "dos": ["Mantener la hora dominante y el círculo del tiempo elevado.", "Conservar la relación cian/pasos y coral/Body Battery.", "Situar los marcadores según datos reales disponibles.", "Mantener reposo negro, sin segundos ni animaciones."],
+    "donts": ["No presentar la compilación como validación visual de la referencia."]
+  }
+}

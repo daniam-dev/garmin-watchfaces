@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iq:manifest version="3" xmlns:iq="http://www.garmin.com/xml/connectiq">
+    <iq:application id="cd8b48b6a99b479d92574e20ffa230a4" type="watchface"
+                    name="@Strings.AppName" entry="PixelAnalogApp"
+                    launcherIcon="@Drawables.LauncherIcon" minApiLevel="6.0.2">
+        <iq:products>
+            <iq:product id="fr170"/>
+        </iq:products>
+        <iq:permissions/>
+        <iq:languages>
+            <iq:language>spa</iq:language>
+            <iq:language>eng</iq:language>
+        </iq:languages>
+        <iq:barrels/>
+    </iq:application>
+</iq:manifest>

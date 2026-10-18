@@ -1,0 +1,4 @@
+{
+  "files.exclude": { "watchfaces": true, ".local": true },
+  "search.exclude": { "watchfaces": true }
+}

@@ -1,0 +1,73 @@
+{
+  "folders": [
+    { "name": "Repositorio", "path": "." },
+    { "name": "Modular One", "path": "watchfaces/modular-one" },
+    { "name": "Pixel Analog", "path": "watchfaces/pixel-analog" }
+  ],
+  "extensions": {
+    "recommendations": ["garmin.monkey-c"]
+  },
+  "settings": {
+    "files.encoding": "utf8",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.exclude": { "**/bin": true, "**/.local": true },
+    "search.exclude": { "**/bin": true, "**/.local": true }
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Compilar Modular One (fr170)",
+        "type": "process",
+        "command": "powershell.exe",
+        "args": [
+          "-NoProfile", "-File",
+          "${workspaceFolder:Modular One}/../../scripts/build.ps1",
+          "-Project", "modular-one"
+        ],
+        "options": { "cwd": "${workspaceFolder:Modular One}" },
+        "group": { "kind": "build", "isDefault": true },
+        "problemMatcher": []
+      },
+      {
+        "label": "Compilar Pixel Analog (fr170)",
+        "type": "process",
+        "command": "powershell.exe",
+        "args": [
+          "-NoProfile", "-File",
+          "${workspaceFolder:Pixel Analog}/../../scripts/build.ps1",
+          "-Project", "pixel-analog"
+        ],
+        "options": { "cwd": "${workspaceFolder:Pixel Analog}" },
+        "group": "build",
+        "problemMatcher": []
+      },
+      {
+        "label": "Verificar estructura",
+        "type": "process",
+        "command": "powershell.exe",
+        "args": ["-NoProfile", "-File", "${workspaceFolder:Repositorio}/scripts/verify.ps1"],
+        "options": { "cwd": "${workspaceFolder:Repositorio}" },
+        "problemMatcher": []
+      },
+      {
+        "label": "Compilar todas (fr170)",
+        "type": "process",
+        "command": "powershell.exe",
+        "args": ["-NoProfile", "-File", "${workspaceFolder:Repositorio}/scripts/build.ps1", "-Project", "all"],
+        "options": { "cwd": "${workspaceFolder:Repositorio}" },
+        "group": "build",
+        "problemMatcher": []
+      },
+      {
+        "label": "Probar herramientas",
+        "type": "process",
+        "command": "powershell.exe",
+        "args": ["-NoProfile", "-File", "${workspaceFolder:Repositorio}/tests/tooling.tests.ps1"],
+        "options": { "cwd": "${workspaceFolder:Repositorio}" },
+        "problemMatcher": []
+      }
+    ]
+  }
+}
