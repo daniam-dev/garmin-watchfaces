@@ -12,9 +12,8 @@ Windows y PowerShell; no hay dependencias Node ni una aplicación web.
 - Consulta `docs/architecture.md` si cambias límites entre componentes,
   herramientas comunes o añades una esfera. No leas todo el repositorio para
   un cambio localizado. Omite `bin/` y `.local/` al explorar código.
-- Conserva el comportamiento y la identidad de Modular One salvo petición
-  expresa. Pixel Analog es una base sin diseño: no completes decisiones
-  de producto por el nombre del proyecto.
+- Conserva el comportamiento y la identidad de cada esfera salvo petición
+  expresa. Los proyectos activos son Modular One y Pilot Analog.
 
 ## Arquitectura
 
@@ -56,7 +55,7 @@ Desde la raíz:
 ```powershell
 .\scripts\verify.ps1
 .\scripts\build.ps1 -Project modular-one
-.\scripts\build.ps1 -Project pixel-analog
+.\scripts\build.ps1 -Project pilot-analog
 .\scripts\build.ps1 -Project all
 .\tests\tooling.tests.ps1
 ```

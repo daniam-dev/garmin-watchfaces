@@ -1,8 +1,9 @@
 # Garmin watchfaces
 
 Esferas independientes para Forerunner 170 (`fr170`), de uso personal e
-instalación por USB. Modular One está implementada; Pixel Analog es una base
-compilable sin diseño.
+instalación por USB. Los proyectos activos son Modular One y Pilot Analog.
+Consulta la [documentación de Pilot Analog](watchfaces/pilot-analog/README.md)
+para conocer sus datos, diseño y validaciones.
 
 ## Preparación y compilación
 
@@ -18,7 +19,7 @@ También puedes ejecutar desde la raíz:
 
 ```powershell
 .\scripts\build.ps1 -Project modular-one
-.\scripts\build.ps1 -Project pixel-analog
+.\scripts\build.ps1 -Project pilot-analog
 .\scripts\build.ps1 -Project all
 ```
 
@@ -27,7 +28,7 @@ El script admite `-SdkPath` y `-DeveloperKeyPath` para usar otras rutas.
 | Proyecto | Archivo generado |
 | --- | --- |
 | Modular One | `watchfaces/modular-one/bin/ModularOne.prg` |
-| Pixel Analog | `watchfaces/pixel-analog/bin/PixelAnalog.prg` |
+| Pilot Analog | `watchfaces/pilot-analog/bin/PilotAnalog.prg` |
 
 ## Instalar en el reloj por cable USB
 

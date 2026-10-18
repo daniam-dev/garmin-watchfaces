@@ -13,6 +13,9 @@ colors:
   weather: "#F8C32A"
   cloud: "#D8DAD8"
   battery: "#929496"
+  battery-high: "#A8CFA0"
+  battery-medium: "#DAB779"
+  battery-low: "#E08A80"
 typography:
   display: {fontFamily: RobotoCondensedBold, fontSize: "116px"}
   value: {fontFamily: RobotoRegular, fontSize: "24px"}
@@ -30,7 +33,13 @@ Esfera nativa Monkey C para `fr170`, circular de 390 × 390. Hora marfil dominan
 
 ## Colors
 
-Cian para pasos y lluvia; coral para Body Battery. Los arcos tienen pistas oscuras del mismo grupo de color. Marfil para hora y cifras, gris atenuado para día de la semana, gris oscuro para contornos y gris para batería. Sol amarillo y nubes gris claro. Los valores normativos están en el frontmatter.
+Cian para pasos y lluvia; coral para Body Battery. Los arcos tienen pistas oscuras del mismo grupo de color. Marfil para hora y cifras, gris atenuado para día de la semana y gris oscuro para contornos. Sol amarillo y nubes gris claro. Los valores normativos están en el frontmatter.
+
+El relleno de la batería física comparte paleta y umbrales con Pilot Analog:
+verde salvia `#A8CFA0` desde 80%, amarillo cálido `#DAB779` desde 30% y rojo
+coral `#E08A80` por debajo de 30%. Solo cambia el relleno del anillo; icono y
+porcentaje conservan el marfil. Ausencia: `--` sin relleno; cero válido: `0%`
+sin relleno. El gris `battery` queda como color neutro para datos inválidos.
 
 ## Typography
 

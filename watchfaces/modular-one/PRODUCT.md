@@ -27,3 +27,7 @@ Fondo negro, hora marfil, pasos cian y Body Battery coral. El círculo del tiemp
 queda más alto que los de fecha y lluvia; los iconos llevan relleno. Arcos
 laterales con pista de color oscuro y marcador circular según el dato real.
 La imagen no está guardada como archivo en el proyecto.
+
+El anillo de batería física utiliza los mismos estados que Pilot Analog:
+carga alta desde 80%, media desde 30% y baja por debajo de 30%. El porcentaje
+permanece legible sin depender del color.

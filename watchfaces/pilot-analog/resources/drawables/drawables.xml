@@ -1,0 +1,11 @@
+<drawables>
+    <bitmap id="LauncherIcon" filename="launcher_icon.svg"/>
+    <bitmap id="N1" filename="n1.png" dithering="none" automaticPalette="false"/>
+    <bitmap id="N2" filename="n2.png" dithering="none" automaticPalette="false"/>
+    <bitmap id="N4" filename="n4.png" dithering="none" automaticPalette="false"/>
+    <bitmap id="N5" filename="n5.png" dithering="none" automaticPalette="false"/>
+    <bitmap id="N7" filename="n7.png" dithering="none" automaticPalette="false"/>
+    <bitmap id="N8" filename="n8.png" dithering="none" automaticPalette="false"/>
+    <bitmap id="N10" filename="n10.png" dithering="none" automaticPalette="false"/>
+    <bitmap id="N11" filename="n11.png" dithering="none" automaticPalette="false"/>
+</drawables>

@@ -1,4 +1,5 @@
 import Toybox.Graphics;
+import Toybox.Lang;
 
 module Theme {
     const BACKGROUND = 0x000000;
@@ -12,6 +13,9 @@ module Theme {
     const WEATHER = 0xF8C32A;
     const CLOUD = 0xD8DAD8;
     const BATTERY = 0x929496;
+    const BATTERY_HIGH = 0xA8CFA0;
+    const BATTERY_MEDIUM = 0xDAB779;
+    const BATTERY_LOW = 0xE08A80;
     const CENTER = 195;
     const TOP_Y = 106;
     const TOP_RADIUS = 36;
@@ -28,4 +32,11 @@ module Theme {
     const BATTERY_Y = 311;
     const BATTERY_RADIUS = 39;
     const TEXT_CENTER = Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER;
+
+    function batteryColor(value as Numeric?) as Number {
+        if (value == null || value < 0 || value > 100) { return BATTERY; }
+        if (value >= 80) { return BATTERY_HIGH; }
+        if (value >= 30) { return BATTERY_MEDIUM; }
+        return BATTERY_LOW;
+    }
 }

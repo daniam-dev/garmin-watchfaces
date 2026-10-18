@@ -3,7 +3,7 @@
 ## Límites del repositorio
 
 Cada esfera es un proyecto Connect IQ autónomo bajo `watchfaces/<slug>/`.
-Puede compilarse sin el código o los recursos de la otra. El manifiesto es la
+Puede compilarse sin el código o los recursos de las demás. El manifiesto es la
 autoridad de identidad y permisos; ambos proyectos admiten únicamente `fr170`.
 
 `projects.json` asocia el slug de cada carpeta con el nombre del programa de
@@ -11,8 +11,8 @@ salida. Los scripts lo leen para evitar mantener listas de proyectos dentro
 del compilador. `bin/` siempre pertenece a la esfera seleccionada.
 
 Las herramientas comunes se limitan a desarrollo: compilación y comprobación
-de estructura. No hay una biblioteca de ejecución compartida: Pixel Analog
-aún no tiene funcionalidades que justifiquen extraerla.
+de estructura. No hay una biblioteca de ejecución compartida: cada esfera
+mantiene su ciclo de vida, proveedores, dibujo y recursos.
 
 ## Modular One
 
@@ -33,11 +33,24 @@ suscripciones. En reposo se limpia la pantalla a negro.
 Conservar esta separación permite modificar el dibujo sin cambiar la lectura
 de datos. No se han renombrado clases ni dividido archivos por anticipación.
 
-## Pixel Analog
+## Pilot Analog
 
-Contiene una aplicación y una vista vacía compilables. Su `PRODUCT.md` separa
-las restricciones confirmadas de las decisiones pendientes. Tendrá su propio
-modelo y renderizador cuando el diseño y las funciones lo requieran.
+Proyecto independiente, sin importaciones desde otras esferas. `PilotAnalogApp`
+crea `PilotAnalogView`, que controla el reposo y el refresco por minuto.
+`PilotProviders` obtiene batería del dispositivo, tiempo, pasos y fecha local; `PilotData`
+conserva los datos anulables. `PilotFormat` calcula ángulos y formatos españoles.
+
+`PilotRenderer` compone `PilotDial`, `PilotComplications` y `PilotHands`.
+`PilotPrimitives` dibuja arcos con extremos redondos; `PilotIcons` contiene
+iconos propios. `PilotTheme` fija colores y coordenadas para 390 × 390.
+Las posiciones de marcadores y los recursos se cargan una vez en `onLayout`.
+Los datos se leen por minuto y al despertar; la hora se calcula en cada
+actualización activa. El reposo limpia la pantalla sin dibujar AOD.
+
+Las pruebas Monkey C se excluyen de la compilación normal mediante `:test`.
+`tests/run.ps1` compila las pruebas y un diagnóstico temporal con el límite
+normal de la watchface. Los manifiestos y programas de diagnóstico se generan
+en `bin/`; no forman otra esfera instalada.
 
 ## Herramientas y validación
 

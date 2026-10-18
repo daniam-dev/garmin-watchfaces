@@ -60,7 +60,7 @@ class FaceRenderer {
         dc.drawText(301, 302, _valueFont, Formatters.integer(data.bodyBattery), Theme.TEXT_CENTER);
         Components.circle(dc, 195, Theme.BATTERY_Y, 44);
         Components.arc(dc, 195, Theme.BATTERY_Y, Theme.BATTERY_RADIUS, 90, 360, true,
-                       Formatters.ratio(data.battery, 100), Theme.BATTERY, Theme.OUTLINE, 6, false);
+                       Formatters.ratio(data.battery, 100), Theme.batteryColor(data.battery), Theme.OUTLINE, 6, false);
         dc.setColor(Theme.TEXT, Graphics.COLOR_TRANSPARENT);
         Components.batteryIcon(dc, 195, 301);
         dc.drawText(195, 326, _smallFont, Formatters.percent(data.battery), Theme.TEXT_CENTER);

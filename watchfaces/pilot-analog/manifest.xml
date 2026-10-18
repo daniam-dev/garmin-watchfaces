@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iq:manifest version="3" xmlns:iq="http://www.garmin.com/xml/connectiq">
+    <iq:application id="9bf7b908a3104ff6a49d912b876ae2d5" type="watchface"
+                    name="@Strings.AppName" entry="PilotAnalogApp"
+                    launcherIcon="@Drawables.LauncherIcon" minApiLevel="6.0.2">
+        <iq:products><iq:product id="fr170"/></iq:products>
+        <iq:permissions/>
+        <iq:languages><iq:language>spa</iq:language><iq:language>eng</iq:language></iq:languages>
+        <iq:barrels/>
+    </iq:application>
+</iq:manifest>

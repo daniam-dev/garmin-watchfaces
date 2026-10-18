@@ -20,7 +20,7 @@ try {
             Copy-Item -LiteralPath (Join-Path $projectPath $name) -Destination $destination -Recurse
         }
     }
-    $manifestPath = Join-Path $fixturePath 'watchfaces/pixel-analog/manifest.xml'
+    $manifestPath = Join-Path $fixturePath 'watchfaces/pilot-analog/manifest.xml'
     $workspacePath = Join-Path $fixturePath 'garmin-watchfaces.code-workspace'
     $registryPath = Join-Path $fixturePath 'projects.json'
     $originals = @{}
@@ -46,19 +46,21 @@ try {
     & $verifyScript -RootPath $fixturePath | Out-Null
     Write-Output 'PASS: estructura valida sin SDK ni clave'
     Assert-Rejected 'IDs duplicados con distinto formato UUID' 'ID de aplicacion duplicado' {
-        $text = $originals[$manifestPath].Replace('cd8b48b6a99b479d92574e20ffa230a4', '60e7de33-3720-4ecd-ba97-e40f6e1bb1a0')
-        [IO.File]::WriteAllText($manifestPath, $text, $utf8)
+        [xml]$otherManifest = Get-Content -LiteralPath (Join-Path $fixturePath 'watchfaces/modular-one/manifest.xml') -Raw
+        [xml]$changedManifest = $originals[$manifestPath]
+        $changedManifest.manifest.application.id = ([guid]$otherManifest.manifest.application.id).ToString('N')
+        [IO.File]::WriteAllText($manifestPath, $changedManifest.OuterXml, $utf8)
     }
     Assert-Rejected 'dispositivo incompatible' 'Solo se admite fr170' {
         [IO.File]::WriteAllText($manifestPath, $originals[$manifestPath].Replace('id="fr170"', 'id="fr165"'), $utf8)
     }
     Assert-Rejected 'tarea de proyecto ausente' 'Debe haber una tarea de compilacion' {
         $workspace = $originals[$workspacePath] | ConvertFrom-Json
-        $workspace.tasks.tasks = @($workspace.tasks.tasks | Where-Object { $_.args -notcontains 'pixel-analog' })
+        $workspace.tasks.tasks = @($workspace.tasks.tasks | Where-Object { $_.args -notcontains 'pilot-analog' })
         [IO.File]::WriteAllText($workspacePath, ($workspace | ConvertTo-Json -Depth 12), $utf8)
     }
     Assert-Rejected 'ruta de proyecto fuera de la convencion' 'Nombre de proyecto no valido' {
-        [IO.File]::WriteAllText($registryPath, $originals[$registryPath].Replace('pixel-analog', '../pixel-analog'), $utf8)
+        [IO.File]::WriteAllText($registryPath, $originals[$registryPath].Replace('pilot-analog', '../pilot-analog'), $utf8)
     }
 } finally {
     $resolvedFixture = [IO.Path]::GetFullPath($fixturePath)

@@ -2,7 +2,7 @@
   "folders": [
     { "name": "Repositorio", "path": "." },
     { "name": "Modular One", "path": "watchfaces/modular-one" },
-    { "name": "Pixel Analog", "path": "watchfaces/pixel-analog" }
+    { "name": "Pilot Analog", "path": "watchfaces/pilot-analog" }
   ],
   "extensions": {
     "recommendations": ["garmin.monkey-c"]
@@ -31,15 +31,15 @@
         "problemMatcher": []
       },
       {
-        "label": "Compilar Pixel Analog (fr170)",
+        "label": "Compilar Pilot Analog (fr170)",
         "type": "process",
         "command": "powershell.exe",
         "args": [
           "-NoProfile", "-File",
-          "${workspaceFolder:Pixel Analog}/../../scripts/build.ps1",
-          "-Project", "pixel-analog"
+          "${workspaceFolder:Pilot Analog}/../../scripts/build.ps1",
+          "-Project", "pilot-analog"
         ],
-        "options": { "cwd": "${workspaceFolder:Pixel Analog}" },
+        "options": { "cwd": "${workspaceFolder:Pilot Analog}" },
         "group": "build",
         "problemMatcher": []
       },
