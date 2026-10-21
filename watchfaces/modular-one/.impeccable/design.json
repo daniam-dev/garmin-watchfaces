@@ -1,260 +1,313 @@
 {
-    "schemaVersion":  2,
-    "generatedAt": "2026-10-21T17:41:31.0428777+02:00",
-    "title":  "Design System: Modular One",
-    "extensions":  {
-                       "colorMeta":  {
-                                         "steps":  {
-                                                       "role":  "primary",
-                                                       "displayName":  "Cian de pasos y lluvia"
-                                                   },
-                                         "body":  {
-                                                      "role":  "secondary",
-                                                      "displayName":  "Turquesa de Body Battery"
-                                                  },
-                                         "text":  {
-                                                      "role":  "neutral",
-                                                      "displayName":  "Blanco de hora y cifras"
-                                                  },
-                                         "surface":  {
-                                                         "role":  "neutral",
-                                                         "displayName":  "Carbón del panel central"
-                                                     },
-                                         "tick":  {
-                                                      "role":  "neutral",
-                                                      "displayName":  "Gris de escalas laterales"
-                                                  },
-                                         "intensity":  {
-                                                           "role":  "secondary",
-                                                           "displayName":  "Turquesa de minutos de intensidad"
-                                                       }
-                                     },
-                       "typographyMeta":  {
-                                              "display":  {
-                                                              "displayName":  "Hora",
-                                                              "purpose":  "Hora de 24 horas en la parte superior."
-                                                          },
-                                              "body":  {
-                                                           "displayName":  "Body Battery",
-                                                           "purpose":  "Cifra del semicírculo central."
-                                                       }
-                                          },
-                       "nativeGeometry":  {
-                                              "device":  "fr170",
-                                              "canvas":  [
-                                                             390,
-                                                             390
-                                                         ],
-                                              "units":  "px",
-                                              "dateCenter":  [
-                                                                 195,
-                                                                 86
-                                                             ],
-                                              "timeCenter":  [
-                                                                 195,
-                                                                 139
-                                                             ],
-                                              "sideArcs":  {
-                                                               "center":  [
-                                                                              195,
-                                                                              195
-                                                                          ],
-                                                               "radius":  180,
-                                                               "width":  3,
-                                                               "sweepDegrees":  168,
-                                                               "stepsStartDegrees":  96,
-                                                               "stepsClockwise":  false,
-                                                               "markerRadius":  5,
-                                                               "ticksPerSide":  43,
-                                                               "tickSpacingDegrees":  4,
-                                                               "tickWidth":  2,
-                                                               "tickOuterRadius":  184,
-                                                               "tickInnerRadius":  177,
-                                                               "longTickInnerRadius":  172,
-                                                               "longTickEvery":  7,
-                                                               "rightStartDegrees":  84,
-                                                               "rightClockwise":  true,
-                                                               "rightMetric":  "weekly-intensity-minutes",
-                                                               "rightGoal":  "ActivityMonitor.Info.activeMinutesWeekGoal"
-                                                           },
-                                              "bodyPanel":  {
-                                                                "origin":  [
-                                                                               58,
-                                                                               176
-                                                                           ],
-                                                                "size":  [
-                                                                             274,
-                                                                             94
-                                                                         ],
-                                                                "gaugeCenter":  [
-                                                                                    113,
-                                                                                    232
-                                                                                ],
-                                                                "gaugeRadius":  32,
-                                                                "gaugeWidth":  13,
-                                                                "gaugeSweepDegrees":  180,
-                                                                "valueCenter":  [
-                                                                                    113,
-                                                                                    234
-                                                                                ],
-                                                                "titleOrigin":  [
-                                                                                    169,
-                                                                                    213
-                                                                                ],
-                                                                "statusOrigin":  [
-                                                                                     169,
-                                                                                     238
-                                                                                 ]
-                                                            },
-                                              "bottomDials":  [
-                                                                  {
-                                                                      "name":  "tiempo",
-                                                                      "center":  [
-                                                                                     116,
-                                                                                     310
-                                                                                 ],
-                                                                      "radius":  33
-                                                                  },
-                                                                  {
-                                                                      "name":  "lluvia",
-                                                                      "center":  [
-                                                                                     195,
-                                                                                     310
-                                                                                 ],
-                                                                      "radius":  33
-                                                                  },
-                                                                  {
-                                                                      "name":  "batería física",
-                                                                      "center":  [
-                                                                                     274,
-                                                                                     310
-                                                                                 ],
-                                                                      "radius":  33
-                                                                  }
-                                                              ],
-                                              "battery":  {
-                                                              "arcRadius":  29,
-                                                              "arcWidth":  4,
-                                                              "marker":  false,
-                                                              "iconCenter":  [
-                                                                                 274,
-                                                                                 299
-                                                                             ],
-                                                              "valueCenter":  [
-                                                                                  274,
-                                                                                  322
-                                                                              ]
-                                                          },
-                                              "topMetrics":  {
-                                                                 "stepsCenterX":  158,
-                                                                 "intensityCenterX":  232,
-                                                                 "valueY":  60,
-                                                                 "iconY":  40,
-                                                                 "iconScale":  0.7,
-                                                                 "intensityIcon":  "stopwatch",
-                                                                 "minutesUnit":  "min",
-                                                                 "minutesCompactAboveWidth":  56,
-                                                                 "topLabels":  false
-                                                             },
-                                              "arcAlignment":  {
-                                                                   "sharedCenterRadiusAndEndAngle":  true,
-                                                                   "angleRounding":  "nearest-whole-degree",
-                                                                   "coordinateRounding":  "center-relative-symmetric",
-                                                                   "capRadius":  "pen-width / 2.0",
-                                                                   "fullRing":  "drawCircle",
-                                                                   "zeroProgress":  "no-foreground"
-                                                               }
-                                          },
-                       "nativeStates":  {
-                                            "batteryThresholds":  {
-                                                                      "highFrom":  60,
-                                                                      "mediumFrom":  30,
-                                                                      "lowBelow":  30
-                                                                  },
-                                            "unavailableValue":  "--",
-                                            "unavailableBodyStatus":  "Sin datos",
-                                            "availableBodyStatus":  "Nivel actual",
-                                            "sleep":  "Pantalla negra, sin AOD, segundos ni animaciones."
-                                        },
-                       "nativeInteraction": {
-                         "gesture": "Pulsación larga",
-                         "delegate": "WatchFaceDelegate.onPress",
-                         "navigation": "Complications.exitTo",
-                         "targets": {
-                           "panel": "BODY_BATTERY",
-                           "stepsAndLeftArc": "STEPS",
-                           "minutesAndRightArc": "INTENSITY_MINUTES",
-                           "date": "DATE",
-                           "weatherAndRain": "CURRENT_WEATHER",
-                           "battery": "BATTERY"
-                         },
-                         "unsupportedTarget": "InvalidValueException devuelve false sin abrir otra vista.",
-                         "deviceVerification": "Pendiente comprobar la apertura de las vistas nativas en el reloj."
-                       },
-                       "sources":  [
-                                       "PRODUCT.md",
-                                       "source/Theme.mc",
-                                       "source/FaceRenderer.mc",
-                                       "source/Components.mc",
-                                       "source/Formatters.mc",
-                                       "source/BatteryTests.mc",
-                                       "source/RendererTests.mc",
-                                       "source/ComplicationDelegate.mc",
-                                       "source/InteractionTests.mc"
-                                   ],
-                       "reference":  {
-                                         "kind":  "conversation-attachment",
-                                         "date":  "2026-10-21",
-                                         "persistentFile":  null
-                                     },
-                       "verification":  {
-                                            "build":  "Compilación con -w sin avisos.",
-                                            "nativeTests":  "Ocho pruebas pasan en fr170; simetría en 360 grados para los tres radios y llenado/vaciado en 1.001 niveles; dibujo nativo a 0, 1, 25, 50, 75, 99 y 100 por ciento; zonas de pulsación larga.",
-                                            "buffer":  "Las medidas y el dibujo usan un búfer de 1 × 1; no constituyen una revisión visual.",
-                                            "visualReview":  "Pendiente captura real de 390 × 390. Computer Use no pudo conectar con su canal nativo; el simulador sí ejecutó las pruebas. No se certifica el aspecto ni la fidelidad a la imagen."
-                                        }
-                   },
-    "components":  [
-                       {
-                           "name":  "Escala lateral",
-                           "kind":  "custom",
-                           "description":  "Marcas radiales grises, pista y progreso finos; marcador simple según el dato real. Componente nativo Monkey C."
-                       },
-                       {
-                           "name":  "Panel de Body Battery",
-                           "kind":  "custom",
-                           "refersTo":  "body-panel",
-                           "description":  "Panel carbón con semicírculo turquesa, cifra, título y estado; ausencia explícita con -- y Sin datos."
-                       },
-                       {
-                           "name":  "Círculo de datos",
-                           "kind":  "custom",
-                           "refersTo":  "data-dial",
-                           "description":  "Círculo oscuro con contorno fino para tiempo, lluvia o batería física; sin implementación HTML/CSS."
-                       },
-                       {
-                           "name":  "Batería física",
-                           "kind":  "custom",
-                           "description":  "Anillo de progreso por umbrales, icono blanco y porcentaje; sin marcador."
-                       },
-                       {
-                           "name":  "Pasos y minutos superiores",
-                           "kind":  "custom",
-                           "description":  "Sobre la fecha: huellas cian pequeñas para pasos y cronómetro turquesa para minutos semanales, con sus cifras debajo y ausencia con --."
-                       }
-                   ],
-    "narrative":  {
-                      "overview":  "Esfera Monkey C de 390 × 390: pasos y minutos sobre la fecha, hora blanca, panel central de Body Battery, tres círculos inferiores y arcos largos de pasos diarios y minutos semanales.",
-                      "dos":  [
-                                  "Mantener la hora dominante arriba y la fecha española encima.",
-                                  "Conservar cian para pasos y turquesa para Body Battery.",
-                                  "Conservar las escalas largas y finas, el panel central y los tres círculos inferiores.",
-                                  "Situar los progresos y marcadores según los datos reales disponibles.",
-                                  "Mantener el reposo negro, sin AOD, segundos ni animaciones."
-                              ],
-                      "donts":  [
-                                    "No convertir un dato ausente en cero ni una condición desconocida en sol.",
-                                    "No presentar compilación, medidas de fuentes o geometría como revisión visual."
-                                ]
-                  }
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-21T19:03:15.067806+02:00",
+  "title": "Design System: Modular One",
+  "extensions": {
+    "colorMeta": {
+      "steps": {
+        "role": "primary",
+        "displayName": "Cian de pasos y lluvia"
+      },
+      "body": {
+        "role": "secondary",
+        "displayName": "Turquesa de Body Battery"
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Blanco de hora y cifras"
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Petróleo oscuro del panel de Body Battery"
+      },
+      "tick": {
+        "role": "neutral",
+        "displayName": "Gris de escalas laterales"
+      },
+      "intensity": {
+        "role": "secondary",
+        "displayName": "Ámbar de minutos semanales"
+      },
+      "body-outline": {
+        "role": "neutral",
+        "displayName": "Contorno turquesa oscuro del panel"
+      },
+      "weather-dial": {
+        "role": "neutral",
+        "displayName": "Ocre oscuro del círculo meteorológico"
+      },
+      "rain-dial": {
+        "role": "neutral",
+        "displayName": "Azul oscuro del círculo de lluvia"
+      },
+      "battery-dial": {
+        "role": "neutral",
+        "displayName": "Verde oscuro del círculo de batería"
+      },
+      "weather-outline": {
+        "role": "neutral",
+        "displayName": "Contorno ocre del tiempo"
+      },
+      "rain-outline": {
+        "role": "neutral",
+        "displayName": "Contorno azul de lluvia"
+      },
+      "battery-outline": {
+        "role": "neutral",
+        "displayName": "Contorno verde de batería"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Hora",
+        "purpose": "Hora blanca con RobotoCondensedBold de 148 px, frente a RobotoRegular de 96 px anterior."
+      },
+      "body": {
+        "displayName": "Body Battery",
+        "purpose": "Cifra del semicírculo central."
+      },
+      "calendar": {
+        "displayName": "Fecha española",
+        "purpose": "Rol propio RobotoRegular de 17 px; mantiene el rol date de 19 px para título del panel y porcentaje de batería."
+      }
+    },
+    "nativeGeometry": {
+      "device": "fr170",
+      "canvas": [
+        390,
+        390
+      ],
+      "units": "px",
+      "dateCenter": [
+        195,
+        80
+      ],
+      "timeCenter": [
+        195,
+        139
+      ],
+      "sideArcs": {
+        "center": [
+          195,
+          195
+        ],
+        "radius": 180,
+        "width": 4,
+        "sweepDegrees": 168,
+        "stepsStartDegrees": 96,
+        "stepsClockwise": false,
+        "markerRadius": 5,
+        "ticksPerSide": 43,
+        "tickSpacingDegrees": 4,
+        "tickWidth": 2,
+        "tickOuterRadius": 184,
+        "tickInnerRadius": 177,
+        "longTickInnerRadius": 172,
+        "longTickEvery": 7,
+        "rightStartDegrees": 84,
+        "rightClockwise": true,
+        "rightMetric": "weekly-intensity-minutes",
+        "rightGoal": "ActivityMonitor.Info.activeMinutesWeekGoal"
+      },
+      "bodyPanel": {
+        "origin": [
+          58,
+          188
+        ],
+        "size": [
+          274,
+          82
+        ],
+        "gaugeCenter": [
+          113,
+          232
+        ],
+        "gaugeRadius": 32,
+        "gaugeWidth": 13,
+        "gaugeSweepDegrees": 180,
+        "valueCenter": [
+          113,
+          234
+        ],
+        "titleOrigin": [
+          169,
+          213
+        ],
+        "statusOrigin": [
+          169,
+          238
+        ]
+      },
+      "bottomDials": [
+        {
+          "name": "tiempo",
+          "center": [
+            116,
+            310
+          ],
+          "radius": 33
+        },
+        {
+          "name": "lluvia",
+          "center": [
+            195,
+            310
+          ],
+          "radius": 33
+        },
+        {
+          "name": "batería física",
+          "center": [
+            274,
+            310
+          ],
+          "radius": 33
+        }
+      ],
+      "battery": {
+        "arcRadius": 29,
+        "arcWidth": 4,
+        "marker": false,
+        "iconCenter": [
+          274,
+          299
+        ],
+        "valueCenter": [
+          274,
+          322
+        ]
+      },
+      "topMetrics": {
+        "stepsCenterX": 158,
+        "intensityCenterX": 232,
+        "valueY": 58,
+        "iconY": 38,
+        "iconScale": 0.7,
+        "intensityIcon": "stopwatch",
+        "minutesUnit": "min",
+        "minutesCompactAboveWidth": 56,
+        "topLabels": false
+      },
+      "arcAlignment": {
+        "sharedCenterRadiusAndEndAngle": true,
+        "angleRounding": "nearest-whole-degree",
+        "coordinateRounding": "center-relative-symmetric",
+        "capRadius": "pen-width / 2.0",
+        "fullRing": "drawCircle",
+        "zeroProgress": "no-foreground"
+      },
+      "calendarHitY": [
+        70,
+        92
+      ],
+      "timeTypography": {
+        "face": "RobotoCondensedBold",
+        "size": 148,
+        "sample": "23:59",
+        "measuredWidth": 291,
+        "previousMeasuredWidth": 204,
+        "allTimesMaximumWidth": 300,
+        "reportedFontHeight": 148,
+        "visibleInkBounds": "Pendientes de comprobar en captura real."
+      },
+      "dialSurfaces": {
+        "weather": "weather-dial",
+        "rain": "rain-dial",
+        "battery": "battery-dial"
+      }
+    },
+    "nativeStates": {
+      "batteryThresholds": {
+        "highFrom": 60,
+        "mediumFrom": 30,
+        "lowBelow": 30
+      },
+      "unavailableValue": "--",
+      "unavailableBodyStatus": "Sin datos",
+      "availableBodyStatus": "Nivel actual",
+      "sleep": "Pantalla negra, sin AOD, segundos ni animaciones."
+    },
+    "nativeInteraction": {
+      "gesture": "Pulsación larga",
+      "delegate": "WatchFaceDelegate.onPress",
+      "navigation": "Complications.exitTo",
+      "targets": {
+        "panel": "BODY_BATTERY",
+        "stepsAndLeftArc": "STEPS",
+        "minutesAndRightArc": "INTENSITY_MINUTES",
+        "date": "DATE",
+        "weatherAndRain": "CURRENT_WEATHER",
+        "battery": "BATTERY"
+      },
+      "unsupportedTarget": "InvalidValueException devuelve false sin abrir otra vista.",
+      "deviceVerification": "Pendiente comprobar la apertura de las vistas nativas en el reloj."
+    },
+    "sources": [
+      "PRODUCT.md",
+      "source/Theme.mc",
+      "source/FaceRenderer.mc",
+      "source/Components.mc",
+      "source/Formatters.mc",
+      "source/BatteryTests.mc",
+      "source/RendererTests.mc",
+      "source/ComplicationDelegate.mc",
+      "source/InteractionTests.mc"
+    ],
+    "reference": {
+      "kind": "conversation-attachment",
+      "date": "2026-10-21",
+      "persistentFile": null
+    },
+    "verification": {
+      "build": "Compilación con -w sin avisos.",
+      "nativeTests": "Ocho pruebas pasan en fr170, con las 1.440 horas, fuente nueva, fuentes de fecha y datos, estados ausentes/cero/máximos, arcos y zonas de pulsación adaptadas.",
+      "buffer": "Las medidas y el dibujo usan un búfer de 1 × 1; no constituyen una revisión visual.",
+      "visualReview": "Pendiente captura real de 390 × 390. Computer Use no pudo conectar con su canal nativo; el simulador sí ejecutó las pruebas. No se certifica el aspecto ni la fidelidad a la imagen.",
+      "typography": "23:59 mide 291 px con RobotoCondensedBold a 148 px, frente a 204 px con RobotoRegular a 96 px. Se comprueban las 1.440 horas y 88:88 con ancho <=300 px.",
+      "contrast": "Contraste calculado: hora/fondo 19,20:1; Body Battery/panel 7,91:1; lluvia/círculo 7,25:1; fecha/fondo 8,89:1."
+    }
+  },
+  "components": [
+    {
+      "name": "Escala lateral",
+      "kind": "custom",
+      "description": "Marcas radiales grises, pista y progreso finos; marcador simple según el dato real. Componente nativo Monkey C."
+    },
+    {
+      "name": "Panel de Body Battery",
+      "kind": "custom",
+      "refersTo": "body-panel",
+      "description": "Panel petróleo oscuro de 274 × 82 en (58, 188), semicírculo turquesa, cifra, título y estado. Contenidos y borde inferior en 270 conservados; ausencia con -- y Sin datos."
+    },
+    {
+      "name": "Círculo de datos",
+      "kind": "custom",
+      "refersTo": "data-dial",
+      "description": "Tres círculos de 66 px: ocre oscuro para tiempo, azul oscuro para lluvia y verde oscuro para batería, con contornos del mismo matiz."
+    },
+    {
+      "name": "Batería física",
+      "kind": "custom",
+      "description": "Anillo de progreso por umbrales, icono blanco y porcentaje; sin marcador."
+    },
+    {
+      "name": "Pasos y minutos superiores",
+      "kind": "custom",
+      "description": "Huellas cian y cronómetro ámbar sobre la fecha, con cifras blancas y ausencia explícita. Iconos en y = 38 y cifras en y = 58."
+    }
+  ],
+  "narrative": {
+    "overview": "Modular One conserva panel de Body Battery, tres círculos y escalas largas. Hora blanca más grande y gruesa (291 px en 23:59); pasos cian, minutos ámbar, Body Battery turquesa y superficies oscuras teñidas.",
+    "dos": [
+      "Mantener la hora dominante arriba y la fecha española encima.",
+      "Conservar cian para pasos y turquesa para Body Battery.",
+      "Conservar las escalas largas y finas, el panel central y los tres círculos inferiores.",
+      "Situar los progresos y marcadores según los datos reales disponibles.",
+      "Mantener el reposo negro, sin AOD, segundos ni animaciones."
+    ],
+    "donts": [
+      "No convertir un dato ausente en cero ni una condición desconocida en sol.",
+      "No presentar compilación, medidas de fuentes o geometría como revisión visual."
+    ]
+  }
 }

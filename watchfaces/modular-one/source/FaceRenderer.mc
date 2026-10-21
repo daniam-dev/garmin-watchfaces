@@ -7,23 +7,26 @@ class FaceRenderer {
     private var _labelFont as Graphics.FontType = Graphics.FONT_XTINY;
     private var _compactFont as Graphics.FontType = Graphics.FONT_XTINY;
     private var _dateFont as Graphics.FontType = Graphics.FONT_TINY;
+    private var _calendarFont as Graphics.FontType = Graphics.FONT_TINY;
     private var _bodyFont as Graphics.FontType = Graphics.FONT_SMALL;
 
     function initialize() {}
 
     function layout(dc as Graphics.Dc) as Void {
-        // Cifras abiertas y peso regular, como en la referencia del usuario.
-        var time = Graphics.getVectorFont({:face => "RobotoRegular", :size => Theme.TIME_SIZE});
+        // Hora dominante, blanca y de peso deportivo; los datos mantienen su escala.
+        var time = Graphics.getVectorFont({:face => Theme.TIME_FACE, :size => Theme.TIME_SIZE});
         var value = Graphics.getVectorFont({:face => "RobotoRegular", :size => Theme.VALUE_SIZE});
         var label = Graphics.getVectorFont({:face => "RobotoRegular", :size => Theme.LABEL_SIZE});
         var compact = Graphics.getVectorFont({:face => "RobotoCondensedRegular", :size => Theme.COMPACT_SIZE});
         var date = Graphics.getVectorFont({:face => "RobotoRegular", :size => Theme.DATE_SIZE});
+        var calendar = Graphics.getVectorFont({:face => "RobotoRegular", :size => Theme.CALENDAR_SIZE});
         var body = Graphics.getVectorFont({:face => "RobotoRegular", :size => Theme.BODY_SIZE});
         if (time != null) { _timeFont = time; }
         if (value != null) { _valueFont = value; }
         if (label != null) { _labelFont = label; }
         if (compact != null) { _compactFont = compact; }
         if (date != null) { _dateFont = date; }
+        if (calendar != null) { _calendarFont = calendar; }
         if (body != null) { _bodyFont = body; }
     }
 
@@ -38,9 +41,10 @@ class FaceRenderer {
                         Formatters.ratio(data.intensityMinutes, data.intensityGoal), Theme.INTENSITY,
                         data.intensityMinutes != null && data.intensityGoal != null && data.intensityGoal > 0);
 
-        dc.setColor(Theme.TEXT, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(Theme.MUTED, Graphics.COLOR_TRANSPARENT);
         var date = data.weekday + " " + data.day + " " + data.month;
-        dc.drawText(Theme.CENTER, Theme.DATE_Y, _dateFont, date, Theme.TEXT_CENTER);
+        dc.drawText(Theme.CENTER, Theme.DATE_Y, _calendarFont, date, Theme.TEXT_CENTER);
+        dc.setColor(Theme.TEXT, Graphics.COLOR_TRANSPARENT);
         dc.drawText(Theme.CENTER, Theme.TIME_Y, _timeFont, data.timeText, Theme.TEXT_CENTER);
 
         drawBodyPanel(dc, data);
@@ -66,7 +70,7 @@ class FaceRenderer {
         dc.fillRoundedRectangle(Theme.PANEL_X, Theme.PANEL_Y, Theme.PANEL_WIDTH,
                                 Theme.PANEL_HEIGHT, Theme.PANEL_RADIUS);
         dc.setPenWidth(1);
-        dc.setColor(Theme.OUTLINE, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(Theme.BODY_OUTLINE, Graphics.COLOR_TRANSPARENT);
         dc.drawRoundedRectangle(Theme.PANEL_X, Theme.PANEL_Y, Theme.PANEL_WIDTH,
                                 Theme.PANEL_HEIGHT, Theme.PANEL_RADIUS);
         Components.arc(dc, Theme.GAUGE_X, Theme.GAUGE_Y, Theme.GAUGE_RADIUS,
@@ -82,15 +86,16 @@ class FaceRenderer {
     }
 
     private function drawDials(dc as Graphics.Dc, data as FaceData) as Void {
-        Components.dial(dc, Theme.LEFT_X);
-        Components.dial(dc, Theme.CENTER);
-        Components.dial(dc, Theme.RIGHT_X);
+        Components.dial(dc, Theme.LEFT_X, Theme.WEATHER_DIAL, Theme.WEATHER_OUTLINE);
+        Components.dial(dc, Theme.CENTER, Theme.RAIN_DIAL, Theme.RAIN_OUTLINE);
+        Components.dial(dc, Theme.RIGHT_X, Theme.BATTERY_DIAL, Theme.BATTERY_OUTLINE);
         Components.weather(dc, Theme.LEFT_X, Theme.DIAL_ICON_Y, data.condition);
         Components.rain(dc, Theme.CENTER, Theme.DIAL_ICON_Y);
         dc.setColor(Theme.TEXT, Graphics.COLOR_TRANSPARENT);
         dc.drawText(Theme.LEFT_X, Theme.DIAL_VALUE_Y, _valueFont, Formatters.temperature(data.temperature), Theme.TEXT_CENTER);
         var rain = Formatters.percent(data.precipitation);
         var rainFont = dc.getTextWidthInPixels(rain, _valueFont) > 52 ? _dateFont : _valueFont;
+        dc.setColor(data.precipitation == null ? Theme.MUTED : Theme.STEPS, Graphics.COLOR_TRANSPARENT);
         dc.drawText(Theme.CENTER, Theme.DIAL_VALUE_Y, rainFont, rain, Theme.TEXT_CENTER);
 
         Components.arc(dc, Theme.RIGHT_X, Theme.DIAL_Y, Theme.BATTERY_RADIUS,

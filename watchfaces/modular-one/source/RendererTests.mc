@@ -9,16 +9,25 @@ function modularTypographyFits(logger as Test.Logger) as Boolean {
     // El búfer mínimo permite medir con el motor real de Garmin, sin simular píxeles.
     var bitmap = Graphics.createBufferedBitmap({:width => 1, :height => 1});
     var dc = bitmap.get().getDc();
-    var time = Graphics.getVectorFont({:face => "RobotoRegular", :size => Theme.TIME_SIZE});
+    var time = Graphics.getVectorFont({:face => Theme.TIME_FACE, :size => Theme.TIME_SIZE});
+    var calendar = Graphics.getVectorFont({:face => "RobotoRegular", :size => Theme.CALENDAR_SIZE});
     var date = Graphics.getVectorFont({:face => "RobotoRegular", :size => Theme.DATE_SIZE});
     var body = Graphics.getVectorFont({:face => "RobotoRegular", :size => Theme.BODY_SIZE});
     var label = Graphics.getVectorFont({:face => "RobotoRegular", :size => Theme.LABEL_SIZE});
     var compact = Graphics.getVectorFont({:face => "RobotoCondensedRegular", :size => Theme.COMPACT_SIZE});
-    Test.assert(time != null && date != null && body != null && label != null);
-    if (time == null || date == null || body == null || label == null) { return false; }
+    Test.assert(time != null && calendar != null && date != null && body != null && label != null);
+    if (time == null || calendar == null || date == null || body == null || label == null) { return false; }
     Test.assert(compact != null);
     if (compact == null) { return false; }
-    Test.assert(dc.getTextWidthInPixels("23:59", time) <= 290);
+    for (var hour = 0; hour < 24; hour += 1) {
+        for (var minute = 0; minute < 60; minute += 1) {
+            var clock = Formatters.clock(hour, minute);
+            Test.assert(dc.getTextWidthInPixels(clock, time) <= 300);
+        }
+    }
+    Test.assert(dc.getTextWidthInPixels("88:88", time) <= 300);
+    Test.assert(dc.getTextWidthInPixels("MIÉ 30 SEPT", calendar) <= 210);
+    Test.assert(Theme.METRICS_VALUE_Y + Graphics.getFontHeight(label)/2 + 4 < Theme.DATE_Y - Graphics.getFontHeight(calendar)/2.0f);
     Test.assert(dc.getTextWidthInPixels("MIÉ 30 SEPT", date) <= 230);
     Test.assert(dc.getTextWidthInPixels("Body Battery", date) <= 150);
     Test.assert(dc.getTextWidthInPixels("100%", date) <= 52);
@@ -101,7 +110,7 @@ function modularRailsClearDials(logger as Test.Logger) as Boolean {
     Test.assert(Math.sqrt(metricsEdgeX * metricsEdgeX + metricsEdgeY * metricsEdgeY) + 1 < Theme.ARC_RADIUS - Theme.MARKER_RADIUS);
     var minutesEdgeX = Theme.INTENSITY_METRIC_X - Theme.CENTER + 28;
     Test.assert(Math.sqrt(minutesEdgeX * minutesEdgeX + metricsEdgeY * metricsEdgeY) + 1 < Theme.ARC_RADIUS - Theme.MARKER_RADIUS);
-    Test.assert(Theme.METRICS_VALUE_Y + Theme.LABEL_SIZE / 2.0f + 4 < Theme.DATE_Y - Theme.DATE_SIZE / 2.0f);
+    Test.assert(Theme.METRICS_VALUE_Y + Theme.LABEL_SIZE / 2.0f + 4 < Theme.DATE_Y - Theme.CALENDAR_SIZE / 2.0f);
     Test.assert(Theme.METRICS_ICON_Y + 9 + 2 < Theme.METRICS_VALUE_Y - Theme.LABEL_SIZE / 2.0f);
     return true;
 }

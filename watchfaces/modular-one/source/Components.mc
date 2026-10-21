@@ -4,11 +4,11 @@ import Toybox.Math;
 import Toybox.Weather;
 
 module Components {
-    function dial(dc as Graphics.Dc, x as Number) as Void {
-        dc.setColor(Theme.DIAL, Graphics.COLOR_TRANSPARENT);
+    function dial(dc as Graphics.Dc, x as Number, surface as Number, outline as Number) as Void {
+        dc.setColor(surface, Graphics.COLOR_TRANSPARENT);
         dc.fillCircle(x, Theme.DIAL_Y, Theme.DIAL_RADIUS);
         dc.setPenWidth(1);
-        dc.setColor(Theme.OUTLINE, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(outline, Graphics.COLOR_TRANSPARENT);
         dc.drawCircle(x, Theme.DIAL_Y, Theme.DIAL_RADIUS);
     }
     function rail(dc as Graphics.Dc, start as Number, clockwise as Boolean,

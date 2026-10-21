@@ -16,9 +16,9 @@ module ModularTargets {
             return Complications.COMPLICATION_TYPE_CURRENT_WEATHER;
         }
         if (circle(x,y,Theme.RIGHT_X,Theme.DIAL_Y,35)) { return Complications.COMPLICATION_TYPE_BATTERY; }
-        if (y >= 24 && y <= 72 && x >= 128 && x < 195) { return Complications.COMPLICATION_TYPE_STEPS; }
-        if (y >= 24 && y <= 72 && x >= 195 && x <= 262) { return Complications.COMPLICATION_TYPE_INTENSITY_MINUTES; }
-        if (y >= 74 && y <= 100 && x >= 110 && x <= 280) { return Complications.COMPLICATION_TYPE_DATE; }
+        if (y >= Theme.METRICS_ICON_Y - 16 && y <= Theme.METRICS_VALUE_Y + 10 && x >= 128 && x < 195) { return Complications.COMPLICATION_TYPE_STEPS; }
+        if (y >= Theme.METRICS_ICON_Y - 16 && y <= Theme.METRICS_VALUE_Y + 10 && x >= 195 && x <= 262) { return Complications.COMPLICATION_TYPE_INTENSITY_MINUTES; }
+        if (y >= Theme.DATE_Y - 10 && y <= Theme.DATE_Y + 12 && x >= 110 && x <= 280) { return Complications.COMPLICATION_TYPE_DATE; }
         if (y >= 70 && y <= 350 && !circle(x,y,195,195,168)) {
             return x < 195 ? Complications.COMPLICATION_TYPE_STEPS : Complications.COMPLICATION_TYPE_INTENSITY_MINUTES;
         }

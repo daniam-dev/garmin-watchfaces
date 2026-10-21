@@ -5,14 +5,20 @@ colors:
   background: "#000000"
   text: "#F4F5F3"
   muted: "#A4AAA8"
-  steps: "#27BED7"
-  intensity: "#24C6AC"
-  body: "#24C6AC"
-  body-track: "#354642"
-  outline: "#3B3E3D"
-  surface: "#202322"
-  dial: "#181B1A"
-  tick: "#656B68"
+  steps: "#42BDD9"
+  intensity: "#F0B965"
+  body: "#37CFAB"
+  body-track: "#28574B"
+  body-outline: "#326153"
+  outline: "#3B4546"
+  surface: "#102823"
+  weather-dial: "#282216"
+  rain-dial: "#12242B"
+  battery-dial: "#1C251B"
+  weather-outline: "#71582F"
+  rain-outline: "#2B5864"
+  battery-outline: "#465B3B"
+  tick: "#727A78"
   weather: "#F8C32A"
   cloud: "#D8DAD8"
   battery: "#929496"
@@ -20,7 +26,8 @@ colors:
   battery-medium: "#E5BC5B"
   battery-low: "#EC7975"
 typography:
-  display: {fontFamily: RobotoRegular, fontSize: "96px"}
+  display: {fontFamily: RobotoCondensedBold, fontSize: "148px"}
+  calendar: {fontFamily: RobotoRegular, fontSize: "17px"}
   value: {fontFamily: RobotoRegular, fontSize: "26px"}
   label: {fontFamily: RobotoRegular, fontSize: "16px"}
   compact: {fontFamily: RobotoCondensedRegular, fontSize: "14px"}
@@ -34,9 +41,8 @@ components:
     textColor: "{colors.text}"
     rounded: "{rounded.panel}"
     width: "274px"
-    height: "94px"
+    height: "82px"
   data-dial:
-    backgroundColor: "{colors.dial}"
     textColor: "{colors.text}"
     size: "66px"
 ---
@@ -48,8 +54,10 @@ components:
 Esfera nativa Monkey C para `fr170`, circular de 390 × 390. La hora blanca
 domina la parte superior, con la fecha española encima. Dos escalas laterales
 enmarcan el panel de Body Battery y los tres círculos inferiores. Cian para
-pasos; turquesa para el panel de energía corporal y los minutos de intensidad
-semanales del arco derecho.
+pasos; ámbar para los minutos semanales del arco derecho; turquesa para el
+panel de Body Battery. La hora se amplía con cifras gruesas y condensadas,
+conservando el blanco. El panel se compacta y los círculos reciben tintes
+oscuros para añadir color sin competir con la hora.
 
 Esta composición corresponde al cambio aprobado a partir de la imagen adjunta
 en la conversación del 21/10/2026, sin archivo persistente en el repositorio.
@@ -58,8 +66,8 @@ La documentación se extrae de `Theme.mc`, `FaceRenderer.mc` y `Components.mc`.
 La compilación con `-w` terminó sin avisos y pasaron ocho pruebas en el
 simulador Garmin `fr170`: umbrales de batería, medidas de fuentes reales,
 dibujo con datos ausentes/máximos/cero y separación geométrica de arcos y
-círculos, además de ausencia, cero y exceso de objetivo de minutos y zonas de
-pulsación larga. Se comprueba
+círculos, además de ausencia, cero y exceso de objetivo de minutos, las 1.440
+horas posibles y zonas de pulsación larga adaptadas. Se comprueba
 la simetría en los 360 grados y el llenado/vaciado en 1.001 niveles; el dibujo
 nativo se ejercita en 0%, 1%, 25%, 50%, 75%, 99% y 100%. Las medidas
 y el dibujo usan un búfer de 1 × 1; no constituyen una
@@ -70,10 +78,12 @@ ejecutó las pruebas. No se certifica el aspecto ni la fidelidad a la imagen.
 ## Colors
 
 Los valores normativos están en el frontmatter y corresponden a `Theme.mc`.
-Cian para pasos y trazos de lluvia; turquesa para Body Battery y minutos semanales.
+Cian para pasos, lluvia y su cifra; ámbar para minutos semanales; turquesa para Body Battery.
 Blanco para hora y cifras; gris atenuado para datos ausentes del indicador
 central. Las escalas son grises, con pista oscura y
-progreso fino de color. El panel es carbón y los círculos, un tono más oscuro.
+progreso fino de color. El panel es petróleo oscuro; el círculo de tiempo tiene
+fondo ocre oscuro, el de lluvia azul oscuro y el de batería verde oscuro,
+con contornos del mismo matiz.
 Sol amarillo y nubes claras representan las condiciones oficiales disponibles.
 
 La batería física usa verde desde 60%, amarillo desde 30% y rojo por debajo de
@@ -83,9 +93,14 @@ ausencia como `null`. Sin dato o con cero no se dibuja progreso de primer plano.
 
 ## Typography
 
-Fuentes vectoriales oficiales Garmin `RobotoRegular`, sin TTF empaquetados.
+Fuentes vectoriales oficiales Garmin, sin TTF empaquetados. Hora con
+`RobotoCondensedBold` a 148 px; el resto conserva Roboto regular. `23:59`
+mide 291 px de ancho en el simulador, frente a 204 px con el rol anterior de
+96 px: el aumento de anchura es del 43% aproximadamente. El alto de fuente
+devuelto por Garmin es 148 px, que no equivale a la caja visible de los dígitos.
+
 La hora usa el rol `display`; temperatura y lluvia, `value`; texto secundario y cifras superiores,
-`label`; fecha, título del panel y porcentaje de batería, `date`; cifra de
+`label`; fecha española, `calendar`; título del panel y porcentaje de batería, `date`; cifra de
 Body Battery, `body`. La lluvia pasa de `value` a `date` si supera 52 píxeles
 de ancho, para que `100%` quepa en el círculo.
 Los minutos usan `compact` si el texto con unidad supera 56 píxeles con `label`.
@@ -98,17 +113,17 @@ la cifra de pasos tienen alineación horizontal propia.
 ## Layout
 
 Coordenadas fijas en píxeles sobre un lienzo circular; centro (195, 195).
-Pasos y minutos sobre la fecha; fecha en (195, 86), hora en (195, 139).
+Pasos y minutos sobre la fecha; fecha en (195, 80), hora en (195, 139).
 No hay rótulos `PASOS` ni `ENERGÍA`.
 
 Escalas laterales centradas en pantalla: 43 marcas por lado, separadas cuatro
 grados y con trazo de 2 píxeles; cada séptima marca es más larga. Llegan al
 radio 184, desde 172 para marcas largas y 177 para cortas. Pista y progreso
-comparten radio 180, grosor 3 y recorrido 168 grados. Pasos empieza a 96 grados
+comparten radio 180, grosor 4 y recorrido 168 grados. Pasos empieza a 96 grados
 en sentido antihorario; la escala derecha a 84 en sentido horario. El marcador
 simple tiene radio 5 y sigue el mismo radio que el arco.
 
-Panel de Body Battery en (58, 176), de 274 × 94. Semicírculo centrado en
+Panel de Body Battery en (58, 188), de 274 × 82. Semicírculo centrado en
 (113, 232), radio 32 y grosor 13; cifra centrada en (113, 234). Título y estado
 alineados a la izquierda desde x = 169, en y = 213 e y = 238.
 
@@ -118,18 +133,19 @@ Batería: anillo de radio 29 y grosor 4, icono en y = 299, porcentaje en y = 322
 Los círculos laterales se mantienen dentro de las escalas y de sus marcadores.
 
 Arriba, pasos y minutos se centran en x = 158 y x = 232. Los iconos se refieren
-a y = 40 y las cifras están en y = 60, dentro de los arcos y sobre la fecha. Las huellas
+a y = 38 y las cifras están en y = 58, dentro de los arcos y sobre la fecha. Las huellas
 usan una escala de 0,7 respecto a su tamaño anterior, unos 15 × 20 píxeles;
 los minutos se identifican con un cronómetro compacto y la unidad `min`.
-Fecha, hora, panel y círculos se desplazaron juntos 20 píxeles hacia abajo
-respecto a la distribución anterior con indicadores al pie, conservando
-tamaños y colores. El ajuste posterior eleva únicamente el panel y todo su
-contenido 3 píxeles; fecha, hora y círculos conservan sus posiciones.
+La hora conserva su centro y gana tamaño. La fecha tiene un rol propio de
+17 px y los indicadores superiores suben 2 px. El panel conserva el borde
+inferior en y = 270 y todos sus contenidos en sus posiciones; se reduce el
+margen superior. Los círculos inferiores y las escalas conservan su posición.
+La zona pulsable de fecha termina en y = 92 para no invadir la hora ampliada.
 
 ## Elevation & Depth
 
 Sin sombras ni degradados. El panel y los círculos se distinguen del fondo por
-su tono y por un contorno de un píxel. Las pistas indican el recorrido completo
+su matiz oscuro y por un contorno de un píxel. Las pistas indican el recorrido completo
 y el color muestra el progreso disponible.
 
 ## Shapes
@@ -148,7 +164,8 @@ recursos de otras esferas. Las huellas separan suela y talón.
 
 ## Components
 
-- Hora y fecha: formato de 24 horas; día de la semana y mes abreviados en español.
+- Hora y fecha: formato de 24 horas; hora blanca gruesa y condensada;
+  día de la semana y mes abreviados en español, en gris y con fuente propia.
 - Escalas: pasos respecto a su objetivo diario y minutos de intensidad respecto
   al objetivo semanal de Garmin. El progreso se limita al recorrido completo,
   conservando las cifras reales aunque superen sus objetivos. Sin dato o sin
@@ -162,8 +179,9 @@ recursos de otras esferas. Las huellas separan suela y talón.
 - Batería física: anillo de progreso sin marcador, icono blanco y porcentaje.
   Ausencia: `--` sin relleno; cero válido: `0%` sin relleno.
 - Indicadores superiores: huellas cian pequeñas y pasos con puntos para separar
-  miles; cronómetro turquesa y minutos semanales con unidad `min`. Cifras
-  blancas y ausencia explícita con `--`. Body Battery aparece solo en el panel.
+  miles; cronómetro ámbar y minutos semanales con unidad `min`. Cifras
+  blancas y ausencia explícita con `--`. El cronómetro y el arco derecho usan
+  ámbar; Body Battery aparece solo en el panel.
 - Pulsación larga: panel hacia Body Battery; pasos y arco izquierdo hacia pasos;
   minutos y arco derecho hacia minutos de intensidad; fecha hacia fecha;
   tiempo y lluvia hacia tiempo actual; círculo de batería hacia batería.

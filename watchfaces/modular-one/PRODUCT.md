@@ -23,14 +23,16 @@ y la estructura del proyecto.
 
 Dirección aprobada a partir de la imagen adjunta en la conversación del
 21/10/2026: hora blanca grande en la parte superior, con fecha española encima;
-escalas laterales largas y finas; panel central carbón para Body Battery;
+escalas laterales largas y finas; panel central para Body Battery;
 tres círculos inferiores para tiempo, lluvia y batería física. Pasos y minutos
 se muestran sobre la fecha, con huellas pequeñas y cronómetro, cifras debajo
-y sin los rótulos `PASOS` y `ENERGÍA`. El bloque de fecha, hora, panel y círculos
-se ha desplazado 20 píxeles hacia abajo para dejar espacio a estos indicadores.
-Body Battery aparece solo en el panel. El ajuste posterior eleva el panel y
-todo su contenido 3 píxeles, manteniendo fecha, hora y círculos en su posición.
-Fondo negro, pasos cian y Body Battery turquesa. Los progresos y marcadores
+y sin los rótulos `PASOS` y `ENERGÍA`. Body Battery aparece solo en el panel.
+La petición más reciente aumenta la presencia de la hora y añade color con
+criterio Garmin: hora blanca más grande, gruesa y condensada; pasos cian,
+minutos de intensidad ámbar y Body Battery turquesa. Se compacta el panel
+para dejar sitio a la hora, conservando sus datos y los tres círculos inferiores.
+El panel tiene fondo petróleo oscuro; los círculos tienen tintes oscuros
+según el dato. Fondo general negro. Los progresos y marcadores
 representan los datos reales. La imagen no está guardada como archivo en el
 proyecto. Los tokens y la composición implementada se recogen en `DESIGN.md`.
 
