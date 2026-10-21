@@ -1,5 +1,19 @@
 # Auditoría de Stride Digital
 
+Estado del 22/10/2026: el ajuste inspirado en imágenes oficiales de Garmin
+mantiene la composición resuelta el día anterior. Añade hora inclinada con
+horas de contorno lima y minutos blancos, iconos vectoriales propios y barras
+de diez segmentos; Body Battery y lluvia usan cian contenido. Compilación
+con avisos y cuatro pruebas en `fr170` superadas. El diagnóstico en el DC
+completo registra 16.472 de 126.880 bytes usados, sin errores de ejecución.
+Se inspeccionaron los atlas `Time.png` y `TimeOutline.png`, además de las
+referencias oficiales guardadas. Sigue pendiente una captura real de Stride
+a 390 × 390: Computer Use no dispone de canal nativo. También queda pendiente
+abrir los destinos en el reloj. `DESIGN.md` describe el diseño vigente;
+`.impeccable/references/README.md` recoge las fuentes de inspiración.
+
+## Resolución anterior
+
 Resolución del 21/10/2026: se implementó el rediseño aprobado, con hora en dos
 líneas a la izquierda, columna de datos a la derecha y barras junto a pasos y
 Body Battery. Se retiraron los arcos y se ajustaron los destinos táctiles a la

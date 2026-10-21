@@ -1,5 +1,6 @@
 <fonts>
-    <font id="Time" filename="Time.fnt" antialias="true" filter="0123456789:-"/>
+    <font id="Time" filename="Time.fnt" antialias="true" filter="0123456789-"/>
+    <font id="TimeOutline" filename="TimeOutline.fnt" antialias="true" filter="0123456789-"/>
     <font id="Value" filename="Value.fnt" antialias="true" filter="0123456789.-"/>
     <font id="Compact" filename="Compact.fnt" antialias="true" filter="0123456789.%-"/>
 </fonts>

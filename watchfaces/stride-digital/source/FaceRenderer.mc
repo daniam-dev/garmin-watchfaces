@@ -6,6 +6,7 @@ import Toybox.WatchUi;
 
 class StrideRenderer {
     private var _time as Graphics.FontType = Graphics.FONT_NUMBER_HOT;
+    private var _timeOutline as Graphics.FontType = Graphics.FONT_NUMBER_HOT;
     private var _value as Graphics.FontType = Graphics.FONT_SMALL;
     private var _small as Graphics.FontType = Graphics.FONT_XTINY;
     private var _label as Graphics.FontType = Graphics.FONT_XTINY;
@@ -14,6 +15,7 @@ class StrideRenderer {
     function initialize() {}
     function layout() as Void {
         _time = WatchUi.loadResource(Rez.Fonts.Time) as WatchUi.FontResource;
+        _timeOutline = WatchUi.loadResource(Rez.Fonts.TimeOutline) as WatchUi.FontResource;
         _value = WatchUi.loadResource(Rez.Fonts.Value) as WatchUi.FontResource;
         _small = WatchUi.loadResource(Rez.Fonts.Compact) as WatchUi.FontResource;
         var label = Graphics.getVectorFont({:face => "RobotoCondensedRegular", :size => StrideTheme.LABEL_SIZE});
@@ -28,16 +30,25 @@ class StrideRenderer {
         dc.drawText(x,y,font,value,StrideTheme.ALIGN);
     }
     function progress(dc as Graphics.Dc, y as Number, ratio as Float, color as Number, track as Number) as Void {
-        dc.setColor(track,Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle(StrideTheme.BAR_X,y,StrideTheme.BAR_WIDTH,StrideTheme.BAR_HEIGHT);
         var width = Math.round(ratio*StrideTheme.BAR_WIDTH).toNumber();
-        if (width <= 0) { return; }
-        dc.setColor(color,Graphics.COLOR_TRANSPARENT);
-        dc.fillRectangle(StrideTheme.BAR_X,y,width,StrideTheme.BAR_HEIGHT);
+        for (var i = 0; i < StrideTheme.BAR_SEGMENTS; i += 1) {
+            var start = i*StrideTheme.BAR_WIDTH/StrideTheme.BAR_SEGMENTS;
+            var end = (i+1)*StrideTheme.BAR_WIDTH/StrideTheme.BAR_SEGMENTS;
+            var gap = i == StrideTheme.BAR_SEGMENTS-1 ? 0 : StrideTheme.BAR_GAP;
+            var segmentWidth = end-start-gap;
+            dc.setColor(track,Graphics.COLOR_TRANSPARENT);
+            dc.fillRectangle(StrideTheme.BAR_X+start,y,segmentWidth,StrideTheme.BAR_HEIGHT);
+            var fill = width-start;
+            if (fill > segmentWidth) { fill = segmentWidth; }
+            if (fill > 0) {
+                dc.setColor(color,Graphics.COLOR_TRANSPARENT);
+                dc.fillRectangle(StrideTheme.BAR_X+start,y,fill,StrideTheme.BAR_HEIGHT);
+            }
+        }
     }
     function metric(dc as Graphics.Dc, y as Number, value as String, label as String, color as Number) as Void {
         var font = dc.getTextWidthInPixels(value,_value) > StrideTheme.METRIC_WIDTH ? _small : _value;
-        text(dc,StrideTheme.METRIC_X,y,font,value,value == "--" ? StrideTheme.MUTED : StrideTheme.WHITE);
+        text(dc,StrideTheme.METRIC_VALUE_X,y,font,value,value == "--" ? StrideTheme.MUTED : StrideTheme.WHITE);
         text(dc,StrideTheme.METRIC_X,y+StrideTheme.LABEL_OFFSET,_label,label,value == "--" ? StrideTheme.MUTED : color);
     }
     function draw(dc as Graphics.Dc, data as StrideData) as Void {
@@ -53,13 +64,17 @@ class StrideRenderer {
         }
         text(dc,StrideTheme.BATTERY_X,StrideTheme.BATTERY_Y,_small,StrideFormat.percent(data.battery),StrideTheme.WHITE);
         text(dc,StrideTheme.DATE_X,StrideTheme.DATE_Y,_date,data.dateText,StrideTheme.MUTED);
-        text(dc,StrideTheme.TIME_X,StrideTheme.HOURS_Y,_time,data.timeText.substring(0,2),StrideTheme.WHITE);
+        text(dc,StrideTheme.TIME_X,StrideTheme.HOURS_Y,_time,data.timeText.substring(0,2),StrideTheme.HOUR_FILL);
+        text(dc,StrideTheme.TIME_X,StrideTheme.HOURS_Y,_timeOutline,data.timeText.substring(0,2),StrideTheme.ACCENT);
         text(dc,StrideTheme.TIME_X,StrideTheme.MINUTES_Y,_time,data.timeText.substring(3,5),StrideTheme.WHITE);
         metric(dc,StrideTheme.STEPS_Y,StrideFormat.steps(data.steps),"PASOS",StrideTheme.STEPS);
+        footsteps(dc,StrideTheme.METRIC_ICON_X,StrideTheme.STEPS_Y,data.steps == null ? StrideTheme.MUTED : StrideTheme.STEPS);
         progress(dc,StrideTheme.STEPS_Y+StrideTheme.BAR_OFFSET,StrideFormat.progress(data.steps,data.goal),StrideTheme.STEPS,StrideTheme.STEPS_TRACK);
         metric(dc,StrideTheme.BODY_Y,StrideFormat.number(data.body),"BODY BATTERY",StrideTheme.BODY);
+        energy(dc,StrideTheme.METRIC_ICON_X,StrideTheme.BODY_Y,data.body == null ? StrideTheme.MUTED : StrideTheme.BODY);
         progress(dc,StrideTheme.BODY_Y+StrideTheme.BAR_OFFSET,StrideFormat.progress(data.body,100),StrideTheme.BODY,StrideTheme.BODY_TRACK);
         metric(dc,StrideTheme.HEART_Y,StrideFormat.number(data.heartRate),"PULSO / LPM",StrideTheme.MUTED);
+        heart(dc,StrideTheme.METRIC_ICON_X,StrideTheme.HEART_Y,StrideTheme.MUTED);
         weather(dc,StrideTheme.WEATHER_ICON_X,StrideTheme.WEATHER_Y,data.condition);
         text(dc,StrideTheme.TEMPERATURE_X,StrideTheme.WEATHER_Y,_weather,StrideFormat.temperature(data.temperature),StrideTheme.WHITE);
         dc.setColor(StrideTheme.MUTED,Graphics.COLOR_TRANSPARENT);
@@ -67,6 +82,24 @@ class StrideRenderer {
         droplet(dc,StrideTheme.RAIN_ICON_X,StrideTheme.WEATHER_Y);
         text(dc,StrideTheme.RAIN_X,StrideTheme.WEATHER_Y,_weather,StrideFormat.percent(data.rain),StrideTheme.WHITE);
         dc.setPenWidth(1);
+    }
+    function footsteps(dc as Graphics.Dc, x as Number, y as Number, color as Number) as Void {
+        dc.setColor(color,Graphics.COLOR_TRANSPARENT); dc.setPenWidth(3);
+        dc.fillCircle(x-3,y-7,2); dc.drawLine(x-4,y-2,x-5,y+3);
+        dc.fillCircle(x+4,y-2,2); dc.drawLine(x+3,y+3,x+2,y+8);
+        dc.setPenWidth(1);
+    }
+    function energy(dc as Graphics.Dc, x as Number, y as Number, color as Number) as Void {
+        dc.setColor(color,Graphics.COLOR_TRANSPARENT); dc.setPenWidth(2);
+        dc.drawLine(x+3,y-8,x-4,y+1); dc.drawLine(x-4,y+1,x+3,y+1);
+        dc.drawLine(x+3,y+1,x-3,y+8); dc.setPenWidth(1);
+    }
+    function heart(dc as Graphics.Dc, x as Number, y as Number, color as Number) as Void {
+        dc.setColor(color,Graphics.COLOR_TRANSPARENT); dc.setPenWidth(2);
+        dc.drawArc(x-3,y-2,4,Graphics.ARC_CLOCKWISE,180,0);
+        dc.drawArc(x+3,y-2,4,Graphics.ARC_CLOCKWISE,180,0);
+        dc.drawLine(x-7,y-2,x-7,y); dc.drawLine(x+7,y-2,x+7,y);
+        dc.drawLine(x-7,y,x,y+8); dc.drawLine(x+7,y,x,y+8); dc.setPenWidth(1);
     }
     function droplet(dc as Graphics.Dc, x as Number, y as Number) as Void {
         dc.setColor(StrideTheme.BODY,Graphics.COLOR_TRANSPARENT); dc.setPenWidth(2);

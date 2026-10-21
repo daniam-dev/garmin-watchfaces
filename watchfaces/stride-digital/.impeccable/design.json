@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-21T17:26:14Z",
+  "generatedAt": "2026-10-22",
   "title": "Design System: Stride Digital",
   "extensions": {
     "colorMeta": {
@@ -30,7 +30,7 @@
       },
       "accent": {
         "role": "primary",
-        "displayName": "Verde suave de indicadores"
+        "displayName": "Lima de horas e indicadores"
       },
       "steps": {
         "role": "primary",
@@ -38,7 +38,7 @@
       },
       "body": {
         "role": "primary",
-        "displayName": "Verde de Body Battery y lluvia"
+        "displayName": "Cian de Body Battery y lluvia"
       },
       "sun": {
         "role": "status",
@@ -47,12 +47,16 @@
       "low": {
         "role": "status",
         "displayName": "Coral de batería baja"
+      },
+      "hour-fill": {
+        "role": "neutral",
+        "displayName": "Relleno oscuro de horas"
       }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Hora deportiva",
-        "purpose": "Rajdhani Bold condensada al 80%, dígitos tabulares en dos líneas blancas. Altura final definida en DESIGN.md."
+        "purpose": "Rajdhani Bold con base condensada al 80% e inclinación de 8° dentro de celdas tabulares; horas con contorno y minutos rellenos. Altura final definida en DESIGN.md."
       },
       "value": {
         "displayName": "Cifras de actividad",
@@ -125,7 +129,10 @@
           "BODY BATTERY",
           "PULSO / LPM"
         ],
-        "compactAboveWidth": 94
+        "compactAboveWidth": 84,
+        "valueCenterX": 297,
+        "iconCenterX": 242,
+        "labelWidth": 94
       },
       "progressBars": {
         "x": 242,
@@ -135,7 +142,10 @@
         "stepsMetric": "steps / stepGoal",
         "bodyMetric": "bodyBattery / 100",
         "zeroProgress": "Sin relleno de primer plano.",
-        "widthRounding": "Al píxel entero más cercano."
+        "widthRounding": "Avance al píxel entero más cercano; relleno limitado a la parte visible de cada segmento.",
+        "segments": 10,
+        "gap": 2,
+        "lastGap": 0
       },
       "weather": {
         "rowY": 344,
@@ -162,7 +172,18 @@
         "tabularDigits": true,
         "pairWidth": 162,
         "testedAabbRadius": 193,
-        "color": "text"
+        "outlineResource": "Rez.Fonts.TimeOutline",
+        "slantDegrees": 8,
+        "cellWidth": 81,
+        "outlineInnerPixels": 3,
+        "outlineErosionKernel": [
+          7,
+          7
+        ],
+        "sameGeometryForBothResources": true,
+        "hoursFillColor": "hour-fill",
+        "hoursOutlineColor": "accent",
+        "minutesColor": "text"
       }
     },
     "nativeStates": {
@@ -266,18 +287,25 @@
       "resources/fonts/README.md"
     ],
     "reference": {
-      "kind": "Composición implementada tras AUDIT.md; sin captura persistente de la versión actual.",
-      "date": "2026-10-21",
-      "persistentFile": null
+      "kind": "Imágenes oficiales Garmin de referencia; no son capturas de Stride.",
+      "date": "2026-10-22",
+      "persistentFile": ".impeccable/references/README.md",
+      "images": [
+        ".impeccable/references/garmin-forerunner970-front.jpg",
+        ".impeccable/references/garmin-forerunner-runners.png",
+        ".impeccable/references/garmin-venu4-front.jpg",
+        ".impeccable/references/garmin-fenix9-front.jpg"
+      ],
+      "currentStrideCapture": null
     },
     "verification": {
       "build": "scripts/build.ps1 -Project stride-digital: compilación con -w superada, sin avisos.",
-      "nativeTests": "scripts/test.ps1 -Project stride-digital: cuatro pruebas pasan en fr170. Incluyen las 1.440 horas dentro del radio 193, ancho tabular de 11 y 88, destinos y cada píxel de las barras, ausencias, extremos, pulso y eventos.",
-      "timeMeasurements": "Pareja de dígitos: 162 px de ancho; altura final de Time definida en DESIGN.md.",
+      "nativeTests": "scripts/test.ps1 -Project stride-digital: cuatro pruebas pasan en fr170. Incluyen las 1.440 horas con Time y TimeOutline dentro del radio 193, geometría y ancho tabular iguales, destinos, iconos y cada píxel de las barras segmentadas, ausencias, extremos, pulso y eventos.",
+      "timeMeasurements": "Pareja de dígitos: 162 px de ancho en ambos recursos; inclinación de 8° y contorno interior nominal de 3 px. Altura final definida en DESIGN.md.",
       "buffer": "El dibujo de pruebas usa un búfer de 1 × 1, sin revisión visual.",
-      "normalMemorySmoke": "Dibujo en el DC de 390 × 390 con el límite normal: 15.304 bytes usados, 111.576 libres y 126.880 totales. Cero errores de ejecución. Estados de prueba, sin inspección visual de píxeles.",
+      "normalMemorySmoke": "Dibujo en el DC de 390 × 390 con el límite normal: 16.472 bytes usados, 110.408 libres y 126.880 totales. Cero errores de ejecución. Estados de prueba, sin inspección visual de píxeles.",
       "independentReview": "Revisión final sin errores materiales de código, geometría o contratos; no valida el aspecto.",
-      "visualReview": "Solo se inspeccionó el atlas Time.png. App cargada en el simulador. No se obtuvo captura porque Computer Use no dispone de canal nativo; pendientes rasterizado, recortes y legibilidad a 390 × 390.",
+      "visualReview": "Se inspeccionaron los atlas Time.png y TimeOutline.png y las cuatro referencias oficiales. App cargada en el simulador. No se obtuvo captura de Stride porque Computer Use no dispone de canal nativo; pendientes rasterizado, recortes y legibilidad a 390 × 390.",
       "deviceNavigation": "Apertura real de destinos pendiente en el reloj."
     },
     "nativeHealth": {
@@ -295,24 +323,24 @@
     {
       "name": "Hora y fecha",
       "kind": "custom",
-      "description": "Hora Rajdhani blanca en dos líneas a la izquierda; fecha española gris en la cabecera."
+      "description": "Hora Rajdhani inclinada en dos líneas a la izquierda: horas con relleno oscuro y contorno lima, minutos blancos; fecha española gris en la cabecera."
     },
     {
       "name": "Barra de pasos",
       "kind": "custom",
       "refersTo": "steps-bar",
-      "description": "Progreso diario bajo su cifra y rótulo en la columna derecha."
+      "description": "Progreso diario de diez segmentos en lima bajo su cifra y rótulo en la columna derecha."
     },
     {
       "name": "Barra de Body Battery",
       "kind": "custom",
       "refersTo": "body-bar",
-      "description": "Progreso sobre 100 bajo su cifra y rótulo en la columna derecha."
+      "description": "Progreso sobre 100 de diez segmentos en cian bajo su cifra y rótulo en la columna derecha."
     },
     {
       "name": "Columna de datos",
       "kind": "custom",
-      "description": "Pasos, Body Battery y pulso con cifras blancas; Compact al superar METRIC_WIDTH. El pulso no tiene barra."
+      "description": "Iconos vectoriales de pasos, Body Battery y pulso junto a cifras blancas; Compact al superar METRIC_WIDTH. El pulso no tiene barra."
     },
     {
       "name": "Batería física",
@@ -326,9 +354,9 @@
     }
   ],
   "narrative": {
-    "overview": "Esfera deportiva de fondo negro, hora blanca en dos líneas a la izquierda\ny una columna de pasos, Body Battery y pulso a la derecha. Las barras de\nprogreso quedan bajo su cifra y rótulo. Fecha y batería ocupan la parte\nsuperior; tiempo y lluvia, el pie.\n\nEsta composición sustituye el diseño anterior tras la auditoría del\n21/10/2026. Aprovecha el círculo físico sin bisel interior ni paneles de datos.\nEl carácter deportivo procede de Rajdhani y del acento verde contenido.\nNo incluye marca ni recursos de una esfera ajena.\n\nLos tokens del frontmatter son normativos. Su implementación está en\n`source/Theme.mc`, `source/FaceRenderer.mc` y los recursos de fuentes.\nLas coordenadas y contratos nativos que no caben en el esquema se conservan\nen `.impeccable/design.json`. Sin segundos, animaciones ni AOD; reposo negro.",
+    "overview": "Esfera deportiva de fondo negro, hora inclinada en dos líneas a la izquierda\ny una columna de pasos, Body Battery y pulso a la derecha. Las barras de\nprogreso segmentadas quedan bajo su cifra y rótulo. Fecha y batería ocupan la parte\nsuperior; tiempo y lluvia, el pie.\n\nEsta composición sustituye el diseño anterior tras la auditoría del\n21/10/2026. Aprovecha el círculo físico sin bisel interior ni paneles de datos.\nEl ajuste del 22/10/2026 añade inclinación y contraste entre contorno y relleno\nen la hora, iconos compactos y segmentos. Las horas tienen relleno oscuro y\ncontorno lima; los minutos son blancos. Pasos y Body Battery usan acentos\nlima y cian contenidos. La investigación de imágenes oficiales de Forerunner\n970, Venu 4 y fēnix 9 se conserva en `.impeccable/references/README.md`.\nNo incluye marca ni recursos Garmin en la esfera.\n\nLos tokens del frontmatter son normativos. Su implementación está en\n`source/Theme.mc`, `source/FaceRenderer.mc` y los recursos de fuentes.\nLas coordenadas y contratos nativos que no caben en el esquema se conservan\nen `.impeccable/design.json`. Sin segundos, animaciones ni AOD; reposo negro.",
     "dos": [
-      "Mantener la hora blanca en dos líneas a la izquierda y los datos en la columna derecha.",
+      "Mantener la hora inclinada en dos líneas a la izquierda, horas de contorno lima\n  y minutos blancos, con los datos en la columna derecha.",
       "Conservar cada barra junto a su cifra y rótulo.",
       "Mostrar ausencia explícita y conservar los ceros válidos.",
       "Mantener reposo negro sin segundos, timers, animaciones ni AOD."
