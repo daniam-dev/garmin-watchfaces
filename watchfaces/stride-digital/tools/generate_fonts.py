@@ -97,7 +97,7 @@ def generate(name: str, size: int, tabular: bool = False, slant: float = 0,
 
 
 if __name__ == "__main__":
-    generate("Time", 186, tabular=True, slant=8, characters="0123456789-")
-    generate("TimeOutline", 186, tabular=True, slant=8, outline=True, characters="0123456789-")
+    generate("Time", 202, tabular=True, slant=8, characters="0123456789-")
+    generate("TimeOutline", 202, tabular=True, slant=8, outline=True, characters="0123456789-")
     generate("Value", 46)
     generate("Compact", 29)

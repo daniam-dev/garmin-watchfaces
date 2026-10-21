@@ -1,11 +1,12 @@
 # Auditoría de Stride Digital
 
 Estado del 22/10/2026: el ajuste inspirado en imágenes oficiales de Garmin
-mantiene la composición resuelta el día anterior. Añade hora inclinada con
+mantiene la composición resuelta el día anterior. Cada línea de la hora mide
+176 × 130 px tras el retoque de tamaño. Añade hora inclinada con
 horas de contorno lima y minutos blancos, iconos vectoriales propios y barras
 de diez segmentos; Body Battery y lluvia usan cian contenido. Compilación
 con avisos y cuatro pruebas en `fr170` superadas. El diagnóstico en el DC
-completo registra 16.472 de 126.880 bytes usados, sin errores de ejecución.
+completo registra 16.464 de 126.880 bytes usados, sin errores de ejecución.
 Se inspeccionaron los atlas `Time.png` y `TimeOutline.png`, además de las
 referencias oficiales guardadas. Sigue pendiente una captura real de Stride
 a 390 × 390: Computer Use no dispone de canal nativo. También queda pendiente

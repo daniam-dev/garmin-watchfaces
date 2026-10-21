@@ -8,10 +8,10 @@ Origen: https://github.com/google/fonts/tree/main/ofl/rajdhani
 `tools/generate_fonts.py` genera cuatro recursos BMFont propios. Reduce al 80%
 el ancho de las cifras, mantiene la línea base y recorta la caja vertical a
 la tinta numérica para centrarla de forma estable. `Time` se genera desde
-186 px y tiene 120 px de altura final. La hora se inclina 8°: antes del sesgo
-se condensa la tinta para mantenerla dentro de su celda de 81 px. Sus dígitos
+202 px y tiene 130 px de altura final. La hora se inclina 8°: antes del sesgo
+se condensa la tinta para mantenerla dentro de su celda de 88 px. Sus dígitos
 son tabulares: comparten avance y se centran en su celda; `11` y `88` miden
-lo mismo (162 px). `TimeOutline` repite la geometría y resta una erosión
+lo mismo (176 px). `TimeOutline` repite la geometría y resta una erosión
 de 7 × 7 para generar un contorno interior nominal de 3 px, sin ampliar
 cajas ni avances. Las horas combinan relleno oscuro con ese contorno lima;
 los minutos usan `Time` blanco. Así las dos líneas mantienen el ancho al

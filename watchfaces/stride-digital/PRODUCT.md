@@ -22,7 +22,9 @@ al pie. Las medidas y los recursos vigentes se documentan en `DESIGN.md`.
 El ajuste del 22/10/2026 conserva esa composición y toma como referencia las
 esferas de las imágenes oficiales de Forerunner 970, Venu 4 y fēnix 9:
 inclinación, contraste entre contorno y relleno, iconos compactos y barras
-segmentadas. Las fuentes y los iconos de Stride siguen siendo propios.
+segmentadas. Las fuentes y los iconos de Stride siguen siendo propios. Cada línea de
+la hora mide 176 × 130 px; la fecha, el pie y la columna dejan espacio
+a las cifras ampliadas.
 Las imágenes y su procedencia están en `.impeccable/references/README.md`;
 son referencias de producto, no capturas de Stride ni recursos compilados.
 
@@ -59,7 +61,7 @@ segmentadas, los iconos y las cajas de las 1.440 horas dentro del círculo para
 y extremos se ejecuta en un búfer de 1 × 1; no valida su aspecto.
 
 El diagnóstico en el DC completo, con el límite normal de memoria, registra
-16.472 bytes usados, 110.408 libres y 126.880 totales, sin errores de ejecución.
+16.464 bytes usados, 110.416 libres y 126.880 totales, sin errores de ejecución.
 Estos estados de prueba no representan lecturas reales. La app está cargada
 en el simulador; se han inspeccionado los atlas `Time.png` y `TimeOutline.png`. No se obtuvo
 captura: Computer Use no dispone de canal nativo. Quedan pendientes la revisión

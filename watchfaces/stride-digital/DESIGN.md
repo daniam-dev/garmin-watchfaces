@@ -15,7 +15,7 @@ colors:
   sun: "#DAB779"
   low: "#DF827A"
 typography:
-  display: {fontFamily: StrideRajdhaniNumeric, fontSize: "120px", fontFeature: "Tabular digits"}
+  display: {fontFamily: StrideRajdhaniNumeric, fontSize: "130px", fontFeature: "Tabular digits"}
   value: {fontFamily: StrideRajdhaniNumeric, fontSize: "30px"}
   compact: {fontFamily: StrideRajdhaniNumeric, fontSize: "19px"}
   label: {fontFamily: RobotoCondensedRegular, fontSize: "16px"}
@@ -78,10 +78,10 @@ los BMFont `Time`, `TimeOutline`, `Value` y `Compact`; se cargan una vez en `lay
 El TTF, la licencia y la procedencia permanecen en `resources/fonts/`.
 
 Los tamaños del frontmatter son alturas finales recortadas a la tinta numérica.
-`Time` y `TimeOutline` se generan desde 186 px con dígitos tabulares: cada pareja mide 162 px,
+`Time` y `TimeOutline` se generan desde 202 px con dígitos tabulares: cada pareja mide 176 px,
 incluidas `11` y `88`. Se muestran horas sobre minutos, sin dibujar los
 dos puntos. La inclinación de 8° se aplica tras condensar la tinta dentro de
-la celda de 81 px. `TimeOutline` genera un contorno interior nominal de 3 px
+la celda de 88 px. `TimeOutline` genera un contorno interior nominal de 3 px
 por erosión de 7 × 7, sin ampliar cajas ni avances. Las horas superponen el
 contorno lima al relleno oscuro; los minutos usan solo el relleno blanco.
 Las dos líneas conservan su posición y anchura al cambiar la hora.
@@ -93,6 +93,8 @@ en el frontmatter. Se conservan los recursos `Value` y `Compact`.
 
 Las pruebas recorren las 1.440 horas con ambas fuentes y comprueban las esquinas de sus cajas
 dentro del radio 193, con separación mínima de ocho píxeles entre líneas.
+También comprueban que las esquinas de la hora no activen otra complicación
+y que fecha, temperatura negativa y lluvia al 100% quepan en el círculo.
 Verifican medidas del motor, no rasterizado ni legibilidad en pantalla.
 
 ## Layout
@@ -103,14 +105,14 @@ Las medidas se aplican mediante `StrideTheme`.
 
 | Elemento | Posición o medida en píxeles |
 | --- | --- |
-| Fecha | Centro (149, 43) |
+| Fecha | Centro (149, 39) |
 | Batería | Icono desde (252, 52); porcentaje centrado en (297, 58) |
-| Horas y minutos | Centros (130, 131) y (130, 259) |
-| Columna de datos | Cifras centradas en x = 297, con ancho disponible de 84; y = 107, 192 y 277; iconos centrados en x = 242 |
-| Rótulos | Centro x = 284, ancho de 94; 27 px bajo cada cifra |
-| Barras | Origen x = 242; y = 151 para pasos y 236 para Body Battery; dimensiones en los tokens de componentes |
-| Tiempo y lluvia | Línea central y = 344; condición x = 118, temperatura x = 160, gota x = 218 y lluvia x = 260 |
-| Separador meteorológico | x = 195, de y = 332 a 356 |
+| Horas y minutos | Centros (146, 127) y (146, 265) |
+| Columna de datos | Cifras centradas en x = 303, con ancho disponible de 84; y = 107, 192 y 277; iconos centrados en x = 248 |
+| Rótulos | Centro x = 290, ancho de 94; 27 px bajo cada cifra |
+| Barras | Origen x = 248; y = 151 para pasos y 236 para Body Battery; dimensiones en los tokens de componentes |
+| Tiempo y lluvia | Línea central y = 352; condición x = 118, temperatura x = 160, gota x = 218 y lluvia x = 260 |
+| Separador meteorológico | x = 195, de y = 340 a 364 |
 
 No hay separadores entre la hora y la columna, ni entre los tres datos.
 La columna y las barras tienen zonas de pulsación propias, recortadas
@@ -163,7 +165,7 @@ Cubren formatos, pulso, eventos, destinos, cada píxel de las barras, las
 1.440 horas con las dos fuentes, ancho tabular, iconos y dibujo con ausencias
 y extremos. Este último
 usa un búfer de 1 × 1. El diagnóstico de dibujo en el DC completo, con el
-límite normal, registra 16.472 bytes usados, 110.408 libres y 126.880 totales,
+límite normal, registra 16.464 bytes usados, 110.416 libres y 126.880 totales,
 sin errores de ejecución. Sus datos son estados de prueba.
 
 La revisión independiente final no detectó errores materiales de código,

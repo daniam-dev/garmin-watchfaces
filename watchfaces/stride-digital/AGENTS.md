@@ -15,7 +15,7 @@ Lee [las instrucciones comunes](../../AGENTS.md), PRODUCT.md y DESIGN.md.
 - Cifras deportivas propias en `resources/fonts/`; regenerar con
   `python tools/generate_fonts.py`. Mantener licencia, horas de relleno oscuro
   y contorno lima, minutos blancos, pasos lima y Body Battery cian contenido.
-  `Time` y `TimeOutline` usan dígitos tabulares inclinados 8°, de 120 px de
+  `Time` y `TimeOutline` usan dígitos tabulares inclinados 8°, de 130 px de
   altura final; el contorno interior nominal de 3 px no amplía sus cajas.
   `Value` y `Compact`
   conservan 30 y 19 px. Cambiar medidas y colores en `StrideTheme` y mantener

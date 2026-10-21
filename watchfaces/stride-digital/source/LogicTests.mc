@@ -30,15 +30,15 @@ function strideDataContracts(logger as Test.Logger) as Boolean {
 function strideComplicationTargets(logger as Test.Logger) as Boolean {
     Test.assertEqual(StrideTargets.at(297,58),Complications.COMPLICATION_TYPE_BATTERY);
     Test.assertEqual(StrideTargets.at(252,52),Complications.COMPLICATION_TYPE_BATTERY);
-    Test.assertEqual(StrideTargets.at(149,43),Complications.COMPLICATION_TYPE_DATE);
-    Test.assertEqual(StrideTargets.at(284,107),Complications.COMPLICATION_TYPE_STEPS);
-    Test.assertEqual(StrideTargets.at(284,192),Complications.COMPLICATION_TYPE_BODY_BATTERY);
-    Test.assertEqual(StrideTargets.at(284,277),Complications.COMPLICATION_TYPE_HEART_RATE);
-    Test.assertEqual(StrideTargets.at(242,107),Complications.COMPLICATION_TYPE_STEPS);
-    Test.assertEqual(StrideTargets.at(242,192),Complications.COMPLICATION_TYPE_BODY_BATTERY);
-    Test.assertEqual(StrideTargets.at(242,277),Complications.COMPLICATION_TYPE_HEART_RATE);
-    Test.assertEqual(StrideTargets.at(118,344),Complications.COMPLICATION_TYPE_CURRENT_WEATHER);
-    Test.assertEqual(StrideTargets.at(260,344),Complications.COMPLICATION_TYPE_CURRENT_WEATHER);
+    Test.assertEqual(StrideTargets.at(149,39),Complications.COMPLICATION_TYPE_DATE);
+    Test.assertEqual(StrideTargets.at(303,107),Complications.COMPLICATION_TYPE_STEPS);
+    Test.assertEqual(StrideTargets.at(303,192),Complications.COMPLICATION_TYPE_BODY_BATTERY);
+    Test.assertEqual(StrideTargets.at(303,277),Complications.COMPLICATION_TYPE_HEART_RATE);
+    Test.assertEqual(StrideTargets.at(248,107),Complications.COMPLICATION_TYPE_STEPS);
+    Test.assertEqual(StrideTargets.at(248,192),Complications.COMPLICATION_TYPE_BODY_BATTERY);
+    Test.assertEqual(StrideTargets.at(248,277),Complications.COMPLICATION_TYPE_HEART_RATE);
+    Test.assertEqual(StrideTargets.at(118,352),Complications.COMPLICATION_TYPE_CURRENT_WEATHER);
+    Test.assertEqual(StrideTargets.at(260,352),Complications.COMPLICATION_TYPE_CURRENT_WEATHER);
     // El progreso y sus extremos deben abrir el mismo dato que su cifra.
     for (var x = StrideTheme.BAR_X; x < StrideTheme.BAR_X+StrideTheme.BAR_WIDTH; x += 1) {
         for (var row = 0; row < StrideTheme.BAR_HEIGHT; row += 1) {
@@ -48,8 +48,8 @@ function strideComplicationTargets(logger as Test.Logger) as Boolean {
     }
     Test.assertEqual(StrideTargets.at(238,219),Complications.COMPLICATION_TYPE_BODY_BATTERY);
     Test.assertEqual(StrideTargets.at(330,304),Complications.COMPLICATION_TYPE_HEART_RATE);
-    Test.assert(StrideTargets.at(130,131) == null);
-    Test.assert(StrideTargets.at(130,259) == null);
+    Test.assert(StrideTargets.at(146,127) == null);
+    Test.assert(StrideTargets.at(146,265) == null);
     Test.assert(StrideTargets.at(3,195) == null);
     Test.assert(StrideTargets.at(387,195) == null);
     Test.assert(StrideTargets.at(0,0) == null);
@@ -78,12 +78,13 @@ function strideNativeTypographyAndStates(logger as Test.Logger) as Boolean {
             for (var line = 0; line < 2; line += 1) {
                 var width = dc.getTextWidthInPixels(lines[line],font);
                 Test.assertEqual(dc.getTextWidthInPixels(lines[line],outline),width);
-                Test.assert(width <= 166);
+                Test.assert(StrideTheme.TIME_X+width/2 < StrideTheme.METRIC_HIT_LEFT-2);
                 for (var side = -1; side <= 1; side += 2) {
                     for (var end = -1; end <= 1; end += 2) {
                         var dx = StrideTheme.TIME_X+side*width/2.0f-195;
                         var dy = centers[line]+end*height/2.0f-195;
                         Test.assert(dx*dx+dy*dy <= 193*193);
+                        Test.assert(StrideTargets.at((dx+195).toNumber(),(dy+195).toNumber()) == null);
                     }
                 }
             }
@@ -104,6 +105,24 @@ function strideNativeTypographyAndStates(logger as Test.Logger) as Boolean {
     Test.assert(dc.getTextWidthInPixels("BODY BATTERY",label) <= StrideTheme.LABEL_WIDTH);
     Test.assert(dc.getTextWidthInPixels("PULSO / LPM",label) <= StrideTheme.LABEL_WIDTH);
     Test.assert(dc.getTextWidthInPixels("MIÉ 30 SEP",date) <= 120);
+    // Fecha y pie se acercan a los extremos del círculo al ampliar la hora.
+    var weather = Graphics.getVectorFont({:face => "RobotoRegular",:size => StrideTheme.WEATHER_SIZE});
+    Test.assert(weather != null);
+    if (weather == null) { return false; }
+    var boxes = [
+        [StrideTheme.DATE_X,StrideTheme.DATE_Y,dc.getTextWidthInPixels("MIÉ 30 SEP",date),Graphics.getFontHeight(date)],
+        [StrideTheme.TEMPERATURE_X,StrideTheme.WEATHER_Y,dc.getTextWidthInPixels("-99°",weather),Graphics.getFontHeight(weather)],
+        [StrideTheme.RAIN_X,StrideTheme.WEATHER_Y,dc.getTextWidthInPixels("100%",weather),Graphics.getFontHeight(weather)]
+    ];
+    for (var i = 0; i < boxes.size(); i += 1) {
+        for (var sx = -1; sx <= 1; sx += 2) {
+            for (var sy = -1; sy <= 1; sy += 2) {
+                var bx = boxes[i][0]+sx*boxes[i][2]/2.0f-195;
+                var by = boxes[i][1]+sy*boxes[i][3]/2.0f-195;
+                Test.assert(bx*bx+by*by <= 193*193);
+            }
+        }
+    }
     logger.debug("Línea horaria: " + dc.getTextWidthInPixels("88",font) + " px; altura: " + height);
     var renderer = new StrideRenderer(); renderer.layout();
     var data = new StrideData(); renderer.draw(dc,data);

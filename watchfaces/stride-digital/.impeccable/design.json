@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-22",
+  "generatedAt": "2026-10-22T00:29:59.028885+02:00",
   "title": "Design System: Stride Digital",
   "extensions": {
     "colorMeta": {
@@ -103,21 +103,21 @@
       },
       "dateCenter": [
         149,
-        43
+        39
       ],
       "timeLines": {
         "hoursCenter": [
-          130,
-          131
+          146,
+          127
         ],
         "minutesCenter": [
-          130,
-          259
+          146,
+          265
         ],
         "separator": false
       },
       "activityColumn": {
-        "centerX": 284,
+        "centerX": 290,
         "valuesY": [
           107,
           192,
@@ -130,12 +130,12 @@
           "PULSO / LPM"
         ],
         "compactAboveWidth": 84,
-        "valueCenterX": 297,
-        "iconCenterX": 242,
+        "valueCenterX": 303,
+        "iconCenterX": 248,
         "labelWidth": 94
       },
       "progressBars": {
-        "x": 242,
+        "x": 248,
         "stepsY": 151,
         "bodyY": 236,
         "dimensions": "components.steps-bar y components.body-bar en DESIGN.md",
@@ -148,7 +148,7 @@
         "lastGap": 0
       },
       "weather": {
-        "rowY": 344,
+        "rowY": 352,
         "conditionCenterX": 118,
         "temperatureCenterX": 160,
         "rainIconCenterX": 218,
@@ -156,25 +156,25 @@
         "separator": {
           "from": [
             195,
-            332
+            340
           ],
           "to": [
             195,
-            356
+            364
           ]
         }
       },
       "timeFont": {
         "resource": "Rez.Fonts.Time",
         "source": "Rajdhani Bold, SIL OFL 1.1",
-        "sourceSize": 186,
+        "sourceSize": 202,
         "horizontalScale": 0.8,
         "tabularDigits": true,
-        "pairWidth": 162,
+        "pairWidth": 176,
         "testedAabbRadius": 193,
         "outlineResource": "Rez.Fonts.TimeOutline",
         "slantDegrees": 8,
-        "cellWidth": 81,
+        "cellWidth": 88,
         "outlineInnerPixels": 3,
         "outlineErosionKernel": [
           7,
@@ -300,10 +300,10 @@
     },
     "verification": {
       "build": "scripts/build.ps1 -Project stride-digital: compilación con -w superada, sin avisos.",
-      "nativeTests": "scripts/test.ps1 -Project stride-digital: cuatro pruebas pasan en fr170. Incluyen las 1.440 horas con Time y TimeOutline dentro del radio 193, geometría y ancho tabular iguales, destinos, iconos y cada píxel de las barras segmentadas, ausencias, extremos, pulso y eventos.",
-      "timeMeasurements": "Pareja de dígitos: 162 px de ancho en ambos recursos; inclinación de 8° y contorno interior nominal de 3 px. Altura final definida en DESIGN.md.",
+      "nativeTests": "scripts/test.ps1 -Project stride-digital: cuatro pruebas pasan en fr170. Incluyen las 1.440 horas con Time y TimeOutline dentro del radio 193, geometría y ancho tabular iguales, destinos, iconos y cada píxel de las barras segmentadas, ausencias, extremos, pulso y eventos. Las esquinas de la hora no activan otra complicación; fecha y pie caben en el radio comprobado.",
+      "timeMeasurements": "Pareja de dígitos: 176 px de ancho en ambos recursos; inclinación de 8° y contorno interior nominal de 3 px. Altura final definida en DESIGN.md.",
       "buffer": "El dibujo de pruebas usa un búfer de 1 × 1, sin revisión visual.",
-      "normalMemorySmoke": "Dibujo en el DC de 390 × 390 con el límite normal: 16.472 bytes usados, 110.408 libres y 126.880 totales. Cero errores de ejecución. Estados de prueba, sin inspección visual de píxeles.",
+      "normalMemorySmoke": "Dibujo en el DC de 390 × 390 con el límite normal: 16.464 bytes usados, 110.416 libres y 126.880 totales. Cero errores de ejecución. Estados de prueba, sin inspección visual de píxeles.",
       "independentReview": "Revisión final sin errores materiales de código, geometría o contratos; no valida el aspecto.",
       "visualReview": "Se inspeccionaron los atlas Time.png y TimeOutline.png y las cuatro referencias oficiales. App cargada en el simulador. No se obtuvo captura de Stride porque Computer Use no dispone de canal nativo; pendientes rasterizado, recortes y legibilidad a 390 × 390.",
       "deviceNavigation": "Apertura real de destinos pendiente en el reloj."
