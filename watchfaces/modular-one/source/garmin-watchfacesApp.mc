@@ -18,7 +18,7 @@ class garmin_watchfacesApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as [Views] or [Views, InputDelegates] {
-        return [ new garmin_watchfacesView() ];
+        return [ new garmin_watchfacesView(), new ModularDelegate() ];
     }
 
 }

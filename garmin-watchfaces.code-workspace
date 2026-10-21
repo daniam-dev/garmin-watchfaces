@@ -2,7 +2,8 @@
   "folders": [
     { "name": "Repositorio", "path": "." },
     { "name": "Modular One", "path": "watchfaces/modular-one" },
-    { "name": "Pilot Analog", "path": "watchfaces/pilot-analog" }
+    { "name": "Pilot Analog", "path": "watchfaces/pilot-analog" },
+    { "name": "Stride Digital", "path": "watchfaces/stride-digital" }
   ],
   "extensions": {
     "recommendations": ["garmin.monkey-c"]
@@ -40,6 +41,15 @@
           "-Project", "pilot-analog"
         ],
         "options": { "cwd": "${workspaceFolder:Pilot Analog}" },
+        "group": "build",
+        "problemMatcher": []
+      },
+      {
+        "label": "Compilar Stride Digital (fr170)",
+        "type": "process",
+        "command": "powershell.exe",
+        "args": ["-NoProfile", "-File", "${workspaceFolder:Stride Digital}/../../scripts/build.ps1", "-Project", "stride-digital"],
+        "options": { "cwd": "${workspaceFolder:Stride Digital}" },
         "group": "build",
         "problemMatcher": []
       },

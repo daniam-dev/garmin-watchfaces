@@ -14,6 +14,12 @@ module Formatters {
     function percent(value as Numeric?) as String {
         return value == null ? "--" : integer(value) + "%";
     }
+    function minutes(value as Number?) as String {
+        return value == null ? "--" : integer(value) + " min";
+    }
+    function nonNegative(value as Number?) as Number? {
+        return value == null || value < 0 ? null : value;
+    }
     function temperature(value as Numeric?) as String {
         return value == null ? "--" : Math.round(value).toNumber().format("%d") + "°";
     }

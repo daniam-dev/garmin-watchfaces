@@ -23,7 +23,9 @@ fecha y pasos diarios. Los datos ausentes conservan `--`; no se inventan.
 Sin AOD, temporizadores, red o animaciones propias. Segundero en las
 actualizaciones activas que entrega Garmin. Pantalla negra en reposo.
 Los datos se refrescan al despertar y por minuto. Sin suscripciones a
-Complications. Mantiene código y recursos independientes de Modular One.
+Complications. El permiso `ComplicationSubscriber` permite abrir las vistas
+nativas con `Complications.exitTo`; no añade suscripciones ni Body Battery.
+Mantiene código y recursos independientes de Modular One.
 
 La petición posterior del usuario sustituye Body Battery por el porcentaje
 de batería del reloj. El arco superior debe tener el mismo inicio, recorrido,
@@ -32,8 +34,19 @@ El relleno de batería indica carga alta desde 80%, media desde 30% y baja
 por debajo de 30%. El porcentaje numérico conserva su legibilidad sin depender
 del color.
 
+Mantener pulsado cada círculo solicita la vista nativa de batería del
+dispositivo, tiempo actual, fecha o pasos. `WatchFaceDelegate.onPress` usa
+`Complications.exitTo`; si el firmware rechaza el destino con
+`InvalidValueException`, el evento devuelve `false` sin abrir otra vista.
+
 ## Evidencia
 
 La referencia está visible en el encargo, sin archivo original localizado en
 el repositorio. DESIGN.md conserva las medidas normalizadas de esa imagen.
 Las capturas del simulador, cuando se obtengan, se guardan en `docs/`.
+
+La compilación con avisos (`-w`) y las siete pruebas en el simulador `fr170`
+pasan, incluidas las zonas de pulsación. El dibujo de pruebas usa un búfer
+de 1 × 1 y no valida el aspecto. No se obtuvo una captura real a 390 × 390:
+Computer Use no pudo conectar con su canal nativo. La apertura de las vistas
+nativas queda pendiente de comprobar en el reloj.

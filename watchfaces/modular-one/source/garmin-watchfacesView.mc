@@ -7,7 +7,7 @@ import Toybox.WatchUi;
 class garmin_watchfacesView extends WatchUi.WatchFace {
     private var _data as FaceData;
     private var _clock as ClockProvider;
-    private var _steps as StepsProvider;
+    private var _activity as ActivityProvider;
     private var _battery as BatteryProvider;
     private var _weather as WeatherProvider;
     private var _body as BodyBatteryProvider;
@@ -20,7 +20,7 @@ class garmin_watchfacesView extends WatchUi.WatchFace {
         WatchFace.initialize();
         _data = new FaceData();
         _clock = new ClockProvider();
-        _steps = new StepsProvider();
+        _activity = new ActivityProvider();
         _battery = new BatteryProvider();
         _weather = new WeatherProvider();
         _body = new BodyBatteryProvider();
@@ -53,7 +53,7 @@ class garmin_watchfacesView extends WatchUi.WatchFace {
         var minute = Time.now().value() / 60;
         if (minute != _lastMinute) {
             _lastMinute = minute;
-            _steps.refresh(_data);
+            _activity.refresh(_data);
             _battery.refresh(_data);
             _weather.refresh(_data);
             _body.refresh(_data);

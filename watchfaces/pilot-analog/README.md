@@ -12,9 +12,10 @@ Desde la raíz del repositorio:
 ```
 
 El archivo instalable es `watchfaces/pilot-analog/bin/PilotAnalog.prg`.
-Conecta el Garmin mediante USB de datos, abre `GARMIN\APPS` (dentro de
-Almacenamiento interno, si aparece) y copia ese `.prg`. Desconecta de forma
-segura y selecciona Pilot Analog en las pantallas del reloj. Conserva nombre,
+Sigue la [guía común de instalación y diagnóstico USB](../../docs/instalacion-usb.md)
+para comprobar MTP y el acceso desde Windows antes de copiarlo a `GARMIN\APPS`.
+Incluye los pasos para activar la esfera y revisar una instalación que falle.
+La transferencia al reloj todavía está pendiente de verificar. Conserva nombre,
 UUID y clave de firma para actualizarla. No copies los programas Tests o Smoke.
 
 Modular One se compila e instala por separado y conserva su UUID. No hace
@@ -49,7 +50,8 @@ python watchfaces/pilot-analog/tools/generate_assets.py
   validado entre 0 y 100. Ausente o inválido: `--`, sin progreso. Se refresca
   por minuto y al despertar. El arco tiene el mismo radio, inicio, recorrido,
   grosor y relleno proporcional que el de pasos. No utiliza Body Battery ni
-  requiere el permiso `ComplicationSubscriber`.
+  suscripciones. El permiso `ComplicationSubscriber` se usa para abrir las
+  vistas nativas al mantener pulsadas las complicaciones.
   Relleno verde salvia desde 80%, amarillo cálido desde 30% y rojo coral por
   debajo de 30%; el número y el icono siguen blancos.
 - Meteorología: caché oficial `Weather.getCurrentConditions()`, `temperature`

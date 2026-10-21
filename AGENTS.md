@@ -13,7 +13,13 @@ Windows y PowerShell; no hay dependencias Node ni una aplicación web.
   herramientas comunes o añades una esfera. No leas todo el repositorio para
   un cambio localizado. Omite `bin/` y `.local/` al explorar código.
 - Conserva el comportamiento y la identidad de cada esfera salvo petición
-  expresa. Los proyectos activos son Modular One y Pilot Analog.
+  expresa. Los proyectos activos se registran en `projects.json`.
+- Las esferas nuevas deben aprovechar todo el lienzo circular de 390 × 390
+  del Forerunner 170, sin simular un bisel interior ni reducir la composición.
+  Ajusta trazos y texto al borde físico para evitar recortes.
+- Las complicaciones deben abrir su vista nativa al mantener pulsado el dato
+  siempre que Garmin ofrezca un destino compatible. Usa `WatchFaceDelegate`
+  y `Complications.exitTo`; documenta los destinos que el firmware no permita.
 
 ## Arquitectura
 
@@ -57,6 +63,7 @@ Desde la raíz:
 .\scripts\build.ps1 -Project modular-one
 .\scripts\build.ps1 -Project pilot-analog
 .\scripts\build.ps1 -Project all
+.\scripts\test.ps1 -Project all
 .\tests\tooling.tests.ps1
 ```
 

@@ -5,6 +5,6 @@ import Toybox.WatchUi;
 class PilotAnalogApp extends Application.AppBase {
     function initialize() { AppBase.initialize(); }
     function getInitialView() as [Views] or [Views, InputDelegates] {
-        return [new PilotAnalogView()];
+        return [new PilotAnalogView(), new PilotDelegate()];
     }
 }

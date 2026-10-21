@@ -69,3 +69,19 @@ La referencia coloca el icono meteorológico encima de la temperatura y las
 huellas encima de los pasos; se conserva ese orden por prioridad visual.
 La horaria es hueca y deja ver el contenido que atraviesa; las agujas se
 dibujan encima de las complicaciones como en la referencia.
+
+## Interacción y validación
+
+Cada círculo conserva su destino al mantener pulsado: batería del dispositivo
+arriba, tiempo actual a la izquierda, fecha a la derecha y pasos abajo.
+Las zonas siguen los centros y radios de la tabla. `WatchFaceDelegate.onPress`
+llama a `Complications.exitTo`; un destino rechazado por el firmware con
+`InvalidValueException` devuelve `false`. El permiso `ComplicationSubscriber`
+permite esta navegación sin suscripciones nuevas ni lectura de Body Battery.
+
+La compilación con `-w` y las siete pruebas en el simulador `fr170` pasan.
+Las zonas de pulsación tienen cobertura de pruebas; no se ha comprobado en
+el reloj la apertura de las vistas nativas. El dibujo de pruebas usa un búfer
+de 1 × 1. La captura real de 390 × 390 sigue pendiente porque Computer Use
+no pudo conectar con su canal nativo; ese error no demuestra un fallo del
+simulador ni valida los píxeles de la esfera.

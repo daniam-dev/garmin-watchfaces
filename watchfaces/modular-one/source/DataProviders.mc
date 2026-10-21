@@ -13,6 +13,8 @@ class FaceData {
     var month as String = "--";
     var steps as Number?;
     var stepGoal as Number?;
+    var intensityMinutes as Number?;
+    var intensityGoal as Number?;
     var battery as Numeric?;
     var bodyBattery as Numeric?;
     var temperature as Numeric?;
@@ -40,12 +42,21 @@ class ClockProvider {
     }
 }
 
-class StepsProvider {
+class ActivityProvider {
     function initialize() {}
     function refresh(data as FaceData) as Void {
         var info = ActivityMonitor.getInfo();
         data.steps = info.steps;
         data.stepGoal = info.stepGoal;
+        data.intensityMinutes = null;
+        data.intensityGoal = null;
+        if (info has :activeMinutesWeek && info.activeMinutesWeek != null) {
+            // Garmin ya cuenta cada minuto vigoroso dos veces en total.
+            data.intensityMinutes = Formatters.nonNegative(info.activeMinutesWeek.total);
+        }
+        if (info has :activeMinutesWeekGoal) {
+            data.intensityGoal = Formatters.nonNegative(info.activeMinutesWeekGoal);
+        }
     }
 }
 

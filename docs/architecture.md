@@ -4,7 +4,7 @@
 
 Cada esfera es un proyecto Connect IQ autónomo bajo `watchfaces/<slug>/`.
 Puede compilarse sin el código o los recursos de las demás. El manifiesto es la
-autoridad de identidad y permisos; ambos proyectos admiten únicamente `fr170`.
+autoridad de identidad y permisos; todos los proyectos admiten únicamente `fr170`.
 
 `projects.json` asocia el slug de cada carpeta con el nombre del programa de
 salida. Los scripts lo leen para evitar mantener listas de proyectos dentro
@@ -25,6 +25,7 @@ mantiene su ciclo de vida, proveedores, dibujo y recursos.
 | `FaceRenderer.mc` | Composición de la esfera desde `FaceData` |
 | `Components.mc` | Primitivas de iconos, círculos y arcos |
 | `Theme.mc` | Colores y medidas reutilizadas |
+| `ComplicationDelegate.mc` | Zonas de pulsación larga y apertura de vistas nativas |
 
 La vista refresca los datos al cambiar el minuto y atiende los cambios de la
 complicación Body Battery. El renderizador no lee sensores ni gestiona
@@ -52,6 +53,28 @@ Las pruebas Monkey C se excluyen de la compilación normal mediante `:test`.
 normal de la watchface. Los manifiestos y programas de diagnóstico se generan
 en `bin/`; no forman otra esfera instalada.
 
+`PilotDelegate` abre batería, tiempo, fecha y pasos por pulsación larga.
+El permiso `ComplicationSubscriber` es necesario para `exitTo`; Pilot no
+mantiene suscripciones a datos ni consulta Body Battery.
+
+## Stride Digital
+
+Esfera digital autónoma que aprovecha el círculo de 390 × 390: arcos de pasos
+y Body Battery a radio 191 y grosor 6, sin bisel interior, y hora grande con
+cifras BMFont propias desde Rajdhani Bold. El generador y la fuente OFL
+pertenecen a esta esfera; rótulos y fecha usan fuentes nativas de Garmin.
+`StrideApp` crea `StrideView` y `StrideDelegate`. La vista controla reposo,
+refresco por minuto y suscripciones de Body Battery y pulso. `StrideProvider` lee Garmin
+y conserva valores anulables en `StrideData`; `StrideFormat` formatea y limita
+progresos. `StrideRenderer` dibuja únicamente desde el modelo y `StrideTheme`.
+No comparte código ni recursos con las otras esferas.
+
+Las tres esferas usan `WatchFaceDelegate.onPress` y `Complications.exitTo`.
+Los módulos `*Targets` resuelven coordenadas sin leer sensores. Fuera de una
+zona no se consume el gesto; un destino rechazado por Garmin devuelve `false`.
+El dato meteorológico y la lluvia abren la misma vista nativa. Las pruebas
+verifican la selección de destinos, no la implementación del firmware.
+
 ## Herramientas y validación
 
 - `scripts/build.ps1`: compila una esfera o todas, en secuencia. Resuelve el
@@ -63,6 +86,11 @@ en `bin/`; no forman otra esfera instalada.
 - `tests/tooling.tests.ps1`: usa una copia temporal sin claves ni binarios para
   comprobar que se rechazan IDs duplicados, dispositivos incompatibles,
   tareas ausentes y slugs con rutas fuera de la convención.
+- `scripts/test.ps1`: compila las pruebas de las esferas registradas y las
+  ejecuta en `fr170`, con límite de 45 segundos por sesión. Exige un resultado
+  `PASSED` sin fallos ni errores y sin errores de transporte. El SDK 9.2 puede
+  terminar con código 1 incluso cuando el veredicto de las pruebas es correcto.
+  Las pruebas de dibujo con búfer de 1 × 1 no constituyen revisión visual.
 
 ## Contexto para Codex
 

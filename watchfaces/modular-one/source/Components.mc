@@ -4,16 +4,64 @@ import Toybox.Math;
 import Toybox.Weather;
 
 module Components {
+    function dial(dc as Graphics.Dc, x as Number) as Void {
+        dc.setColor(Theme.DIAL, Graphics.COLOR_TRANSPARENT);
+        dc.fillCircle(x, Theme.DIAL_Y, Theme.DIAL_RADIUS);
+        dc.setPenWidth(1);
+        dc.setColor(Theme.OUTLINE, Graphics.COLOR_TRANSPARENT);
+        dc.drawCircle(x, Theme.DIAL_Y, Theme.DIAL_RADIUS);
+    }
+    function rail(dc as Graphics.Dc, start as Number, clockwise as Boolean,
+                  progress as Float, color as Number, available as Boolean) as Void {
+        var sign = clockwise ? -1 : 1;
+        dc.setColor(Theme.TICK, Graphics.COLOR_TRANSPARENT);
+        dc.setPenWidth(2);
+        for (var i = 0; i <= 42; i += 1) {
+            var angle = start + sign * i * 4;
+            var inner = i % 7 == 0 ? 172 : 177;
+            var from = arcPoint(Theme.CENTER, Theme.CENTER, inner, angle);
+            var to = arcPoint(Theme.CENTER, Theme.CENTER, 184, angle);
+            dc.drawLine(from[0], from[1], to[0], to[1]);
+        }
+        // El progreso fino deja visible la escala. Sin dato no hay marcador.
+        arc(dc, Theme.CENTER, Theme.CENTER, Theme.ARC_RADIUS, start, Theme.ARC_SWEEP, clockwise,
+            progress, color, Theme.OUTLINE, Theme.ARC_WIDTH, false);
+        if (available) {
+            var markerAngle = start + sign * progressDegrees(Theme.ARC_SWEEP, progress);
+            dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+            cap(dc, Theme.CENTER, Theme.CENTER, Theme.ARC_RADIUS, markerAngle, Theme.MARKER_RADIUS * 2);
+        }
+    }
     function circle(dc as Graphics.Dc, x as Number, y as Number, radius as Number) as Void {
         dc.setPenWidth(2);
         dc.setColor(Theme.OUTLINE, Graphics.COLOR_TRANSPARENT);
         dc.drawCircle(x, y, radius);
     }
-    // Garmin angles start at 3 o'clock. Use the same integer angle for caps.
+    function progressDegrees(sweep as Number, progress as Float) as Number {
+        if (progress <= 0.0f) { return 0; }
+        if (progress >= 1.0f) { return sweep; }
+        // drawArc trunca ángulos: elegimos una sola vez el grado más próximo.
+        return Math.round(sweep * progress).toNumber();
+    }
+    function arcPoint(x as Number, y as Number, radius as Number, angle as Number) as Array<Number> {
+        var normalized = angle % 360;
+        if (normalized < 0) { normalized += 360; }
+        var acute = normalized;
+        if (normalized > 270) { acute = 360 - normalized; }
+        else if (normalized > 180) { acute = normalized - 180; }
+        else if (normalized > 90) { acute = 180 - normalized; }
+        var radians = acute * Math.PI / 180.0f;
+        // Redondear los módulos antes del signo conserva la simetría entre lados.
+        var dx = Math.round(radius * Math.cos(radians)).toNumber();
+        var dy = Math.round(radius * Math.sin(radians)).toNumber();
+        if (normalized > 90 && normalized < 270) { dx = -dx; }
+        if (normalized < 180) { dy = -dy; }
+        return [x + dx, y + dy];
+    }
     function cap(dc as Graphics.Dc, x as Number, y as Number, radius as Number,
                  angle as Number, width as Number) as Void {
-        var radians = angle * Math.PI / 180.0f;
-        dc.fillCircle(x + radius * Math.cos(radians), y - radius * Math.sin(radians), width / 2);
+        var point = arcPoint(x, y, radius, angle);
+        dc.fillCircle(point[0], point[1], width / 2.0f);
     }
     function arc(dc as Graphics.Dc, x as Number, y as Number, radius as Number,
                  start as Number, sweep as Number, clockwise as Boolean,
@@ -24,28 +72,33 @@ module Components {
         var finish = start + sign * sweep;
         dc.setPenWidth(width);
         dc.setColor(track, Graphics.COLOR_TRANSPARENT);
-        dc.drawArc(x, y, radius, direction, start, finish);
-        cap(dc, x, y, radius, start, width);
-        cap(dc, x, y, radius, finish, width);
-        // Equal angles draw a FULL circle: skip the foreground when zero.
-        var degrees = (sweep * progress).toNumber();
-        if (degrees > 0) {
-            finish = start + sign * degrees;
-            dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+        if (sweep == 360) {
+            dc.drawCircle(x, y, radius);
+        } else {
             dc.drawArc(x, y, radius, direction, start, finish);
             cap(dc, x, y, radius, start, width);
             cap(dc, x, y, radius, finish, width);
         }
+        // Ángulos iguales dibujan un círculo entero: el cero no tiene relleno.
+        var degrees = progressDegrees(sweep, progress);
+        finish = start + sign * degrees;
+        if (degrees > 0) {
+            dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+            if (degrees == 360) {
+                dc.drawCircle(x, y, radius);
+            } else {
+                dc.drawArc(x, y, radius, direction, start, finish);
+                cap(dc, x, y, radius, start, width);
+                cap(dc, x, y, radius, finish, width);
+            }
+        }
         if (marker) {
-            var angle = (start + sign * degrees) * Math.PI / 180.0f;
-            var markerX = x + radius * Math.cos(angle);
-            var markerY = y - radius * Math.sin(angle);
             dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-            dc.fillCircle(markerX, markerY, 9);
+            cap(dc, x, y, radius, finish, 18);
             dc.setColor(Theme.TEXT, Graphics.COLOR_TRANSPARENT);
-            dc.fillCircle(markerX, markerY, 7);
+            cap(dc, x, y, radius, finish, 14);
             dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-            dc.fillCircle(markerX, markerY, 5);
+            cap(dc, x, y, radius, finish, 10);
         }
         dc.setPenWidth(2);
     }
@@ -58,20 +111,21 @@ module Components {
     function feet(dc as Graphics.Dc, x as Number, y as Number) as Void {
         // fillEllipse takes a center and two radii, not a bounding box.
         // Separate soles and heels, staggered like the reference footprints.
-        dc.fillEllipse(x - 7, y - 5, 4, 7);
-        dc.fillCircle(x - 7, y + 7, 3);
-        dc.fillEllipse(x + 7, y - 11, 4, 7);
-        dc.fillCircle(x + 7, y + 1, 3);
+        var scale = Theme.STEPS_ICON_SCALE;
+        dc.fillEllipse(x - 7 * scale, y - 5 * scale, 4 * scale, 7 * scale);
+        dc.fillCircle(x - 7 * scale, y + 7 * scale, 3 * scale);
+        dc.fillEllipse(x + 7 * scale, y - 11 * scale, 4 * scale, 7 * scale);
+        dc.fillCircle(x + 7 * scale, y + scale, 3 * scale);
     }
-    function energy(dc as Graphics.Dc, x as Number, y as Number) as Void {
-        // Solid silhouette with a separate bolt; no intersecting thin strokes.
-        dc.fillCircle(x - 6, y - 13, 4);
-        dc.fillPolygon([[x - 15, y - 9], [x - 6, y - 6], [x + 3, y - 10],
-                        [x + 4, y - 7], [x - 5, y - 2], [x - 15, y - 6]]);
-        dc.fillPolygon([[x - 9, y - 5], [x - 3, y - 4], [x - 5, y + 3],
-                        [x - 9, y + 11], [x - 13, y + 11], [x - 9, y + 1]]);
-        dc.fillPolygon([[x + 12, y - 9], [x + 4, y + 3], [x + 9, y + 3],
-                        [x + 6, y + 12], [x + 17, y - 2], [x + 11, y - 2]]);
+    function intensity(dc as Graphics.Dc, x as Number, y as Number) as Void {
+        // Cronómetro compacto, con trazos comparables a las huellas pequeñas.
+        dc.setPenWidth(2);
+        dc.drawCircle(x, y, 8);
+        dc.fillRoundedRectangle(x - 3, y - 13, 6, 3, 1);
+        dc.drawLine(x, y - 10, x, y - 8);
+        dc.drawLine(x + 6, y - 7, x + 8, y - 9);
+        dc.drawLine(x, y, x, y - 4);
+        dc.drawLine(x, y, x + 3, y + 2);
     }
     function cloud(dc as Graphics.Dc, x as Number, y as Number) as Void {
         dc.setColor(Theme.CLOUD, Graphics.COLOR_TRANSPARENT);
