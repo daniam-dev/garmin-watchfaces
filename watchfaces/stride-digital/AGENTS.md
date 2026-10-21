@@ -3,7 +3,7 @@
 Lee [las instrucciones comunes](../../AGENTS.md), PRODUCT.md y DESIGN.md.
 
 - Proyecto autónomo para `fr170`; no importar código ni recursos de otra esfera.
-- Aprovechar el círculo completo de 390 × 390. Hora inclinada en dos líneas a la
+- Aprovechar el círculo completo de 390 × 390. Hora recta en dos líneas a la
   izquierda; pasos, Body Battery y pulso en una columna a la derecha. Sin
   arcos de actividad, paneles ni círculos de datos.
 - Datos oficiales, nulos explícitos, hora de 24 horas y fecha española.
@@ -15,8 +15,10 @@ Lee [las instrucciones comunes](../../AGENTS.md), PRODUCT.md y DESIGN.md.
 - Cifras deportivas propias en `resources/fonts/`; regenerar con
   `python tools/generate_fonts.py`. Mantener licencia, horas de relleno oscuro
   y contorno lima, minutos blancos, pasos lima y Body Battery cian contenido.
-  `Time` y `TimeOutline` usan dígitos tabulares inclinados 8°, de 130 px de
-  altura final; el contorno interior nominal de 3 px no amplía sus cajas.
+  Los cuatro recursos numéricos usan Barlow Condensed ExtraBold, con licencia
+  SIL OFL 1.1. `Time` y `TimeOutline` tienen dígitos tabulares rectos (0°),
+  celdas de 88 px y 130 px de altura final; el contorno interior nominal de
+  3 px no amplía sus cajas.
   `Value` y `Compact`
   conservan 30 y 19 px. Cambiar medidas y colores en `StrideTheme` y mantener
   `DESIGN.md` y `.impeccable/design.json` coherentes.

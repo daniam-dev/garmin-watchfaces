@@ -99,6 +99,7 @@ function strideNativeTypographyAndStates(logger as Test.Logger) as Boolean {
     Test.assert(dc.getTextWidthInPixels("999.999",small) <= StrideTheme.METRIC_WIDTH);
     Test.assert(dc.getTextWidthInPixels("100.000",small) <= StrideTheme.METRIC_WIDTH);
     Test.assert(dc.getTextWidthInPixels("888.888",small) <= StrideTheme.METRIC_WIDTH);
+    Test.assert(dc.getTextWidthInPixels("444.444",small) <= StrideTheme.METRIC_WIDTH);
     Test.assert(dc.getTextWidthInPixels("100%",small) <= 60);
     Test.assert(dc.getTextWidthInPixels("220",value) <= StrideTheme.METRIC_WIDTH);
     Test.assert(Graphics.getFontHeight(value)/2+Graphics.getFontHeight(label)/2+3 <= StrideTheme.LABEL_OFFSET);

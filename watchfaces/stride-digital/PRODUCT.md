@@ -8,8 +8,9 @@ Esfera nativa Monkey C para Forerunner 170 (`fr170`), AMOLED circular
 de 390 × 390. API mínima 6.0.2. Uso personal de Dani.
 
 Hora grande, fondo negro y español, con consulta de pasos, Body Battery, pulso,
-tiempo, lluvia y batería. El carácter deportivo se apoya en las cifras Rajdhani
-inclinadas: horas con relleno oscuro y contorno lima, minutos blancos. Pasos
+tiempo, lluvia y batería. El carácter deportivo se apoya en Barlow Condensed
+ExtraBold, de trazos gruesos y redondeados, recta y sin sesgo añadido (0°):
+horas con relleno oscuro y contorno lima, minutos blancos. Pasos
 usan lima; Body Battery y lluvia, cian contenido. No se añaden marca Garmin
 ni servicios externos.
 
@@ -21,8 +22,10 @@ al pie. Las medidas y los recursos vigentes se documentan en `DESIGN.md`.
 
 El ajuste del 22/10/2026 conserva esa composición y toma como referencia las
 esferas de las imágenes oficiales de Forerunner 970, Venu 4 y fēnix 9:
-inclinación, contraste entre contorno y relleno, iconos compactos y barras
-segmentadas. Las fuentes y los iconos de Stride siguen siendo propios. Cada línea de
+contraste entre contorno y relleno, iconos compactos y barras segmentadas.
+La sustitución de Rajdhani por Barlow responde al rechazo de la fuente anterior;
+la inclinación de las referencias no se traslada a la fuente actual.
+Los recursos numéricos se generan desde Barlow y los iconos son propios. Cada línea de
 la hora mide 176 × 130 px; la fecha, el pie y la columna dejan espacio
 a las cifras ampliadas.
 Las imágenes y su procedencia están en `.impeccable/references/README.md`;
@@ -57,13 +60,15 @@ una aplicación que Garmin no exponga.
 La compilación con `-w` y las cuatro pruebas en `fr170` pasan. Cubren ausencia,
 ceros, objetivos, pulso, destinos de pulsación, cada píxel de las dos barras
 segmentadas, los iconos y las cajas de las 1.440 horas dentro del círculo para
-`Time` y `TimeOutline`. El dibujo con datos ausentes
+`Time` y `TimeOutline`, además del ancho de `444.444`, caso de cifra larga.
+El dibujo con datos ausentes
 y extremos se ejecuta en un búfer de 1 × 1; no valida su aspecto.
 
 El diagnóstico en el DC completo, con el límite normal de memoria, registra
 16.464 bytes usados, 110.416 libres y 126.880 totales, sin errores de ejecución.
 Estos estados de prueba no representan lecturas reales. La app está cargada
-en el simulador; se han inspeccionado los atlas `Time.png` y `TimeOutline.png`. No se obtuvo
+en el simulador; se han inspeccionado los atlas `Time.png`, `TimeOutline.png`
+y `Value.png`. No se obtuvo
 captura: Computer Use no dispone de canal nativo. Quedan pendientes la revisión
 visual a 390 × 390 y la apertura de los destinos en el reloj. Las comprobaciones
 geométricas y de compilación no sustituyen esa revisión.

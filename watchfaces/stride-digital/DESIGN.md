@@ -15,9 +15,9 @@ colors:
   sun: "#DAB779"
   low: "#DF827A"
 typography:
-  display: {fontFamily: StrideRajdhaniNumeric, fontSize: "130px", fontFeature: "Tabular digits"}
-  value: {fontFamily: StrideRajdhaniNumeric, fontSize: "30px"}
-  compact: {fontFamily: StrideRajdhaniNumeric, fontSize: "19px"}
+  display: {fontFamily: StrideBarlowNumeric, fontSize: "130px", fontFeature: "Tabular digits"}
+  value: {fontFamily: StrideBarlowNumeric, fontSize: "30px"}
+  compact: {fontFamily: StrideBarlowNumeric, fontSize: "19px"}
   label: {fontFamily: RobotoCondensedRegular, fontSize: "16px"}
   date: {fontFamily: RobotoRegular, fontSize: "18px"}
   weather: {fontFamily: RobotoRegular, fontSize: "22px"}
@@ -38,14 +38,14 @@ components:
 
 ## Overview
 
-Esfera deportiva de fondo negro, hora inclinada en dos líneas a la izquierda
+Esfera deportiva de fondo negro, hora recta en dos líneas a la izquierda
 y una columna de pasos, Body Battery y pulso a la derecha. Las barras de
 progreso segmentadas quedan bajo su cifra y rótulo. Fecha y batería ocupan la parte
 superior; tiempo y lluvia, el pie.
 
 Esta composición sustituye el diseño anterior tras la auditoría del
 21/10/2026. Aprovecha el círculo físico sin bisel interior ni paneles de datos.
-El ajuste del 22/10/2026 añade inclinación y contraste entre contorno y relleno
+El ajuste del 22/10/2026 añade contraste entre contorno y relleno
 en la hora, iconos compactos y segmentos. Las horas tienen relleno oscuro y
 contorno lima; los minutos son blancos. Pasos y Body Battery usan acentos
 lima y cian contenidos. La investigación de imágenes oficiales de Forerunner
@@ -72,16 +72,18 @@ no depende solo del color. Una condición desconocida se dibuja con dos rayas.
 
 ## Typography
 
-Cifras propias desde Rajdhani Bold de Indian Type Foundry, bajo SIL OFL 1.1,
-condensadas al 80%. No proceden de Garmin. `tools/generate_fonts.py` genera
+Cifras generadas desde Barlow Condensed ExtraBold de Jeremy Tribby, bajo SIL
+OFL 1.1, con trazos gruesos y redondeados. La fuente sustituye a Rajdhani por
+petición del usuario. Se mantiene recta, con inclinación natural de 0° y sin
+sesgo añadido. No procede de Garmin. `tools/generate_fonts.py` genera
 los BMFont `Time`, `TimeOutline`, `Value` y `Compact`; se cargan una vez en `layout()`.
 El TTF, la licencia y la procedencia permanecen en `resources/fonts/`.
 
 Los tamaños del frontmatter son alturas finales recortadas a la tinta numérica.
-`Time` y `TimeOutline` se generan desde 202 px con dígitos tabulares: cada pareja mide 176 px,
+`Time` y `TimeOutline` se generan desde 179 px con dígitos tabulares: cada pareja mide 176 px,
 incluidas `11` y `88`. Se muestran horas sobre minutos, sin dibujar los
-dos puntos. La inclinación de 8° se aplica tras condensar la tinta dentro de
-la celda de 88 px. `TimeOutline` genera un contorno interior nominal de 3 px
+dos puntos. La escala horizontal de 0,97 mantiene los dígitos dentro de su
+celda de 88 px, sin inclinarlos. `TimeOutline` genera un contorno interior nominal de 3 px
 por erosión de 7 × 7, sin ampliar cajas ni avances. Las horas superponen el
 contorno lima al relleno oscuro; los minutos usan solo el relleno blanco.
 Las dos líneas conservan su posición y anchura al cambiar la hora.
@@ -89,12 +91,14 @@ Las dos líneas conservan su posición y anchura al cambiar la hora.
 Las cifras de actividad usan `value`; si superan los 84 px de
 `METRIC_WIDTH`, cambian a `compact`. La batería también usa `compact`.
 Rótulos, fecha y meteorología usan las fuentes vectoriales nativas indicadas
-en el frontmatter. Se conservan los recursos `Value` y `Compact`.
+en el frontmatter. `Value` y `Compact` también usan Barlow, desde 42 y 26 px,
+sin condensación adicional y con alturas finales de 30 y 19 px.
 
 Las pruebas recorren las 1.440 horas con ambas fuentes y comprueban las esquinas de sus cajas
 dentro del radio 193, con separación mínima de ocho píxeles entre líneas.
 También comprueban que las esquinas de la hora no activen otra complicación
 y que fecha, temperatura negativa y lluvia al 100% quepan en el círculo.
+El caso `444.444` comprueba el ancho de una cifra larga con la fuente nueva.
 Verifican medidas del motor, no rasterizado ni legibilidad en pantalla.
 
 ## Layout
@@ -140,7 +144,7 @@ otra esfera.
 
 ## Components
 
-- Hora y fecha: 24 horas inclinadas en dos líneas, horas de contorno y minutos
+- Hora y fecha: 24 horas rectas en dos líneas, horas de contorno y minutos
   rellenos; día y mes abreviados en español.
 - Pasos: cifra real con puntos de miles, rótulo `PASOS` y barra respecto al
   objetivo diario. Icono de huellas y barra segmentada en lima.
@@ -170,7 +174,7 @@ sin errores de ejecución. Sus datos son estados de prueba.
 
 La revisión independiente final no detectó errores materiales de código,
 geometría o contratos. La app está cargada en el simulador y solo se han
-inspeccionado los atlas `Time.png` y `TimeOutline.png`. No se obtuvo captura real de 390 × 390:
+inspeccionado los atlas `Time.png`, `TimeOutline.png` y `Value.png`. No se obtuvo captura real de 390 × 390:
 Computer Use no dispone de canal nativo. Quedan pendientes la revisión
 visual de rasterizado, recortes y legibilidad con datos representativos
 y ausentes, y la apertura de vistas nativas en el reloj. No se presenta
@@ -178,7 +182,7 @@ la compilación ni la geometría como validación visual.
 
 ## Do's and Don'ts
 
-- Mantener la hora inclinada en dos líneas a la izquierda, horas de contorno lima
+- Mantener la hora recta en dos líneas a la izquierda, horas de contorno lima
   y minutos blancos, con los datos en la columna derecha.
 - Conservar cada barra junto a su cifra y rótulo.
 - Mostrar ausencia explícita y conservar los ceros válidos.

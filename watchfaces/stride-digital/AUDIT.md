@@ -2,12 +2,14 @@
 
 Estado del 22/10/2026: el ajuste inspirado en imágenes oficiales de Garmin
 mantiene la composición resuelta el día anterior. Cada línea de la hora mide
-176 × 130 px tras el retoque de tamaño. Añade hora inclinada con
+176 × 130 px tras el retoque de tamaño. La fuente Barlow Condensed ExtraBold
+sustituye a Rajdhani por petición del usuario, recta y sin sesgo añadido (0°).
+Mantiene
 horas de contorno lima y minutos blancos, iconos vectoriales propios y barras
 de diez segmentos; Body Battery y lluvia usan cian contenido. Compilación
 con avisos y cuatro pruebas en `fr170` superadas. El diagnóstico en el DC
 completo registra 16.464 de 126.880 bytes usados, sin errores de ejecución.
-Se inspeccionaron los atlas `Time.png` y `TimeOutline.png`, además de las
+Se inspeccionaron los atlas `Time.png`, `TimeOutline.png` y `Value.png`, además de las
 referencias oficiales guardadas. Sigue pendiente una captura real de Stride
 a 390 × 390: Computer Use no dispone de canal nativo. También queda pendiente
 abrir los destinos en el reloj. `DESIGN.md` describe el diseño vigente;

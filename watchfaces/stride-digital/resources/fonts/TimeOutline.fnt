@@ -1,15 +1,15 @@
-info face="Stride Rajdhani Numeric" size=202 bold=1 italic=1 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=0,0
+info face="Stride Barlow Numeric" size=179 bold=1 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=0,0
 common lineHeight=130 base=130 scaleW=1024 scaleH=134 pages=1 packed=0
 page id=0 file="TimeOutline.png"
 chars count=11
-char id=48 x=2 y=2 width=87 height=130 xoffset=0 yoffset=0 xadvance=88 page=0 chnl=8
-char id=49 x=91 y=2 width=61 height=130 xoffset=14 yoffset=0 xadvance=88 page=0 chnl=8
-char id=50 x=154 y=2 width=82 height=130 xoffset=3 yoffset=0 xadvance=88 page=0 chnl=8
-char id=51 x=238 y=2 width=83 height=130 xoffset=2 yoffset=0 xadvance=88 page=0 chnl=8
-char id=52 x=323 y=2 width=87 height=130 xoffset=0 yoffset=0 xadvance=88 page=0 chnl=8
-char id=53 x=412 y=2 width=83 height=130 xoffset=2 yoffset=0 xadvance=88 page=0 chnl=8
-char id=54 x=497 y=2 width=86 height=130 xoffset=1 yoffset=0 xadvance=88 page=0 chnl=8
-char id=55 x=585 y=2 width=74 height=130 xoffset=7 yoffset=0 xadvance=88 page=0 chnl=8
-char id=56 x=661 y=2 width=88 height=130 xoffset=0 yoffset=0 xadvance=88 page=0 chnl=8
-char id=57 x=751 y=2 width=86 height=130 xoffset=1 yoffset=0 xadvance=88 page=0 chnl=8
-char id=45 x=839 y=2 width=58 height=130 xoffset=15 yoffset=0 xadvance=88 page=0 chnl=8
+char id=48 x=2 y=2 width=79 height=130 xoffset=4 yoffset=0 xadvance=88 page=0 chnl=8
+char id=49 x=83 y=2 width=51 height=126 xoffset=18 yoffset=2 xadvance=88 page=0 chnl=8
+char id=50 x=136 y=2 width=78 height=127 xoffset=5 yoffset=1 xadvance=88 page=0 chnl=8
+char id=51 x=216 y=2 width=77 height=127 xoffset=6 yoffset=2 xadvance=88 page=0 chnl=8
+char id=52 x=295 y=2 width=88 height=126 xoffset=0 yoffset=2 xadvance=88 page=0 chnl=8
+char id=53 x=385 y=2 width=78 height=127 xoffset=5 yoffset=2 xadvance=88 page=0 chnl=8
+char id=54 x=465 y=2 width=78 height=128 xoffset=5 yoffset=1 xadvance=88 page=0 chnl=8
+char id=55 x=545 y=2 width=73 height=126 xoffset=8 yoffset=2 xadvance=88 page=0 chnl=8
+char id=56 x=620 y=2 width=77 height=130 xoffset=6 yoffset=0 xadvance=88 page=0 chnl=8
+char id=57 x=699 y=2 width=77 height=128 xoffset=6 yoffset=1 xadvance=88 page=0 chnl=8
+char id=45 x=778 y=2 width=58 height=65 xoffset=15 yoffset=63 xadvance=88 page=0 chnl=8

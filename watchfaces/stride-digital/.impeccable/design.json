@@ -56,15 +56,15 @@
     "typographyMeta": {
       "display": {
         "displayName": "Hora deportiva",
-        "purpose": "Rajdhani Bold con base condensada al 80% e inclinación de 8° dentro de celdas tabulares; horas con contorno y minutos rellenos. Altura final definida en DESIGN.md."
+        "purpose": "Barlow Condensed ExtraBold, recta y sin sesgo añadido (0°), con escala horizontal de 0,97 y celdas tabulares; horas con contorno y minutos rellenos. Altura final definida en DESIGN.md."
       },
       "value": {
         "displayName": "Cifras de actividad",
-        "purpose": "Recurso Value conservado, con avances proporcionales."
+        "purpose": "Barlow Condensed ExtraBold desde 42 px, sin condensación adicional, con altura final de 30 px y avances proporcionales."
       },
       "compact": {
         "displayName": "Cifra compacta",
-        "purpose": "Batería y cifras de actividad que superen METRIC_WIDTH."
+        "purpose": "Barlow Condensed ExtraBold desde 26 px, sin condensación adicional y con altura final de 19 px; batería y cifras de actividad que superen METRIC_WIDTH."
       },
       "label": {
         "displayName": "Rótulos",
@@ -166,14 +166,14 @@
       },
       "timeFont": {
         "resource": "Rez.Fonts.Time",
-        "source": "Rajdhani Bold, SIL OFL 1.1",
-        "sourceSize": 202,
-        "horizontalScale": 0.8,
+        "source": "Barlow Condensed ExtraBold, Jeremy Tribby, SIL OFL 1.1",
+        "sourceSize": 179,
+        "horizontalScale": 0.97,
         "tabularDigits": true,
         "pairWidth": 176,
         "testedAabbRadius": 193,
         "outlineResource": "Rez.Fonts.TimeOutline",
-        "slantDegrees": 8,
+        "slantDegrees": 0,
         "cellWidth": 88,
         "outlineInnerPixels": 3,
         "outlineErosionKernel": [
@@ -301,11 +301,11 @@
     "verification": {
       "build": "scripts/build.ps1 -Project stride-digital: compilación con -w superada, sin avisos.",
       "nativeTests": "scripts/test.ps1 -Project stride-digital: cuatro pruebas pasan en fr170. Incluyen las 1.440 horas con Time y TimeOutline dentro del radio 193, geometría y ancho tabular iguales, destinos, iconos y cada píxel de las barras segmentadas, ausencias, extremos, pulso y eventos. Las esquinas de la hora no activan otra complicación; fecha y pie caben en el radio comprobado.",
-      "timeMeasurements": "Pareja de dígitos: 176 px de ancho en ambos recursos; inclinación de 8° y contorno interior nominal de 3 px. Altura final definida en DESIGN.md.",
+      "timeMeasurements": "Pareja de dígitos: 176 × 130 px en ambos recursos; celdas tabulares de 88 px, sin sesgo añadido (0°) y contorno interior nominal de 3 px. Se comprueba además el ancho de 444.444 con la fuente nueva.",
       "buffer": "El dibujo de pruebas usa un búfer de 1 × 1, sin revisión visual.",
       "normalMemorySmoke": "Dibujo en el DC de 390 × 390 con el límite normal: 16.464 bytes usados, 110.416 libres y 126.880 totales. Cero errores de ejecución. Estados de prueba, sin inspección visual de píxeles.",
       "independentReview": "Revisión final sin errores materiales de código, geometría o contratos; no valida el aspecto.",
-      "visualReview": "Se inspeccionaron los atlas Time.png y TimeOutline.png y las cuatro referencias oficiales. App cargada en el simulador. No se obtuvo captura de Stride porque Computer Use no dispone de canal nativo; pendientes rasterizado, recortes y legibilidad a 390 × 390.",
+      "visualReview": "Se inspeccionaron los atlas nuevos Time.png, TimeOutline.png y Value.png. Las cuatro referencias oficiales se conservan como inspiración. App cargada en el simulador. No se obtuvo captura de Stride porque Computer Use no dispone de canal nativo; pendientes rasterizado, recortes y legibilidad a 390 × 390.",
       "deviceNavigation": "Apertura real de destinos pendiente en el reloj."
     },
     "nativeHealth": {
@@ -323,7 +323,7 @@
     {
       "name": "Hora y fecha",
       "kind": "custom",
-      "description": "Hora Rajdhani inclinada en dos líneas a la izquierda: horas con relleno oscuro y contorno lima, minutos blancos; fecha española gris en la cabecera."
+      "description": "Hora Barlow Condensed ExtraBold recta en dos líneas a la izquierda: horas con relleno oscuro y contorno lima, minutos blancos; fecha española gris en la cabecera."
     },
     {
       "name": "Barra de pasos",
@@ -354,9 +354,9 @@
     }
   ],
   "narrative": {
-    "overview": "Esfera deportiva de fondo negro, hora inclinada en dos líneas a la izquierda\ny una columna de pasos, Body Battery y pulso a la derecha. Las barras de\nprogreso segmentadas quedan bajo su cifra y rótulo. Fecha y batería ocupan la parte\nsuperior; tiempo y lluvia, el pie.\n\nEsta composición sustituye el diseño anterior tras la auditoría del\n21/10/2026. Aprovecha el círculo físico sin bisel interior ni paneles de datos.\nEl ajuste del 22/10/2026 añade inclinación y contraste entre contorno y relleno\nen la hora, iconos compactos y segmentos. Las horas tienen relleno oscuro y\ncontorno lima; los minutos son blancos. Pasos y Body Battery usan acentos\nlima y cian contenidos. La investigación de imágenes oficiales de Forerunner\n970, Venu 4 y fēnix 9 se conserva en `.impeccable/references/README.md`.\nNo incluye marca ni recursos Garmin en la esfera.\n\nLos tokens del frontmatter son normativos. Su implementación está en\n`source/Theme.mc`, `source/FaceRenderer.mc` y los recursos de fuentes.\nLas coordenadas y contratos nativos que no caben en el esquema se conservan\nen `.impeccable/design.json`. Sin segundos, animaciones ni AOD; reposo negro.",
+    "overview": "Esfera deportiva de fondo negro, hora recta en dos líneas a la izquierda\ny una columna de pasos, Body Battery y pulso a la derecha. Las barras de\nprogreso segmentadas quedan bajo su cifra y rótulo. Fecha y batería ocupan la parte\nsuperior; tiempo y lluvia, el pie.\n\nEsta composición sustituye el diseño anterior tras la auditoría del\n21/10/2026. Aprovecha el círculo físico sin bisel interior ni paneles de datos.\nEl ajuste del 22/10/2026 añade contraste entre contorno y relleno\nen la hora, iconos compactos y segmentos. Las horas tienen relleno oscuro y\ncontorno lima; los minutos son blancos. Pasos y Body Battery usan acentos\nlima y cian contenidos. La investigación de imágenes oficiales de Forerunner\n970, Venu 4 y fēnix 9 se conserva en `.impeccable/references/README.md`.\nNo incluye marca ni recursos Garmin en la esfera.\n\nLos tokens del frontmatter son normativos. Su implementación está en\n`source/Theme.mc`, `source/FaceRenderer.mc` y los recursos de fuentes.\nLas coordenadas y contratos nativos que no caben en el esquema se conservan\nen `.impeccable/design.json`. Sin segundos, animaciones ni AOD; reposo negro.",
     "dos": [
-      "Mantener la hora inclinada en dos líneas a la izquierda, horas de contorno lima\n  y minutos blancos, con los datos en la columna derecha.",
+      "Mantener la hora recta en dos líneas a la izquierda, horas de contorno lima\n  y minutos blancos, con los datos en la columna derecha.",
       "Conservar cada barra junto a su cifra y rótulo.",
       "Mostrar ausencia explícita y conservar los ceros válidos.",
       "Mantener reposo negro sin segundos, timers, animaciones ni AOD."

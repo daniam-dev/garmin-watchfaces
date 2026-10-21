@@ -1,19 +1,18 @@
 """Genera los recursos BMFont numéricos propios de Stride Digital con Pillow."""
 
 from pathlib import Path
-from math import radians, tan
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont, ImageOps, PngImagePlugin
 
 ROOT = Path(__file__).resolve().parents[1]
 FONTS = ROOT / "resources" / "fonts"
-SOURCE = FONTS / "Rajdhani-Bold.ttf"
+SOURCE = FONTS / "BarlowCondensed-ExtraBold.ttf"
 CHARACTERS = "0123456789:.-%"
 SCALE = 4
-CONDENSE = 0.80
 
 
-def generate(name: str, size: int, tabular: bool = False, slant: float = 0,
-             outline: bool = False, characters: str = CHARACTERS) -> None:
+def generate(name: str, size: int, tabular: bool = False,
+             outline: bool = False, characters: str = CHARACTERS,
+             condense: float = 1.0) -> None:
     font = ImageFont.truetype(str(SOURCE), size * SCALE)
     boxes = {char: font.getbbox(char) for char in characters}
     # Todos los glifos comparten la caja de las cifras; el guion y los dos
@@ -21,9 +20,7 @@ def generate(name: str, size: int, tabular: bool = False, slant: float = 0,
     top = min(boxes[char][1] for char in "0123456789")
     bottom = max(boxes[char][3] for char in "0123456789")
     line_height = round((bottom - top) / SCALE)
-    digit_advance = round(max(font.getlength(char) for char in "0123456789") / SCALE * CONDENSE)
-    lean = round(tan(radians(slant)) * line_height)
-    core_scale = (digit_advance - lean) / digit_advance
+    digit_advance = round(max(font.getlength(char) for char in "0123456789") / SCALE * condense)
     glyphs = []
     for char in characters:
         left, glyph_top, right, glyph_bottom = boxes[char]
@@ -31,21 +28,11 @@ def generate(name: str, size: int, tabular: bool = False, slant: float = 0,
         height = max(1, glyph_bottom - glyph_top)
         mask = Image.new("L", (width, height), 0)
         ImageDraw.Draw(mask).text((-left, -glyph_top), char, font=font, fill=255)
-        target = (max(1, round(width / SCALE * CONDENSE)), max(1, round(height / SCALE)))
+        target = (max(1, round(width / SCALE * condense)), max(1, round(height / SCALE)))
         mask = mask.resize(target, Image.Resampling.LANCZOS)
-        advance = round(font.getlength(char) / SCALE * CONDENSE)
-        offset_x = round(left / SCALE * CONDENSE)
+        advance = round(font.getlength(char) / SCALE * condense)
+        offset_x = round(left / SCALE * condense)
         offset_y = round((glyph_top - top) / SCALE)
-        if lean:
-            # La inclinación queda dentro de la celda original: primero se
-            # condensa la tinta y después se sesga hacia la derecha.
-            core = mask.resize((max(1, round(mask.width * core_scale)), mask.height), Image.Resampling.LANCZOS)
-            cell = Image.new("L", (core.width + lean, line_height), 0)
-            cell.paste(core, (0, offset_y))
-            mask = cell.transform(cell.size, Image.Transform.AFFINE,
-                                  (1, lean / line_height, -lean, 0, 1, 0),
-                                  Image.Resampling.BICUBIC)
-            offset_y = 0
         if outline:
             # Contorno interior de tres píxeles, sin ampliar caja ni avance.
             padded = ImageOps.expand(mask, border=3, fill=0)
@@ -80,11 +67,12 @@ def generate(name: str, size: int, tabular: bool = False, slant: float = 0,
         atlas.paste(mask, (x, y))
 
     metadata = PngImagePlugin.PngInfo()
-    metadata.add_text("Source", "https://github.com/google/fonts/tree/main/ofl/rajdhani; SIL OFL 1.1")
-    metadata.add_text("Generator", f"tools/generate_fonts.py; Rajdhani Bold; horizontal scale 0.80; 4x supersampling; tabular digits={tabular}; slant={slant}; inner outline={3 if outline else 0}px")
+    metadata.add_text("Source", "https://github.com/google/fonts/tree/main/ofl/barlowcondensed; SIL OFL 1.1")
+    metadata.add_text("Copyright", "Copyright 2017 The Barlow Project Authors (https://github.com/jpt/barlow)")
+    metadata.add_text("Generator", f"tools/generate_fonts.py; Barlow Condensed ExtraBold; horizontal scale={condense}; 4x supersampling; tabular digits={tabular}; upright; inner outline={3 if outline else 0}px")
     atlas.save(FONTS / f"{name}.png", pnginfo=metadata)
     lines = [
-        f'info face="Stride Rajdhani Numeric" size={size} bold=1 italic={1 if slant else 0} charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=0,0',
+        f'info face="Stride Barlow Numeric" size={size} bold=1 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=0,0',
         f"common lineHeight={line_height} base={line_height} scaleW={atlas_width} scaleH={atlas_height} pages=1 packed=0",
         f'page id=0 file="{name}.png"',
         f"chars count={len(positions)}",
@@ -93,11 +81,11 @@ def generate(name: str, size: int, tabular: bool = False, slant: float = 0,
         lines.append(f"char id={ord(char)} x={x} y={y} width={mask.width} height={mask.height} xoffset={offset_x} yoffset={offset_y} xadvance={advance} page=0 chnl=8")
     (FONTS / f"{name}.fnt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     advances = {char: advance for char, mask, offset_x, offset_y, advance in glyphs}
-    print(f"{name}: height={line_height}, 88={sum(advances[c] for c in '88')}, slant={slant}, outline={outline}")
+    print(f"{name}: height={line_height}, 88={sum(advances[c] for c in '88')}, outline={outline}")
 
 
 if __name__ == "__main__":
-    generate("Time", 202, tabular=True, slant=8, characters="0123456789-")
-    generate("TimeOutline", 202, tabular=True, slant=8, outline=True, characters="0123456789-")
-    generate("Value", 46)
-    generate("Compact", 29)
+    generate("Time", 179, tabular=True, characters="0123456789-", condense=0.97)
+    generate("TimeOutline", 179, tabular=True, outline=True, characters="0123456789-", condense=0.97)
+    generate("Value", 42)
+    generate("Compact", 26)

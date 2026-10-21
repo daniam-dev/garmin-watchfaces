@@ -21,9 +21,10 @@ sirve como referencia directa del tratamiento de hora observado.
 
 ## Aplicación a Stride
 
-- Forerunner 970: se toma la inclinación deportiva y el contraste entre cifras
-  de contorno y rellenas. Stride los genera desde Rajdhani Bold con licencia
-  OFL; mantiene horas sobre minutos en su propia composición.
+- Forerunner 970: se toma el contraste entre cifras de contorno y rellenas.
+  Stride las genera desde Barlow Condensed ExtraBold con licencia OFL;
+  mantiene horas sobre minutos en su propia composición. La fuente actual
+  es recta (0°), sin trasladar la inclinación observada en las referencias.
 - Venu 4: se toma la agrupación compacta de icono, cifra e indicador. Stride
   dibuja huellas, energía y corazón mediante primitivas vectoriales propias.
 - fēnix 9: se toma la segmentación de indicadores para las dos barras
