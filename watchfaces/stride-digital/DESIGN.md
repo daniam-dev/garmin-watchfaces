@@ -1,6 +1,6 @@
 ---
 name: Stride Digital
-description: Esfera deportiva de hora grande y progreso al borde para Garmin fr170.
+description: Esfera deportiva de hora en dos líneas y columna de datos para Garmin fr170.
 colors:
   background: "#000000"
   text: "#F2F4EF"
@@ -14,143 +14,157 @@ colors:
   sun: "#DAB779"
   low: "#DF827A"
 typography:
-  display: {fontFamily: StrideRajdhaniNumeric, fontSize: "112px"}
+  display: {fontFamily: StrideRajdhaniNumeric, fontSize: "120px", fontFeature: "Tabular digits"}
   value: {fontFamily: StrideRajdhaniNumeric, fontSize: "30px"}
   compact: {fontFamily: StrideRajdhaniNumeric, fontSize: "19px"}
   label: {fontFamily: RobotoCondensedRegular, fontSize: "16px"}
-  date: {fontFamily: RobotoRegular, fontSize: "22px"}
+  date: {fontFamily: RobotoRegular, fontSize: "18px"}
+  weather: {fontFamily: RobotoRegular, fontSize: "22px"}
 components:
-  activity-rail:
+  steps-bar:
+    backgroundColor: "{colors.steps-track}"
     textColor: "{colors.steps}"
-    size: "382px"
-  body-rail:
+    width: "84px"
+    height: "5px"
+  body-bar:
     backgroundColor: "{colors.body-track}"
     textColor: "{colors.body}"
-    size: "382px"
+    width: "84px"
+    height: "5px"
 ---
 
 # Design System: Stride Digital
 
 ## Overview
 
-Esfera nativa Monkey C de consulta rápida para `fr170`, con composición
-deportiva cercana a Garmin. Fondo negro, hora blanca dominante y dos arcos
-en el borde físico. La parte inferior agrupa pasos, Body Battery y pulso
-en tres columnas. Batería y fecha quedan encima de la hora;
-tiempo y lluvia, al pie. No incluye marca ni imágenes de una esfera ajena.
+Esfera deportiva de fondo negro, hora blanca en dos líneas a la izquierda
+y una columna de pasos, Body Battery y pulso a la derecha. Las barras de
+progreso quedan bajo su cifra y rótulo. Fecha y batería ocupan la parte
+superior; tiempo y lluvia, el pie.
 
-La fuente de las medidas y colores es `source/Theme.mc`; las fuentes y los
-componentes se extraen de `source/FaceRenderer.mc`. Es una composición propia,
-sin captura de referencia persistente. Sin segundos, animaciones ni AOD;
-el reposo es negro.
+Esta composición sustituye el diseño anterior tras la auditoría del
+21/10/2026. Aprovecha el círculo físico sin bisel interior ni paneles de datos.
+El carácter deportivo procede de Rajdhani y del acento verde contenido.
+No incluye marca ni recursos de una esfera ajena.
+
+Los tokens del frontmatter son normativos. Su implementación está en
+`source/Theme.mc`, `source/FaceRenderer.mc` y los recursos de fuentes.
+Las coordenadas y contratos nativos que no caben en el esquema se conservan
+en `.impeccable/design.json`. Sin segundos, animaciones ni AOD; reposo negro.
 
 ## Colors
 
-Los valores normativos están en el frontmatter. Hora y cifras blancas, con
-un único verde suave en el progreso de pasos y Body Battery, batería suficiente
-y lluvia. Rótulos y fecha en gris claro, pistas y separadores oscuros.
-El sol usa amarillo cálido; batería baja, coral. La aclaración de Dani pide
-carácter Garmin en los números y descarta la hora multicolor anterior.
+Hora y cifras usan `text`; fecha y datos secundarios, `muted`. El verde
+`accent` se aplica a pasos, Body Battery, batería suficiente y lluvia.
+`steps` y `body` mantienen sus nombres semánticos y el mismo acento;
+sus pistas usan el gris oscuro correspondiente. El sol usa `sun`.
 
-El icono de batería pasa a rojo coral por debajo del 30%; el porcentaje permanece
-blanco. Los rótulos, cifras y longitudes permiten reconocer cada dato sin
-depender solo del color. Una condición desconocida se dibuja con dos rayas.
+El icono de batería usa `low` por debajo del 30%; el porcentaje conserva
+el color del texto. Si el dato de actividad está ausente, su cifra y rótulo
+pasan a gris. Cada barra permanece junto a su dato, de modo que la asociación
+no depende solo del color. Una condición desconocida se dibuja con dos rayas.
 
 ## Typography
 
 Cifras propias desde Rajdhani Bold de Indian Type Foundry, bajo SIL OFL 1.1,
-con trazos rectos, contraformas más cuadradas y anchura reducida al 80%.
-No es una fuente extraída de Garmin. `tools/generate_fonts.py` genera los
-recursos BMFont `Time`, `Value` y `Compact`, cargados una vez en `layout()`.
-El TTF, la licencia y la procedencia se conservan en `resources/fonts/`.
+condensadas al 80%. No proceden de Garmin. `tools/generate_fonts.py` genera
+los BMFont `Time`, `Value` y `Compact`; se cargan una vez en `layout()`.
+El TTF, la licencia y la procedencia permanecen en `resources/fonts/`.
 
-Los tamaños del frontmatter son las alturas de línea finales del recurso,
-recortadas a la tinta de las cifras: 112, 30 y 19 píxeles. La hora usa `display`;
-actividad y pulso, `value`; batería y cifras largas, `compact`. Si una cifra
-supera 82 píxeles, se reduce a `compact`. `999.999` mide 77 píxeles así.
-Rótulos y fecha conservan Roboto nativa de Garmin, sin cambios de posición.
+Los tamaños del frontmatter son alturas finales recortadas a la tinta numérica.
+`Time` se genera desde 186 px con dígitos tabulares: cada pareja mide 162 px,
+incluidas `11` y `88`. Se muestran horas sobre minutos, sin dibujar los
+dos puntos. Las dos líneas conservan su posición y anchura al cambiar la hora.
 
-El simulador mide `88:88` en 328 × 112 píxeles. Las pruebas recorren las 1.440
-horas y exigen ancho máximo de 342 píxeles. La caja de hora ocupa y = 108–220,
-con cuatro píxeles hasta la regla. Esto verifica medidas, no la legibilidad
-visual del reloj ni su fidelidad a una referencia.
+Las cifras de actividad usan `value`; si superan los 94 px de
+`METRIC_WIDTH`, cambian a `compact`. La batería también usa `compact`.
+Rótulos, fecha y meteorología usan las fuentes vectoriales nativas indicadas
+en el frontmatter. Se conservan los recursos `Value` y `Compact`.
+
+Las pruebas recorren las 1.440 horas y comprueban las esquinas de sus cajas
+dentro del radio 193, con separación mínima de ocho píxeles entre líneas.
+Verifican medidas del motor, no rasterizado ni legibilidad en pantalla.
 
 ## Layout
 
-Lienzo circular completo de 390 × 390, centro (195, 195). Sin bisel interior.
-Los arcos tienen radio 191 y ancho 6: su borde exterior alcanza radio 194,
-a un píxel del círculo físico. Cada arco recorre 168°; el izquierdo empieza
-a 96° en sentido antihorario y el derecho, a 84° en sentido horario.
+Lienzo circular completo de 390 × 390, centro (195, 195), sin bisel interior.
+Las posiciones de texto son centros; la de batería es el origen de su icono.
+Las medidas se aplican mediante `StrideTheme`.
 
 | Elemento | Posición o medida en píxeles |
 | --- | --- |
-| Batería | Icono desde (154, 28), porcentaje centrado en (207, 34) |
-| Fecha | Centro (195, 74) |
-| Hora | Centro (195, 164) |
-| Separador horizontal | De (49, 224) a (341, 224) |
-| Columnas de actividad | Centros x = 96, 195 y 294; cifras y = 258; rótulos y = 287 |
-| Separadores de columnas | x = 146 y 244, de y = 244 a 295 |
-| Tiempo y lluvia | Línea central y = 334; separación en x = 195 |
+| Fecha | Centro (149, 43) |
+| Batería | Icono desde (252, 52); porcentaje centrado en (297, 58) |
+| Horas y minutos | Centros (130, 131) y (130, 259) |
+| Columna de datos | Centro x = 284; cifras en y = 107, 192 y 277 |
+| Rótulos | 27 px bajo cada cifra |
+| Barras | Origen x = 242; y = 151 para pasos y 236 para Body Battery; dimensiones en los tokens de componentes |
+| Tiempo y lluvia | Línea central y = 344; condición x = 118, temperatura x = 160, gota x = 218 y lluvia x = 260 |
+| Separador meteorológico | x = 195, de y = 332 a 356 |
 
-La composición y las zonas de pulsación permanecen dentro del círculo. No
-se reduce el contenido para simular una caja o un bisel.
+No hay separadores entre la hora y la columna, ni entre los tres datos.
+La columna y las barras tienen zonas de pulsación propias, recortadas
+al círculo físico. Las dos líneas de la hora no abren complicaciones.
 
 ## Elevation & Depth
 
-Superficie plana, sin sombras ni degradados. Fondo negro continuo y trazos
-de separación finos. Las pistas conservan el recorrido completo; el color
-indica únicamente el progreso disponible.
+Superficie plana, sin sombras ni degradados. El fondo negro es continuo.
+La jerarquía depende del tamaño de la hora, la alineación de los datos y
+el contraste. Las barras conservan su pista completa; el relleno representa
+únicamente progreso disponible.
 
 ## Shapes
 
-Arcos finos continuos sin marcadores. Cero o ausencia no dibujan el arco de
-primer plano; el ángulo se redondea antes de llamar a `drawArc`. Los iconos
-de batería, condición y lluvia se dibujan con primitivas vectoriales Monkey C.
-Los atlas de fuentes son PNG grises de 8 bits con cobertura suavizada;
-no se comparten recursos con otra esfera.
+Barras rectangulares horizontales sin marcadores. El relleno se redondea al
+píxel más cercano; cero o ausencia no dibujan relleno. No hay arcos de
+actividad, paneles ni círculos alrededor de datos.
+
+Batería, condición y lluvia usan primitivas vectoriales Monkey C; las curvas
+del sol, nube y gota son partes de sus iconos. Los atlas de fuentes son PNG
+grises de 8 bits con cobertura suavizada. No se comparten recursos con
+otra esfera.
 
 ## Components
 
-- Hora y fecha: 24 horas, día y mes abreviados en español; hora blanca y fecha gris.
-- Arcos: pasos respecto al objetivo diario a la izquierda; Body Battery
-  sobre 100 a la derecha. Se limita el progreso al 100%, conservando la
-  cifra real. Sin objetivo positivo de pasos no se dibuja su progreso.
-- Columnas: rótulos `PASOS`, `BODY BATTERY` y `PULSO / LPM`. Pasos con puntos
-  de miles; pulso en latidos por minuto, con `--` si no hay lectura válida.
-  Las dos líneas verticales solo separan columnas. Se retira la barra corta
-  de Body Battery, cuyo progreso ya se muestra en el arco derecho.
-- Batería física: silueta, relleno proporcional y porcentaje, con ausencia
-  explícita. El cero válido se conserva.
-- Tiempo: condición oficial y temperatura Celsius redondeada; lluvia con
-  gota y porcentaje. Un dato ausente muestra `--`.
-- Pulsación larga: batería, fecha y cada columna solicitan su vista nativa;
-  ambos valores meteorológicos comparten tiempo actual. Los arcos abren
-  pasos o Body Battery según el lado; la columna de pulso abre frecuencia
-  cardíaca. `WatchFaceDelegate.onPress` utiliza
-  `Complications.exitTo`; si el firmware rechaza el destino con
-  `InvalidValueException`, devuelve `false` sin abrir otra vista.
+- Hora y fecha: 24 horas en dos líneas, día y mes abreviados en español.
+- Pasos: cifra real con puntos de miles, rótulo `PASOS` y barra respecto al
+  objetivo diario. Sin objetivo positivo no se dibuja relleno; superar el
+  objetivo completa la barra y conserva la cifra real.
+- Body Battery: cifra, rótulo `BODY BATTERY` y barra sobre 100.
+- Pulso: cifra en latidos por minuto y rótulo `PULSO / LPM`, sin progreso.
+  Lectura ausente o no positiva muestra `--`.
+- Batería física: silueta, relleno proporcional y porcentaje. Ausencia
+  explícita y cero válido conservado.
+- Tiempo y lluvia: condición oficial, temperatura Celsius redondeada, gota
+  y probabilidad de precipitación. Un dato ausente muestra `--`.
+- Pulsación larga: batería, fecha y cada dato de la columna solicitan su
+  vista nativa. Cada barra abre el mismo destino que su cifra; temperatura
+  y lluvia comparten tiempo actual. `WatchFaceDelegate.onPress` utiliza
+  `Complications.exitTo`; ante `InvalidValueException`, devuelve `false`
+  sin abrir otra vista.
 
-La compilación con avisos (`-w`) y las cuatro pruebas en el simulador `fr170`
-pasan. Cubren formatos, objetivos, pulso ausente/cero/válido, las 1.440 horas
-con los recursos nuevos, reconocimiento
-de eventos de ambas complicaciones, zonas de pulsación y dibujo con datos
-ausentes y extremos. El dibujo de estas pruebas usa un búfer de 1 × 1;
-no valida píxeles. `tests/Smoke.mc` ejecutó el dibujo sobre el DC completo con
-datos ausentes, máximos y cero, con el límite normal de memoria: 15.224 bytes
-usados de 126.880, sin inspeccionar sus píxeles.
-La captura aportada por Dani en esta conversación muestra la versión anterior
-con minutos semanales y hora blanca; no está guardada como archivo local.
-No se obtuvo una nueva captura real de 390 × 390: Computer Use no pudo conectar con
-su canal nativo. La legibilidad, los posibles recortes y la apertura de las
-vistas nativas en el reloj siguen pendientes. No se presenta una
-previsualización HTML/CSS como sustituto de esta revisión.
+La compilación con avisos (`-w`) y las cuatro pruebas pasan en `fr170`.
+Cubren formatos, pulso, eventos, destinos, cada píxel de las barras, las
+1.440 horas, ancho tabular y dibujo con ausencias y extremos. Este último
+usa un búfer de 1 × 1. El diagnóstico de dibujo en el DC completo, con el
+límite normal, registra 15.304 bytes usados, 111.576 libres y 126.880 totales,
+sin errores de ejecución. Sus datos son estados de prueba.
+
+La revisión independiente final no detectó errores materiales de código,
+geometría o contratos. La app está cargada en el simulador y solo se ha
+inspeccionado el atlas `Time.png`. No se obtuvo captura real de 390 × 390:
+Computer Use no dispone de canal nativo. Quedan pendientes la revisión
+visual de rasterizado, recortes y legibilidad con datos representativos
+y ausentes, y la apertura de vistas nativas en el reloj. No se presenta
+la compilación ni la geometría como validación visual.
 
 ## Do's and Don'ts
 
-- Mantener la hora dominante y los arcos junto al borde físico.
-- Conservar los colores y rótulos de cada dato.
+- Mantener la hora blanca en dos líneas a la izquierda y los datos en la columna derecha.
+- Conservar cada barra junto a su cifra y rótulo.
 - Mostrar ausencia explícita y conservar los ceros válidos.
 - Mantener reposo negro sin segundos, timers, animaciones ni AOD.
-- No añadir un bisel interior, marca o recursos de otra esfera.
+- No añadir arcos de actividad, paneles, círculos de datos ni bisel interior.
+- No añadir marca o recursos de otra esfera.
 - No convertir una condición desconocida en sol ni una ausencia en cero.
 - No presentar una compilación, geometría o búfer de pruebas como captura real.

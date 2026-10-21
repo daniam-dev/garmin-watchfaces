@@ -11,7 +11,7 @@ SCALE = 4
 CONDENSE = 0.80
 
 
-def generate(name: str, size: int) -> None:
+def generate(name: str, size: int, tabular: bool = False) -> None:
     font = ImageFont.truetype(str(SOURCE), size * SCALE)
     boxes = {char: font.getbbox(char) for char in CHARACTERS}
     # Todos los glifos comparten la caja de las cifras; el guion y los dos
@@ -19,6 +19,7 @@ def generate(name: str, size: int) -> None:
     top = min(boxes[char][1] for char in "0123456789")
     bottom = max(boxes[char][3] for char in "0123456789")
     line_height = round((bottom - top) / SCALE)
+    digit_advance = round(max(font.getlength(char) for char in "0123456789") / SCALE * CONDENSE)
     glyphs = []
     for char in CHARACTERS:
         left, glyph_top, right, glyph_bottom = boxes[char]
@@ -28,9 +29,12 @@ def generate(name: str, size: int) -> None:
         ImageDraw.Draw(mask).text((-left, -glyph_top), char, font=font, fill=255)
         target = (max(1, round(width / SCALE * CONDENSE)), max(1, round(height / SCALE)))
         mask = mask.resize(target, Image.Resampling.LANCZOS)
-        glyphs.append((char, mask, round(left / SCALE * CONDENSE),
-                       round((glyph_top - top) / SCALE),
-                       round(font.getlength(char) / SCALE * CONDENSE)))
+        advance = round(font.getlength(char) / SCALE * CONDENSE)
+        offset_x = round(left / SCALE * CONDENSE)
+        if tabular and char.isdigit():
+            advance = digit_advance
+            offset_x = round((advance - mask.width) / 2)
+        glyphs.append((char, mask, offset_x, round((glyph_top - top) / SCALE), advance))
 
     atlas_width = 1024 if size > 100 else 512
     padding = 2
@@ -53,7 +57,7 @@ def generate(name: str, size: int) -> None:
 
     metadata = PngImagePlugin.PngInfo()
     metadata.add_text("Source", "https://github.com/google/fonts/tree/main/ofl/rajdhani; SIL OFL 1.1")
-    metadata.add_text("Generator", "tools/generate_fonts.py; Rajdhani Bold; horizontal scale 0.80; 4x supersampling")
+    metadata.add_text("Generator", f"tools/generate_fonts.py; Rajdhani Bold; horizontal scale 0.80; 4x supersampling; tabular digits={tabular}")
     atlas.save(FONTS / f"{name}.png", pnginfo=metadata)
     lines = [
         f'info face="Stride Rajdhani Numeric" size={size} bold=1 italic=0 charset="" unicode=1 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=0,0',
@@ -65,10 +69,10 @@ def generate(name: str, size: int) -> None:
         lines.append(f"char id={ord(char)} x={x} y={y} width={mask.width} height={mask.height} xoffset={offset_x} yoffset={offset_y} xadvance={advance} page=0 chnl=8")
     (FONTS / f"{name}.fnt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     advances = {char: advance for char, mask, offset_x, offset_y, advance in glyphs}
-    print(f"{name}: height={line_height}, 88:88={sum(advances[c] for c in '88:88')}, 999.999={sum(advances[c] for c in '999.999')}")
+    print(f"{name}: height={line_height}, 88={sum(advances[c] for c in '88')}, 999.999={sum(advances[c] for c in '999.999')}")
 
 
 if __name__ == "__main__":
-    generate("Time", 174)
+    generate("Time", 186, tabular=True)
     generate("Value", 46)
     generate("Compact", 29)

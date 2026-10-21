@@ -1,5 +1,22 @@
 # Auditoría de Stride Digital
 
+Resolución del 21/10/2026: se implementó el rediseño aprobado, con hora en dos
+líneas a la izquierda, columna de datos a la derecha y barras junto a pasos y
+Body Battery. Se retiraron los arcos y se ajustaron los destinos táctiles a la
+nueva composición. Compilación con avisos y cuatro pruebas en `fr170`
+superadas; la comprobación técnica incluye las 1.440 horas y cada píxel de las
+barras. El diagnóstico de dibujo con memoria normal usa 15.304 de 126.880
+bytes, sin errores de ejecución. La revisión independiente final no detectó
+errores materiales de código, geometría o contratos. No hay validación visual:
+solo se inspeccionó el atlas `Time.png`; Computer Use no dispone de canal
+nativo para obtener una captura. Siguen pendientes una captura real de
+390 × 390 y los destinos en el reloj. `DESIGN.md` describe el diseño vigente.
+
+El informe que sigue se conserva como histórico de la versión previa. Sus
+medidas, resultados y referencias de líneas corresponden a esa base.
+
+## Informe histórico
+
 21/10/2026. Implementación revisada en `d06d9d8`; Stride no cambia respecto a
 `c246b07`. Objetivo: valorar su uso y darle una identidad Garmin propia,
 distinta de Modular One. Auditoría con `to-prompt` e `impeccable`, adaptada a

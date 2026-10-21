@@ -6,15 +6,16 @@ module StrideTargets {
     function at(x as Number, y as Number) as Complications.Type? {
         var dx = x-195; var dy = y-195;
         if (dx*dx+dy*dy > 195*195) { return null; }
-        if (y >= 16 && y <= 51 && x >= 142 && x <= 249) { return Complications.COMPLICATION_TYPE_BATTERY; }
-        if (y >= 57 && y <= 92 && x >= 102 && x <= 288) { return Complications.COMPLICATION_TYPE_DATE; }
-        if (y >= 235 && y <= 310 && x >= 50 && x < 146) { return Complications.COMPLICATION_TYPE_STEPS; }
-        if (y >= 235 && y <= 310 && x >= 146 && x < 244) { return Complications.COMPLICATION_TYPE_BODY_BATTERY; }
-        if (y >= 235 && y <= 310 && x >= 244 && x <= 340) { return Complications.COMPLICATION_TYPE_HEART_RATE; }
-        if (y >= 315 && y <= 355 && x >= 100 && x <= 290) { return Complications.COMPLICATION_TYPE_CURRENT_WEATHER; }
-        if (y >= 60 && y <= 350 && dx*dx+dy*dy >= 178*178) {
-            return x < 195 ? Complications.COMPLICATION_TYPE_STEPS : Complications.COMPLICATION_TYPE_BODY_BATTERY;
+        if (y >= StrideTheme.BATTERY_Y-22 && y <= StrideTheme.BATTERY_Y+21 &&
+            x >= StrideTheme.BATTERY_ICON_X-14 && x <= StrideTheme.BATTERY_X+33) { return Complications.COMPLICATION_TYPE_BATTERY; }
+        if (y >= StrideTheme.DATE_Y-22 && y <= StrideTheme.DATE_Y+21 &&
+            x >= StrideTheme.DATE_X-63 && x <= StrideTheme.DATE_X+68) { return Complications.COMPLICATION_TYPE_DATE; }
+        if (x >= StrideTheme.METRIC_HIT_LEFT && x <= StrideTheme.METRIC_HIT_RIGHT) {
+            if (y >= StrideTheme.STEPS_Y+StrideTheme.METRIC_HIT_TOP && y <= StrideTheme.STEPS_Y+StrideTheme.METRIC_HIT_BOTTOM) { return Complications.COMPLICATION_TYPE_STEPS; }
+            if (y >= StrideTheme.BODY_Y+StrideTheme.METRIC_HIT_TOP && y <= StrideTheme.BODY_Y+StrideTheme.METRIC_HIT_BOTTOM) { return Complications.COMPLICATION_TYPE_BODY_BATTERY; }
+            if (y >= StrideTheme.HEART_Y+StrideTheme.METRIC_HIT_TOP && y <= StrideTheme.HEART_Y+StrideTheme.LABEL_OFFSET+15) { return Complications.COMPLICATION_TYPE_HEART_RATE; }
         }
+        if (y >= StrideTheme.WEATHER_Y-21 && y <= StrideTheme.WEATHER_Y+22 && x >= 100 && x <= 292) { return Complications.COMPLICATION_TYPE_CURRENT_WEATHER; }
         return null;
     }
 }

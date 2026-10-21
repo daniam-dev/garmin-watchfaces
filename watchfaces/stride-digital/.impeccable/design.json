@@ -1,17 +1,9 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-21T18:50:13.211841+02:00",
+  "generatedAt": "2026-10-21T17:26:14Z",
   "title": "Design System: Stride Digital",
   "extensions": {
     "colorMeta": {
-      "steps": {
-        "role": "primary",
-        "displayName": "Verde suave de pasos y batería"
-      },
-      "body": {
-        "role": "tertiary",
-        "displayName": "Verde suave de Body Battery y lluvia"
-      },
       "background": {
         "role": "neutral",
         "displayName": "Negro de fondo"
@@ -26,49 +18,61 @@
       },
       "track": {
         "role": "neutral",
-        "displayName": "Gris oscuro de pistas y separadores"
+        "displayName": "Gris oscuro de pistas"
       },
-      "low": {
-        "role": "status",
-        "displayName": "Coral de batería baja"
+      "steps-track": {
+        "role": "neutral",
+        "displayName": "Pista de pasos"
+      },
+      "body-track": {
+        "role": "neutral",
+        "displayName": "Pista de Body Battery"
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Verde suave de indicadores"
+      },
+      "steps": {
+        "role": "primary",
+        "displayName": "Verde de pasos"
+      },
+      "body": {
+        "role": "primary",
+        "displayName": "Verde de Body Battery y lluvia"
       },
       "sun": {
         "role": "status",
         "displayName": "Amarillo cálido del sol"
       },
-      "steps-track": {
-        "role": "neutral",
-        "displayName": "Pista gris de pasos"
-      },
-      "body-track": {
-        "role": "neutral",
-        "displayName": "Pista gris de Body Battery"
-      },
-      "accent": {
-        "role": "primary",
-        "displayName": "Verde suave único para indicadores"
+      "low": {
+        "role": "status",
+        "displayName": "Coral de batería baja"
       }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Hora deportiva",
-        "purpose": "Rajdhani Bold condensada al 80%, BMFont propio de 112px de altura final, completamente blanca."
+        "purpose": "Rajdhani Bold condensada al 80%, dígitos tabulares en dos líneas blancas. Altura final definida en DESIGN.md."
       },
       "value": {
         "displayName": "Cifras de actividad",
-        "purpose": "Rajdhani Bold condensada al 80%, BMFont propio de 30px de altura final."
+        "purpose": "Recurso Value conservado, con avances proporcionales."
       },
       "compact": {
         "displayName": "Cifra compacta",
-        "purpose": "BMFont propio de 19 px para batería y cifras de actividad que superen 82 px."
+        "purpose": "Batería y cifras de actividad que superen METRIC_WIDTH."
       },
       "label": {
         "displayName": "Rótulos",
-        "purpose": "Identificación de cada columna de actividad."
+        "purpose": "Identificar cada dato de la columna derecha."
       },
       "date": {
-        "displayName": "Fecha y tiempo",
-        "purpose": "Fecha española, temperatura y probabilidad de lluvia."
+        "displayName": "Fecha",
+        "purpose": "Fecha española en la cabecera."
+      },
+      "weather": {
+        "displayName": "Tiempo y lluvia",
+        "purpose": "Temperatura Celsius y probabilidad de precipitación."
       }
     },
     "nativeGeometry": {
@@ -82,109 +86,91 @@
         195,
         195
       ],
-      "sideArcs": {
-        "radius": 191,
-        "width": 6,
-        "outerRadius": 194,
-        "physicalCircleRadius": 195,
-        "sweepDegrees": 168,
-        "stepsStartDegrees": 96,
-        "stepsClockwise": false,
-        "marker": false,
-        "zeroProgress": "Sin arco de primer plano.",
-        "angleRounding": "Al grado entero más cercano.",
-        "bodyStartDegrees": 84,
-        "bodyClockwise": true,
-        "leftMetric": "steps / stepGoal",
-        "rightMetric": "bodyBattery / 100"
-      },
       "battery": {
         "iconOrigin": [
-          154,
-          28
+          252,
+          52
         ],
         "valueCenter": [
-          207,
-          34
+          297,
+          58
         ],
         "lowBelow": 30
       },
       "dateCenter": [
-        195,
-        74
+        149,
+        43
       ],
-      "timeCenter": [
-        195,
-        164
-      ],
-      "horizontalRule": {
-        "from": [
-          49,
-          224
+      "timeLines": {
+        "hoursCenter": [
+          130,
+          131
         ],
-        "to": [
-          341,
-          224
-        ]
+        "minutesCenter": [
+          130,
+          259
+        ],
+        "separator": false
       },
-      "activityColumns": {
-        "centersX": [
-          96,
-          195,
-          294
+      "activityColumn": {
+        "centerX": 284,
+        "valuesY": [
+          107,
+          192,
+          277
         ],
-        "valueY": 258,
-        "labelY": 287,
+        "labelOffset": 27,
         "labels": [
           "PASOS",
           "BODY BATTERY",
           "PULSO / LPM"
         ],
-        "compactAboveWidth": 82,
-        "separatorX": [
-          146,
-          244
-        ],
-        "separatorY": [
-          244,
-          295
-        ]
+        "compactAboveWidth": 94
+      },
+      "progressBars": {
+        "x": 242,
+        "stepsY": 151,
+        "bodyY": 236,
+        "dimensions": "components.steps-bar y components.body-bar en DESIGN.md",
+        "stepsMetric": "steps / stepGoal",
+        "bodyMetric": "bodyBattery / 100",
+        "zeroProgress": "Sin relleno de primer plano.",
+        "widthRounding": "Al píxel entero más cercano."
       },
       "weather": {
-        "rowY": 334,
+        "rowY": 344,
         "conditionCenterX": 118,
-        "temperatureCenterX": 158,
+        "temperatureCenterX": 160,
         "rainIconCenterX": 218,
         "rainValueCenterX": 260,
         "separator": {
           "from": [
             195,
-            322
+            332
           ],
           "to": [
             195,
-            346
+            356
           ]
         }
       },
       "timeFont": {
         "resource": "Rez.Fonts.Time",
-        "lineHeight": 112,
-        "source": "Rajdhani Bold, SIL OFL1.1",
+        "source": "Rajdhani Bold, SIL OFL 1.1",
+        "sourceSize": 186,
         "horizontalScale": 0.8,
-        "inkY": [
-          108,
-          220
-        ],
+        "tabularDigits": true,
+        "pairWidth": 162,
+        "testedAabbRadius": 193,
         "color": "text"
       }
     },
     "nativeStates": {
       "unavailableValue": "--",
       "unknownWeather": "Dos rayas, sin condición ficticia.",
-      "zero": "Conservar ceros válidos; sin progreso de primer plano. Pulso cero se trata como ausente.",
-      "missingGoal": "Conservar la cifra disponible; sin progreso.",
-      "exceededGoal": "Progreso completo y cifra real.",
+      "zero": "Conservar ceros válidos; sin progreso de primer plano. Pulso no positivo se trata como ausente.",
+      "missingGoal": "Conservar la cifra disponible; sin relleno.",
+      "exceededGoal": "Barra completa y cifra real.",
       "sleep": "Pantalla negra, sin AOD, segundos, timers ni animaciones."
     },
     "nativeInteraction": {
@@ -194,10 +180,74 @@
       "targets": {
         "battery": "BATTERY",
         "date": "DATE",
-        "stepsAndLeftArc": "STEPS",
-        "bodyColumnAndRightArc": "BODY_BATTERY",
-        "heartColumn": "HEART_RATE",
+        "stepsAndBar": "STEPS",
+        "bodyAndBar": "BODY_BATTERY",
+        "heart": "HEART_RATE",
         "weatherAndRain": "CURRENT_WEATHER"
+      },
+      "hitRegions": {
+        "circleRadius": 195,
+        "battery": {
+          "x": [
+            238,
+            330
+          ],
+          "y": [
+            36,
+            79
+          ]
+        },
+        "date": {
+          "x": [
+            86,
+            217
+          ],
+          "y": [
+            21,
+            64
+          ]
+        },
+        "steps": {
+          "x": [
+            228,
+            346
+          ],
+          "y": [
+            83,
+            161
+          ]
+        },
+        "body": {
+          "x": [
+            228,
+            346
+          ],
+          "y": [
+            168,
+            246
+          ]
+        },
+        "heart": {
+          "x": [
+            228,
+            346
+          ],
+          "y": [
+            253,
+            319
+          ]
+        },
+        "weatherAndRain": {
+          "x": [
+            100,
+            292
+          ],
+          "y": [
+            323,
+            366
+          ]
+        },
+        "time": "Sin destino."
       },
       "unsupportedTarget": "InvalidValueException devuelve false sin abrir otra vista.",
       "deviceVerification": "Pendiente comprobar la apertura de las vistas nativas en el reloj."
@@ -216,17 +266,19 @@
       "resources/fonts/README.md"
     ],
     "reference": {
-      "kind": "Captura del usuario en la conversación: versión anterior con minutos semanales y hora blanca.",
+      "kind": "Composición implementada tras AUDIT.md; sin captura persistente de la versión actual.",
       "date": "2026-10-21",
       "persistentFile": null
     },
     "verification": {
-      "build": "Compilación con -w superada.",
-      "nativeTests": "Cuatro pruebas pasan en fr170: formatos, destinos, pulso y eventos, medidas y dibujo con los recursos BMFont nuevos; se recorren las 1.440 horas.",
-      "timeWidth": "88:88 mide 328 × 112 px; las 1.440 horas caben en 342 px; 999.999 mide 77 px con Compact.",
+      "build": "scripts/build.ps1 -Project stride-digital: compilación con -w superada, sin avisos.",
+      "nativeTests": "scripts/test.ps1 -Project stride-digital: cuatro pruebas pasan en fr170. Incluyen las 1.440 horas dentro del radio 193, ancho tabular de 11 y 88, destinos y cada píxel de las barras, ausencias, extremos, pulso y eventos.",
+      "timeMeasurements": "Pareja de dígitos: 162 px de ancho; altura final de Time definida en DESIGN.md.",
       "buffer": "El dibujo de pruebas usa un búfer de 1 × 1, sin revisión visual.",
-      "visualReview": "Atlas de cifras inspeccionado. Captura anterior del usuario como referencia de composición. Captura nueva del reloj pendiente porque Computer Use no conecta con su canal nativo.",
-      "normalMemorySmoke": "Diagnóstico de dibujo en el DC de 390 × 390 con el límite normal: 15.224 bytes usados, 111.656 libres y 126.880 totales. No inspecciona los píxeles."
+      "normalMemorySmoke": "Dibujo en el DC de 390 × 390 con el límite normal: 15.304 bytes usados, 111.576 libres y 126.880 totales. Cero errores de ejecución. Estados de prueba, sin inspección visual de píxeles.",
+      "independentReview": "Revisión final sin errores materiales de código, geometría o contratos; no valida el aspecto.",
+      "visualReview": "Solo se inspeccionó el atlas Time.png. App cargada en el simulador. No se obtuvo captura porque Computer Use no dispone de canal nativo; pendientes rasterizado, recortes y legibilidad a 390 × 390.",
+      "deviceNavigation": "Apertura real de destinos pendiente en el reloj."
     },
     "nativeHealth": {
       "heartSource": "Complications.COMPLICATION_TYPE_HEART_RATE",
@@ -243,18 +295,24 @@
     {
       "name": "Hora y fecha",
       "kind": "custom",
-      "description": "Hora blanca con cifras deportivas Rajdhani Bold propias, caja de 328 × 112 px para 88:88. Fecha española gris con Roboto nativa."
+      "description": "Hora Rajdhani blanca en dos líneas a la izquierda; fecha española gris en la cabecera."
     },
     {
-      "name": "Arcos de actividad",
+      "name": "Barra de pasos",
       "kind": "custom",
-      "refersTo": "activity-rail",
-      "description": "Pasos a la izquierda y Body Battery a la derecha, con un único acento verde suave y pistas grises, radio 191 y ancho 6."
+      "refersTo": "steps-bar",
+      "description": "Progreso diario bajo su cifra y rótulo en la columna derecha."
     },
     {
-      "name": "Columnas de actividad",
+      "name": "Barra de Body Battery",
       "kind": "custom",
-      "description": "Pasos, Body Battery y pulso con cifras Rajdhani blancas y rótulos Roboto grises; reducción a Compact si superan 82 px."
+      "refersTo": "body-bar",
+      "description": "Progreso sobre 100 bajo su cifra y rótulo en la columna derecha."
+    },
+    {
+      "name": "Columna de datos",
+      "kind": "custom",
+      "description": "Pasos, Body Battery y pulso con cifras blancas; Compact al superar METRIC_WIDTH. El pulso no tiene barra."
     },
     {
       "name": "Batería física",
@@ -264,25 +322,20 @@
     {
       "name": "Tiempo y lluvia",
       "kind": "custom",
-      "description": "Condición, temperatura Celsius y probabilidad de lluvia, con iconos vectoriales y ausencia explícita."
-    },
-    {
-      "name": "Arco de Body Battery",
-      "kind": "custom",
-      "refersTo": "body-rail",
-      "description": "Escala 0–100 en el arco derecho; sustituye la barra corta inferior."
+      "description": "Condición oficial, temperatura Celsius y probabilidad de lluvia, con iconos vectoriales y ausencia explícita."
     }
   ],
   "narrative": {
-    "overview": "Esfera deportiva cercana a Garmin, de fondo negro y hora blanca con cifras altas y compactas. Un único acento verde suave en los indicadores; pasos, Body Battery y pulso debajo. Se conserva la composición.",
+    "overview": "Esfera deportiva de fondo negro, hora blanca en dos líneas a la izquierda\ny una columna de pasos, Body Battery y pulso a la derecha. Las barras de\nprogreso quedan bajo su cifra y rótulo. Fecha y batería ocupan la parte\nsuperior; tiempo y lluvia, el pie.\n\nEsta composición sustituye el diseño anterior tras la auditoría del\n21/10/2026. Aprovecha el círculo físico sin bisel interior ni paneles de datos.\nEl carácter deportivo procede de Rajdhani y del acento verde contenido.\nNo incluye marca ni recursos de una esfera ajena.\n\nLos tokens del frontmatter son normativos. Su implementación está en\n`source/Theme.mc`, `source/FaceRenderer.mc` y los recursos de fuentes.\nLas coordenadas y contratos nativos que no caben en el esquema se conservan\nen `.impeccable/design.json`. Sin segundos, animaciones ni AOD; reposo negro.",
     "dos": [
-      "Mantener la hora dominante y los arcos junto al borde físico.",
-      "Conservar los colores y rótulos de cada dato.",
+      "Mantener la hora blanca en dos líneas a la izquierda y los datos en la columna derecha.",
+      "Conservar cada barra junto a su cifra y rótulo.",
       "Mostrar ausencia explícita y conservar los ceros válidos.",
       "Mantener reposo negro sin segundos, timers, animaciones ni AOD."
     ],
     "donts": [
-      "No añadir un bisel interior, marca o recursos de otra esfera.",
+      "No añadir arcos de actividad, paneles, círculos de datos ni bisel interior.",
+      "No añadir marca o recursos de otra esfera.",
       "No convertir una condición desconocida en sol ni una ausencia en cero.",
       "No presentar una compilación, geometría o búfer de pruebas como captura real."
     ]

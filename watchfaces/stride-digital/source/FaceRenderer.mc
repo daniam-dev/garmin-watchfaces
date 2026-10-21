@@ -10,63 +10,62 @@ class StrideRenderer {
     private var _small as Graphics.FontType = Graphics.FONT_XTINY;
     private var _label as Graphics.FontType = Graphics.FONT_XTINY;
     private var _date as Graphics.FontType = Graphics.FONT_TINY;
+    private var _weather as Graphics.FontType = Graphics.FONT_TINY;
     function initialize() {}
     function layout() as Void {
         _time = WatchUi.loadResource(Rez.Fonts.Time) as WatchUi.FontResource;
         _value = WatchUi.loadResource(Rez.Fonts.Value) as WatchUi.FontResource;
         _small = WatchUi.loadResource(Rez.Fonts.Compact) as WatchUi.FontResource;
-        var label = Graphics.getVectorFont({:face => "RobotoCondensedRegular", :size => 16});
-        var date = Graphics.getVectorFont({:face => "RobotoRegular", :size => 22});
+        var label = Graphics.getVectorFont({:face => "RobotoCondensedRegular", :size => StrideTheme.LABEL_SIZE});
+        var date = Graphics.getVectorFont({:face => "RobotoRegular", :size => StrideTheme.DATE_SIZE});
+        var weather = Graphics.getVectorFont({:face => "RobotoRegular", :size => StrideTheme.WEATHER_SIZE});
         if (label != null) { _label = label; }
         if (date != null) { _date = date; }
+        if (weather != null) { _weather = weather; }
     }
     function text(dc as Graphics.Dc, x as Number, y as Number, font as Graphics.FontType, value as String, color as Number) as Void {
         dc.setColor(color,Graphics.COLOR_TRANSPARENT);
         dc.drawText(x,y,font,value,StrideTheme.ALIGN);
     }
-    // Garmin cuantiza los ángulos: cero no llama a drawArc con extremos iguales.
-    function rail(dc as Graphics.Dc, start as Number, clockwise as Boolean, ratio as Float, color as Number, track as Number) as Void {
-        dc.setPenWidth(StrideTheme.EDGE_WIDTH);
-        var end = start + (clockwise ? -StrideTheme.SWEEP : StrideTheme.SWEEP);
-        var direction = clockwise ? Graphics.ARC_CLOCKWISE : Graphics.ARC_COUNTER_CLOCKWISE;
+    function progress(dc as Graphics.Dc, y as Number, ratio as Float, color as Number, track as Number) as Void {
         dc.setColor(track,Graphics.COLOR_TRANSPARENT);
-        dc.drawArc(195,195,StrideTheme.EDGE_RADIUS,direction,start,end);
-        var sweep = Math.round(ratio*StrideTheme.SWEEP).toNumber();
-        if (sweep <= 0) { return; }
+        dc.fillRectangle(StrideTheme.BAR_X,y,StrideTheme.BAR_WIDTH,StrideTheme.BAR_HEIGHT);
+        var width = Math.round(ratio*StrideTheme.BAR_WIDTH).toNumber();
+        if (width <= 0) { return; }
         dc.setColor(color,Graphics.COLOR_TRANSPARENT);
-        dc.drawArc(195,195,StrideTheme.EDGE_RADIUS,direction,start,start+(clockwise ? -sweep : sweep));
+        dc.fillRectangle(StrideTheme.BAR_X,y,width,StrideTheme.BAR_HEIGHT);
     }
-    function metric(dc as Graphics.Dc, x as Number, value as String, label as String) as Void {
-        var font = dc.getTextWidthInPixels(value,_value) > 82 ? _small : _value;
-        text(dc,x,StrideTheme.VALUE_Y,font,value,value == "--" ? StrideTheme.MUTED : StrideTheme.WHITE);
-        text(dc,x,StrideTheme.LABEL_Y,_label,label,StrideTheme.MUTED);
+    function metric(dc as Graphics.Dc, y as Number, value as String, label as String, color as Number) as Void {
+        var font = dc.getTextWidthInPixels(value,_value) > StrideTheme.METRIC_WIDTH ? _small : _value;
+        text(dc,StrideTheme.METRIC_X,y,font,value,value == "--" ? StrideTheme.MUTED : StrideTheme.WHITE);
+        text(dc,StrideTheme.METRIC_X,y+StrideTheme.LABEL_OFFSET,_label,label,value == "--" ? StrideTheme.MUTED : color);
     }
     function draw(dc as Graphics.Dc, data as StrideData) as Void {
         dc.setColor(StrideTheme.WHITE,StrideTheme.BLACK); dc.clear(); dc.setAntiAlias(true);
-        rail(dc,96,false,StrideFormat.progress(data.steps,data.goal),StrideTheme.STEPS,StrideTheme.STEPS_TRACK);
-        rail(dc,84,true,StrideFormat.progress(data.body,100),StrideTheme.BODY,StrideTheme.BODY_TRACK);
         dc.setPenWidth(1);
         var batteryColor = data.battery == null ? StrideTheme.MUTED : (data.battery < 30 ? StrideTheme.LOW : StrideTheme.STEPS);
         dc.setColor(batteryColor,Graphics.COLOR_TRANSPARENT);
-        dc.drawRoundedRectangle(154,28,18,11,2); dc.fillRectangle(173,31,2,5);
+        var bx = StrideTheme.BATTERY_ICON_X; var by = StrideTheme.BATTERY_ICON_Y;
+        dc.drawRoundedRectangle(bx,by,18,11,2); dc.fillRectangle(bx+19,by+3,2,5);
         if (data.battery != null && data.battery > 0) {
             var fill = Math.round(data.battery*0.12f).toNumber();
-            dc.fillRectangle(157,31,fill < 1 ? 1 : fill,5);
+            dc.fillRectangle(bx+3,by+3,fill < 1 ? 1 : fill,5);
         }
-        text(dc,207,StrideTheme.BATTERY_Y,_small,StrideFormat.percent(data.battery),StrideTheme.WHITE);
-        text(dc,195,StrideTheme.DATE_Y,_date,data.dateText,StrideTheme.MUTED);
-        text(dc,195,StrideTheme.TIME_Y,_time,data.timeText,StrideTheme.WHITE);
-        dc.setColor(StrideTheme.TRACK,Graphics.COLOR_TRANSPARENT);
-        dc.drawLine(49,StrideTheme.RULE_Y,341,StrideTheme.RULE_Y);
-        dc.drawLine(146,244,146,295); dc.drawLine(244,244,244,295);
-        metric(dc,StrideTheme.STEPS_X,StrideFormat.steps(data.steps),"PASOS");
-        metric(dc,StrideTheme.BODY_X,StrideFormat.number(data.body),"BODY BATTERY");
-        metric(dc,StrideTheme.HEART_X,StrideFormat.number(data.heartRate),"PULSO / LPM");
-        weather(dc,118,StrideTheme.WEATHER_Y,data.condition);
-        text(dc,158,StrideTheme.WEATHER_Y,_date,StrideFormat.temperature(data.temperature),StrideTheme.WHITE);
-        dc.setColor(StrideTheme.MUTED,Graphics.COLOR_TRANSPARENT); dc.drawLine(195,322,195,346);
-        droplet(dc,218,StrideTheme.WEATHER_Y);
-        text(dc,260,StrideTheme.WEATHER_Y,_date,StrideFormat.percent(data.rain),StrideTheme.WHITE);
+        text(dc,StrideTheme.BATTERY_X,StrideTheme.BATTERY_Y,_small,StrideFormat.percent(data.battery),StrideTheme.WHITE);
+        text(dc,StrideTheme.DATE_X,StrideTheme.DATE_Y,_date,data.dateText,StrideTheme.MUTED);
+        text(dc,StrideTheme.TIME_X,StrideTheme.HOURS_Y,_time,data.timeText.substring(0,2),StrideTheme.WHITE);
+        text(dc,StrideTheme.TIME_X,StrideTheme.MINUTES_Y,_time,data.timeText.substring(3,5),StrideTheme.WHITE);
+        metric(dc,StrideTheme.STEPS_Y,StrideFormat.steps(data.steps),"PASOS",StrideTheme.STEPS);
+        progress(dc,StrideTheme.STEPS_Y+StrideTheme.BAR_OFFSET,StrideFormat.progress(data.steps,data.goal),StrideTheme.STEPS,StrideTheme.STEPS_TRACK);
+        metric(dc,StrideTheme.BODY_Y,StrideFormat.number(data.body),"BODY BATTERY",StrideTheme.BODY);
+        progress(dc,StrideTheme.BODY_Y+StrideTheme.BAR_OFFSET,StrideFormat.progress(data.body,100),StrideTheme.BODY,StrideTheme.BODY_TRACK);
+        metric(dc,StrideTheme.HEART_Y,StrideFormat.number(data.heartRate),"PULSO / LPM",StrideTheme.MUTED);
+        weather(dc,StrideTheme.WEATHER_ICON_X,StrideTheme.WEATHER_Y,data.condition);
+        text(dc,StrideTheme.TEMPERATURE_X,StrideTheme.WEATHER_Y,_weather,StrideFormat.temperature(data.temperature),StrideTheme.WHITE);
+        dc.setColor(StrideTheme.MUTED,Graphics.COLOR_TRANSPARENT);
+        dc.drawLine(StrideTheme.WEATHER_SEPARATOR_X,StrideTheme.WEATHER_Y-12,StrideTheme.WEATHER_SEPARATOR_X,StrideTheme.WEATHER_Y+12);
+        droplet(dc,StrideTheme.RAIN_ICON_X,StrideTheme.WEATHER_Y);
+        text(dc,StrideTheme.RAIN_X,StrideTheme.WEATHER_Y,_weather,StrideFormat.percent(data.rain),StrideTheme.WHITE);
         dc.setPenWidth(1);
     }
     function droplet(dc as Graphics.Dc, x as Number, y as Number) as Void {
